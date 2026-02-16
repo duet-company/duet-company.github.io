@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Data Labs - Data Infrastructure Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Clash+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            color: #111111;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: #111111;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #666666;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #111111;
+        }
+
+        .btn-primary {
+            background: #111111;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #000000;
+            transform: translateY(-1px);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 160px 0 100px;
+            text-align: left;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 64px;
+            font-weight: 600;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 32px;
+            color: #111111;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #666666;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: #111111;
+            padding: 12px 24px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            border-color: #111111;
+            transform: translateY(-1px);
+        }
+
+        /* Features */
+        .features {
+            padding: 100px 0;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 48px 32px;
+        }
+
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .feature-item h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #111111;
+        }
+
+        .feature-item p {
+            color: #666666;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Stats */
+        .stats {
+            padding: 100px 0;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 48px;
+        }
+
+        .stat-item {
+            text-align: left;
+        }
+
+        .stat-value {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 56px;
+            font-weight: 600;
+            color: #111111;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666666;
+            font-weight: 500;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .cta p {
+            color: #666666;
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer p {
+            color: #666666;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #666666;
+            text-decoration: none;
+            margin-left: 32px;
+        }
+
+        footer a:hover {
+            color: #111111;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero {
+                padding: 120px 0 60px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">AI Data Labs</a>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="https://github.com/duet-company/duet-company.github.io">GitHub</a>
+                    <a href="#contact" class="btn-primary">Get Started</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Data infrastructure that doesn't get in your way</h1>
+            <p>Build and manage scalable data platforms in hours, not months. Autonomous agents handle the complexity so you can focus on insights.</p>
+            <div class="hero-actions">
+                <a href="#pricing" class="btn-primary">Start Free Trial</a>
+                <a href="https://github.com/duet-company/duet-company.github.io" class="btn-secondary">View on GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🤖</div>
+                    <h3>Autonomous Operations</h3>
+                    <p>AI agents handle 90% of routine infrastructure tasks. Self-healing, auto-scaling, and intelligent optimization.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Natural Language Queries</h3>
+                    <p>Ask questions in plain English. No SQL expertise required. Get answers in seconds.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h3>Real-Time Analytics</h3>
+                    <p>Sub-second queries on petabytes of data. Real-time dashboards and instant insights.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💰</div>
+                    <h3>Cost Efficient</h3>
+                    <p>300% better compression. 2x-100x faster queries. Pay only for what you use.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Enterprise Security</h3>
+                    <p>Built on open source. No vendor lock-in. Full data sovereignty and compliance.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Self-Healing</h3>
+                    <p>Problems detected and fixed automatically. Zero downtime, no manual intervention.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">90%</div>
+                    <div class="stat-label">Faster Setup</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">10x</div>
+                    <div class="stat-label">Cost Reduction</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">2-100x</div>
+                    <div class="stat-label">Query Speed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">24/7</div>
+                    <div class="stat-label">AI Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to simplify your data infrastructure?</h2>
+            <p>Start your 14-day free trial. No credit card required.</p>
+            <a href="#contact" class="btn-primary">Contact Sales</a>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <p>&copy; 2026 Duet Company</p>
+            <a href="https://github.com/duet-company">GitHub</a>
+            <a href="mailto:hello@aidatalabs.ai">Contact</a>
+        </div>
+    </footer>
+</body>
+</html>
