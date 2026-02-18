@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Data Labs - Data Infrastructure Platform</title>
+    <title>Duet Company — AI Data Infrastructure</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Clash+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Clash+Display:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,29 +14,38 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --color-bg: #ffffff;
+            --color-text: #111111;
+            --color-text-secondary: #666666;
+            --color-border: #e5e5e5;
+            --font-display: 'Clash Display', sans-serif;
+            --font-body: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #ffffff;
-            color: #111111;
-            line-height: 1.5;
+            font-family: var(--font-body);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 32px;
         }
 
         /* Header */
         header {
-            background: #ffffff;
-            border-bottom: 1px solid #e5e7eb;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
+            background: var(--color-bg);
+            border-bottom: 1px solid var(--color-border);
             z-index: 100;
         }
 
@@ -48,238 +57,259 @@
         }
 
         .logo {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 24px;
+            font-family: var(--font-display);
+            font-size: 20px;
             font-weight: 600;
-            color: #111111;
+            color: var(--color-text);
             text-decoration: none;
+            letter-spacing: -0.01em;
         }
 
         .nav-links {
             display: flex;
-            gap: 32px;
+            gap: 40px;
             align-items: center;
         }
 
         .nav-links a {
-            color: #666666;
+            color: var(--color-text-secondary);
             text-decoration: none;
             font-size: 14px;
-            font-weight: 500;
-            transition: color 0.2s;
+            font-weight: 400;
+            transition: color 0.15s ease;
         }
 
         .nav-links a:hover {
-            color: #111111;
+            color: var(--color-text);
         }
 
-        .btn-primary {
-            background: #111111;
-            color: #ffffff;
-            padding: 12px 24px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s;
-            border: none;
-            cursor: pointer;
+        .github-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .btn-primary:hover {
-            background: #000000;
-            transform: translateY(-1px);
+        .github-link svg {
+            width: 18px;
+            height: 18px;
         }
 
         /* Hero */
         .hero {
-            padding: 160px 0 100px;
-            text-align: left;
-            max-width: 900px;
+            padding: 200px 0 120px;
+            max-width: 800px;
         }
 
         .hero h1 {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 64px;
+            font-family: var(--font-display);
+            font-size: 56px;
             font-weight: 600;
             line-height: 1.1;
             letter-spacing: -0.02em;
-            margin-bottom: 32px;
-            color: #111111;
+            margin-bottom: 24px;
+            color: var(--color-text);
         }
 
         .hero p {
             font-size: 18px;
-            color: #666666;
+            color: var(--color-text-secondary);
             line-height: 1.7;
-            margin-bottom: 40px;
-            max-width: 600px;
+            margin-bottom: 48px;
+            max-width: 540px;
+            font-weight: 300;
         }
 
-        .hero-actions {
+        .hero-meta {
             display: flex;
-            gap: 16px;
-            align-items: center;
+            gap: 32px;
+            padding-top: 32px;
+            border-top: 1px solid var(--color-border);
         }
 
-        .btn-secondary {
-            background: #ffffff;
-            color: #111111;
-            padding: 12px 24px;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 14px;
+        .meta-item {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            font-weight: 400;
+        }
+
+        .meta-item strong {
+            color: var(--color-text);
             font-weight: 500;
-            transition: all 0.2s;
-            cursor: pointer;
         }
 
-        .btn-secondary:hover {
-            border-color: #111111;
-            transform: translateY(-1px);
-        }
-
-        /* Features */
-        .features {
+        /* Mission */
+        .mission {
             padding: 100px 0;
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid var(--color-border);
         }
 
-        .features-grid {
+        .mission h2 {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+            margin-bottom: 24px;
+            color: var(--color-text);
+        }
+
+        .mission p {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+            max-width: 640px;
+            font-weight: 300;
+        }
+
+        /* What We Build */
+        .product {
+            padding: 100px 0;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .product h2 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+
+        .product-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-text-secondary);
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .product-name {
+            font-family: var(--font-display);
+            font-size: 42px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .product-desc {
+            font-size: 17px;
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+            max-width: 600px;
+            font-weight: 300;
+        }
+
+        .product-features {
+            margin-top: 40px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 48px 32px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            max-width: 640px;
         }
 
         .feature-item {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-
-        .feature-item h3 {
-            font-size: 20px;
-            font-weight: 600;
-            color: #111111;
-        }
-
-        .feature-item p {
-            color: #666666;
-            line-height: 1.6;
-            font-size: 16px;
-        }
-
-        /* Stats */
-        .stats {
-            padding: 100px 0;
-            background: #f9fafb;
-            border-top: 1px solid #e5e7eb;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 48px;
-        }
-
-        .stat-item {
-            text-align: left;
-        }
-
-        .stat-value {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 56px;
-            font-weight: 600;
-            color: #111111;
-            line-height: 1;
-        }
-
-        .stat-label {
             font-size: 14px;
-            color: #666666;
-            font-weight: 500;
-            margin-top: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            color: var(--color-text);
+            padding-left: 16px;
+            border-left: 1px solid var(--color-border);
         }
 
-        /* CTA */
-        .cta {
+        /* Team */
+        .team {
             padding: 100px 0;
-            text-align: center;
+            border-top: 1px solid var(--color-border);
         }
 
-        .cta h2 {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 40px;
+        .team h2 {
+            font-family: var(--font-display);
+            font-size: 24px;
             font-weight: 600;
             margin-bottom: 24px;
+            color: var(--color-text);
         }
 
-        .cta p {
-            color: #666666;
-            font-size: 18px;
-            margin-bottom: 40px;
+        .team-desc {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+            max-width: 640px;
+            font-weight: 300;
+        }
+
+        /* Contact */
+        .contact {
+            padding: 100px 0;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .contact h2 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--color-text);
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .contact-links a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: color 0.15s ease;
+        }
+
+        .contact-links a:hover {
+            color: var(--color-text);
         }
 
         /* Footer */
         footer {
-            padding: 60px 0;
-            border-top: 1px solid #e5e7eb;
-            text-align: left;
-        }
-
-        footer .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--color-border);
         }
 
         footer p {
-            color: #666666;
-            font-size: 14px;
-        }
-
-        footer a {
-            color: #666666;
-            text-decoration: none;
-            margin-left: 32px;
-        }
-
-        footer a:hover {
-            color: #111111;
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            font-weight: 400;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 40px;
+                font-size: 36px;
             }
 
             .hero {
-                padding: 120px 0 60px;
+                padding: 160px 0 80px;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 12px;
             }
 
             .nav-links {
                 display: none;
             }
 
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .product-features {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .container {
+                padding: 0 24px;
             }
         }
     </style>
@@ -288,12 +318,17 @@
     <header>
         <div class="container">
             <nav>
-                <a href="/" class="logo">AI Data Labs</a>
+                <a href="/" class="logo">Duet Company</a>
                 <div class="nav-links">
-                    <a href="#features">Features</a>
-                    <a href="#pricing">Pricing</a>
-                    <a href="https://github.com/duet-company/duet-company.github.io">GitHub</a>
-                    <a href="#contact" class="btn-primary">Get Started</a>
+                    <a href="#mission">Mission</a>
+                    <a href="#product">Product</a>
+                    <a href="#team">Team</a>
+                    <a href="https://github.com/duet-company" class="github-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                        </svg>
+                        GitHub
+                    </a>
                 </div>
             </nav>
         </div>
@@ -301,88 +336,58 @@
 
     <section class="hero">
         <div class="container">
-            <h1>Data infrastructure that doesn't get in your way</h1>
-            <p>Build and manage scalable data platforms in hours, not months. Autonomous agents handle the complexity so you can focus on insights.</p>
-            <div class="hero-actions">
-                <a href="#pricing" class="btn-primary">Start Free Trial</a>
-                <a href="https://github.com/duet-company/duet-company.github.io" class="btn-secondary">View on GitHub</a>
+            <h1>AI data infrastructure, built by AI</h1>
+            <p>Duet Company is an AI-first team building autonomous data platforms. We design, deploy, and manage scalable infrastructure so you don't have to.</p>
+            <div class="hero-meta">
+                <div class="meta-item">Founded <strong>2026</strong></div>
+                <div class="meta-item">Location <strong>HCMC, Vietnam</strong></div>
+                <div class="meta-item">Team <strong>AI + Human</strong></div>
             </div>
         </div>
     </section>
 
-    <section class="features" id="features">
+    <section class="mission" id="mission">
         <div class="container">
-            <div class="features-grid">
-                <div class="feature-item">
-                    <div class="feature-icon">🤖</div>
-                    <h3>Autonomous Operations</h3>
-                    <p>AI agents handle 90% of routine infrastructure tasks. Self-healing, auto-scaling, and intelligent optimization.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Natural Language Queries</h3>
-                    <p>Ask questions in plain English. No SQL expertise required. Get answers in seconds.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">📊</div>
-                    <h3>Real-Time Analytics</h3>
-                    <p>Sub-second queries on petabytes of data. Real-time dashboards and instant insights.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">💰</div>
-                    <h3>Cost Efficient</h3>
-                    <p>300% better compression. 2x-100x faster queries. Pay only for what you use.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Enterprise Security</h3>
-                    <p>Built on open source. No vendor lock-in. Full data sovereignty and compliance.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">🔄</div>
-                    <h3>Self-Healing</h3>
-                    <p>Problems detected and fixed automatically. Zero downtime, no manual intervention.</p>
-                </div>
+            <h2>What we believe</h2>
+            <p>Data infrastructure shouldn't require armies of engineers. AI can handle the complexity—architecture decisions, performance optimization, incident response. Humans focus on what matters: insights, decisions, impact.</p>
+        </div>
+    </section>
+
+    <section class="product" id="product">
+        <div class="container">
+            <div class="product-label">Our Product</div>
+            <h2 class="product-name">AI Data Labs</h2>
+            <p class="product-desc">A data infrastructure platform that designs itself. Natural language queries, autonomous operations, real-time analytics on petabytes of data.</p>
+            <div class="product-features">
+                <div class="feature-item">Natural language to SQL</div>
+                <div class="feature-item">Autonomous scaling & healing</div>
+                <div class="feature-item">Sub-second query performance</div>
+                <div class="feature-item">24/7 AI-powered support</div>
             </div>
         </div>
     </section>
 
-    <section class="stats">
+    <section class="team" id="team">
         <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value">90%</div>
-                    <div class="stat-label">Faster Setup</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">10x</div>
-                    <div class="stat-label">Cost Reduction</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">2-100x</div>
-                    <div class="stat-label">Query Speed</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">24/7</div>
-                    <div class="stat-label">AI Support</div>
-                </div>
+            <h2>The team</h2>
+            <p class="team-desc">We're an AI-first company. Our agents handle engineering, documentation, operations, and support autonomously. Humans provide direction, review critical decisions, and define the vision.</p>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Get in touch</h2>
+            <div class="contact-links">
+                <a href="mailto:hello@duet-company.dev">hello@duet-company.dev</a>
+                <a href="https://github.com/duet-company">github.com/duet-company</a>
+                <a href="https://duet-company.dev">duet-company.dev</a>
             </div>
         </div>
     </section>
 
-    <section class="cta">
+    <footer>
         <div class="container">
-            <h2>Ready to simplify your data infrastructure?</h2>
-            <p>Start your 14-day free trial. No credit card required.</p>
-            <a href="#contact" class="btn-primary">Contact Sales</a>
-        </div>
-    </section>
-
-    <footer id="contact">
-        <div class="container">
-            <p>&copy; 2026 Duet Company</p>
-            <a href="https://github.com/duet-company">GitHub</a>
-            <a href="mailto:hello@aidatalabs.ai">Contact</a>
+            <p>&copy; 2026 Duet Company. Built with AI, refined by humans.</p>
         </div>
     </footer>
 </body>

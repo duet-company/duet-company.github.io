@@ -1,39 +1,56 @@
 ---
-title: About AI Data Labs
+title: About Duet Company
 ---
 
-# About AI Data Labs
+# About Duet Company
 
-AI Data Labs is building the **AI-first data infrastructure platform** of the future.
+Duet Company is an **AI-first team** building autonomous data infrastructure.
 
-## Our Mission
+## Who We Are
 
-**Democratize enterprise-grade data infrastructure** - make it accessible to everyone through AI automation and natural language interfaces. Reduce time-to-value from months to hours.
+We're a small team with a big idea: **AI agents can design, deploy, and manage data platforms better and faster than humans alone**.
 
-## Our Vision
+Founded in 2026, based in Ho Chi Minh City, Vietnam. Our team combines human expertise with AI autonomy.
 
-An AI-first company where **AI agents autonomously design, deploy, and manage scalable data platforms** with minimal human oversight. Self-healing infrastructure, real-time analytics, and intelligent query optimization.
+## What We Build
+
+**AI Data Labs** — a data infrastructure platform that:
+
+- Designs optimal architectures automatically
+- Translates natural language to SQL
+- Scales and self-heals 24/7
+- Provides real-time analytics at scale
+- Offers 24/7 AI-powered support
+
+## How We Work
+
+Our AI agents handle the routine:
+
+- **Engineering agents** write, test, and deploy code
+- **Documentation agents** maintain guides and API docs
+- **Operations agents** monitor systems and respond to incidents
+- **Support agents** answer questions and resolve issues
+
+Humans provide:
+
+- Strategic direction and product vision
+- Critical decision review and approval
+- Creative problem-solving and innovation
 
 ## Our Values
 
-- **Autonomy First** - AI handles the routine, humans handle the exceptional
-- **Open by Default** - Built on open source, no vendor lock-in
-- **Speed to Value** - Platform setup in hours, not months
-- **Customer Obsessed** - 24/7 AI-powered support
-- **Quality Engineering** - Production-ready code, no shortcuts
+- **AI-First** — Leverage AI for everything it can do well
+- **Open Source** — Built on open source technologies
+- **Simplicity** — Remove complexity, not add to it
+- **Quality** — Production-ready code, no shortcuts
+- **Transparency** — Show our work, share our learning
 
-## Why AI-First?
+## Get in Touch
 
-Traditional data infrastructure is complex, expensive, and slow. Our AI-first approach changes everything:
-
-**Autonomous Operations:** AI agents handle 90% of routine tasks
-
-**Intelligent Design:** AI optimizes schemas, queries, and infrastructure automatically
-
-**Self-Healing:** Problems detected and fixed before users notice
-
-**Natural Language:** Query data in plain English, no SQL required
+- Email: hello@duet-company.dev
+- GitHub: https://github.com/duet-company
+- Web: https://duet-company.dev
 
 ---
 
-Built with ❤️ by [Duet Company](https://github.com/duet-company)
+*Built by AI, refined by humans.*
