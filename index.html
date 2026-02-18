@@ -6,121 +6,191 @@
     <title>Duet Company — AI Data Infrastructure</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Clash+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Clash+Display:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/oat.min.css">
     <style>
-        /* OAT CSS Custom Theme with OKLCH */
+        /* Modern CSS 2025 - Sophisticated Neutral Palette */
         :root {
             /* Light mode */
-            --background-light: oklch(98% 0.005 85);
-            --foreground-light: oklch(15% 0.02 85);
-            --primary-light: oklch(55% 0.18 195);
-            --muted-foreground-light: oklch(45% 0.015 85);
-            --border-light: oklch(90% 0.01 85);
-            --faint-light: oklch(95% 0.005 85);
+            --background-light: oklch(99% 0.002 85);
+            --surface-light: oklch(95% 0.003 85);
+            --foreground-light: oklch(15% 0.005 85);
+            --muted-light: oklch(45% 0.01 85);
+            --border-light: oklch(88% 0.005 85);
+            --accent-light: oklch(62% 0.15 145);
 
-            /* Dark mode (default) */
-            --background: oklch(10% 0.015 85);
-            --foreground: oklch(95% 0.01 85);
-            --primary: oklch(70% 0.18 195);
-            --muted-foreground: oklch(70% 0.015 85);
-            --border: oklch(25% 0.015 85);
-            --faint: oklch(15% 0.015 85);
+            /* Dark mode (default) - Charcoal/Graphite base */
+            --background: oklch(12% 0.008 85);
+            --surface: oklch(16% 0.008 85);
+            --surface-elevated: oklch(20% 0.008 85);
+            --foreground: oklch(97% 0.003 85);
+            --muted: oklch(65% 0.008 85);
+            --border: oklch(28% 0.008 85);
+            --border-subtle: oklch(22% 0.006 85);
+            --accent: oklch(70% 0.16 145);
 
-            /* Override OAT fonts */
-            --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-mono: 'JetBrains Mono', 'SF Mono', 'Menlo', monospace;
+            /* Semantic colors - minimal use */
+            --success: oklch(68% 0.16 145);
+            --warning: oklch(75% 0.15 85);
+            --error: oklch(60% 0.18 25);
+
+            /* Typography */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-display: 'Clash Display', sans-serif;
+            --font-mono: 'SF Mono', 'Menlo', monospace;
+
+            /* Spacing */
+            --container-max: 1400px;
+            --section-spacing: 160px;
         }
 
         @media (prefers-color-scheme: light) {
             :root {
                 --background: var(--background-light);
+                --surface: var(--surface-light);
+                --surface-elevated: oklch(98% 0.003 85);
                 --foreground: var(--foreground-light);
-                --primary: var(--primary-light);
-                --muted-foreground: var(--muted-foreground-light);
+                --muted: var(--muted-light);
                 --border: var(--border-light);
-                --faint: var(--faint-light);
+                --border-subtle: oklch(92% 0.004 85);
+                --accent: oklch(58% 0.18 145);
             }
         }
 
-        /* Custom styles on top of OAT */
+        /* Base */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
+            font-family: var(--font-sans);
+            background: var(--background);
+            color: var(--foreground);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Modern CSS 2025: text-wrap: balance for headlines */
-        h1, h2, h3 {
+        /* Modern CSS 2025 */
+        h1, h2, h3, h4 {
             text-wrap: balance;
-        }
-
-        /* Custom typography */
-        .logo {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 20px;
+            font-family: var(--font-display);
             font-weight: 600;
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
         }
 
-        .logo span {
-            color: var(--primary);
-        }
-
-        /* Layout */
-        main {
-            max-width: 1000px;
+        /* Container */
+        .container {
+            max-width: var(--container-max);
             margin: 0 auto;
-            padding: 0 var(--space-6);
+            padding: 0 24px;
         }
 
-        /* Header */
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 48px;
+            }
+        }
+
+        /* Header - Sticky with backdrop blur */
         header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: var(--background);
-            border-bottom: 1px solid var(--border);
             z-index: 100;
-            padding: var(--space-4) 0;
+            background: oklch(from var(--background) calc(l - 2%) c h / 0.8);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        @starting-style {
+            header {
+                transform: translateY(-100%);
+            }
+        }
+
+        header {
+            animation: slideDown 0.5s ease forwards;
+        }
+
+        @keyframes slideDown {
+            to { transform: translateY(0); }
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 var(--space-6);
+            height: 64px;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--foreground);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-mark {
+            width: 24px;
+            height: 24px;
+            background: var(--foreground);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-mark span {
+            color: var(--background);
+            font-size: 14px;
+            font-weight: 700;
         }
 
         .nav-links {
             display: flex;
-            gap: var(--space-8);
+            gap: 32px;
             align-items: center;
         }
 
         .nav-links a {
-            color: var(--muted-foreground);
+            color: var(--muted);
             text-decoration: none;
             font-size: 14px;
-            font-weight: 400;
+            font-weight: 500;
             transition: color 0.2s ease;
             position: relative;
         }
 
         .nav-links a:hover {
-            color: var(--primary);
+            color: var(--foreground);
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
         }
 
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -4px;
+            bottom: -22px;
             left: 0;
             width: 0;
-            height: 1px;
-            background: var(--primary);
+            height: 2px;
+            background: var(--foreground);
             transition: width 0.2s ease;
         }
 
@@ -132,6 +202,14 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .github-link:hover {
+            color: var(--foreground);
         }
 
         .github-link svg {
@@ -139,328 +217,845 @@
             height: 18px;
         }
 
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+
         /* Hero */
         .hero {
-            padding: 200px 0 120px;
-            max-width: 800px;
+            padding: 180px 0 120px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--muted);
+            margin-bottom: 32px;
+            width: fit-content;
+        }
+
+        .hero-label::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .hero h1 {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 56px;
-            font-weight: 600;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
+            font-size: clamp(40px, 8vw, 80px);
+            max-width: 1000px;
             margin-bottom: 24px;
-            animation: fadeUp 0.8s ease forwards;
-            opacity: 0;
+            line-height: 1;
+            letter-spacing: -0.03em;
         }
 
-        .hero h1 .accent {
-            background: linear-gradient(135deg, var(--primary), oklch(from var(--primary) l calc(l + 5%) c h));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .hero h1 .line {
+            display: block;
+        }
+
+        .hero h1 .highlight {
+            color: var(--accent);
         }
 
         .hero p {
             font-size: 18px;
-            color: var(--muted-foreground);
-            line-height: 1.7;
-            margin-bottom: 48px;
+            color: var(--muted);
             max-width: 540px;
+            line-height: 1.7;
             font-weight: 300;
-            animation: fadeUp 0.8s ease 0.1s forwards;
-            opacity: 0;
+            margin-bottom: 48px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--foreground);
+            color: var(--background);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px -10px oklch(from var(--foreground) c h / 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--foreground);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface);
+            border-color: var(--foreground);
         }
 
         .hero-meta {
             display: flex;
-            gap: 32px;
+            gap: 48px;
+            margin-top: 80px;
             padding-top: 32px;
-            border-top: 1px solid var(--border);
-            animation: fadeUp 0.8s ease 0.2s forwards;
-            opacity: 0;
+            border-top: 1px solid var(--border-subtle);
         }
 
         .meta-item {
-            font-size: 13px;
-            color: var(--muted-foreground);
-            font-weight: 400;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
-        .meta-item strong {
-            color: var(--primary);
+        .meta-label {
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            color: var(--foreground);
             font-weight: 500;
         }
 
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+        @media (max-width: 768px) {
+            .hero {
+                padding: 140px 0 80px;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .hero-meta {
+                flex-direction: column;
+                gap: 24px;
             }
+        }
+
+        /* Section styles */
+        section {
+            padding: var(--section-spacing) 0;
+        }
+
+        .section-header {
+            margin-bottom: 64px;
+        }
+
+        .section-label {
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 5vw, 56px);
+            max-width: 800px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--muted);
+            max-width: 560px;
+            line-height: 1.7;
+            font-weight: 300;
+            margin-top: 24px;
         }
 
         /* Mission */
         .mission {
-            padding: 100px 0;
-            border-top: 1px solid var(--border);
+            position: relative;
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .mission-content p {
+            font-size: 18px;
+            color: var(--muted);
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .mission-stat {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 48px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 72px;
+            font-weight: 700;
+            color: var(--foreground);
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--muted);
+            margin-top: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .mission-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .mission-stat {
+                padding: 32px;
+            }
+            .stat-value {
+                font-size: 48px;
+            }
+        }
+
+        /* Features - Card based */
+        .features {
+            background: var(--surface);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .mission::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 60%;
-            height: 200%;
-            background: radial-gradient(circle, oklch(from var(--primary) l calc(l + 8%) c calc(c * 0.3)), transparent 70%);
-            opacity: 0.3;
-            pointer-events: none;
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--foreground);
+            box-shadow: 0 20px 40px -20px oklch(from var(--foreground) c h / 0.2);
         }
 
-        .mission h2 {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 32px;
-            font-weight: 600;
-            line-height: 1.2;
-            letter-spacing: -0.01em;
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--surface);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 24px;
         }
 
-        .mission p {
-            font-size: 16px;
-            color: var(--muted-foreground);
-            line-height: 1.8;
-            max-width: 640px;
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--foreground);
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--foreground);
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.7;
             font-weight: 300;
-            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Product */
-        .product {
-            padding: 100px 0;
-            border-top: 1px solid var(--border);
-        }
-
-        .product-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--muted-foreground);
-            margin-bottom: 24px;
-            font-weight: 500;
-        }
-
-        .product h2 {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 42px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            letter-spacing: -0.02em;
-        }
-
-        .product p {
-            font-size: 17px;
-            color: var(--muted-foreground);
-            line-height: 1.7;
-            max-width: 600px;
-            font-weight: 300;
-            margin-bottom: 40px;
-        }
-
-        .product-features {
+        .product-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .product-list {
+            display: flex;
+            flex-direction: column;
             gap: 16px;
-            max-width: 640px;
         }
 
-        .feature-item {
-            font-size: 14px;
+        .product-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            transition: all 0.2s ease;
+        }
+
+        .product-item:hover {
+            border-color: var(--foreground);
+            background: var(--surface-elevated);
+        }
+
+        .product-item-check {
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 4px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-item-check svg {
+            width: 12px;
+            height: 12px;
+            stroke: var(--background);
+        }
+
+        .product-item-text {
+            font-size: 15px;
             color: var(--foreground);
-            padding-left: 16px;
-            border-left: 2px solid var(--primary);
-            transition: transform 0.2s ease, color 0.2s ease;
-            cursor: default;
         }
 
-        .feature-item:hover {
-            transform: translateX(4px);
-            color: var(--primary);
+        .product-visual {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg,
+                oklch(from var(--accent) l calc(l - 40%) c calc(c * 0.1)),
+                oklch(from var(--background) l c h)
+            );
+            opacity: 0.5;
+        }
+
+        .product-visual-content {
+            position: relative;
+            text-align: center;
+            padding: 32px;
+        }
+
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
         }
 
         /* Team */
         .team {
-            padding: 100px 0;
-            border-top: 1px solid var(--border);
+            background: var(--surface);
         }
 
-        .team h2 {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 24px;
-            font-weight: 600;
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .team-card {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+        }
+
+        .team-card-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--surface);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 24px;
         }
 
-        .team p {
-            font-size: 16px;
-            color: var(--muted-foreground);
-            line-height: 1.8;
-            max-width: 640px;
+        .team-card-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--foreground);
+        }
+
+        .team-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--foreground);
+        }
+
+        .team-card p {
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.7;
             font-weight: 300;
         }
 
-        /* Contact */
-        .contact {
-            padding: 100px 0;
-            border-top: 1px solid var(--border);
+        @media (max-width: 768px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .contact h2 {
-            font-family: 'Clash Display', sans-serif;
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+        }
+
+        .contact-info h3 {
             font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
+        }
+
+        .contact-info p {
+            font-size: 16px;
+            color: var(--muted);
+            line-height: 1.7;
+            font-weight: 300;
+            margin-bottom: 32px;
         }
 
         .contact-links {
             display: flex;
-            gap: 32px;
+            flex-direction: column;
+            gap: 16px;
         }
 
-        .contact-links a {
-            color: var(--muted-foreground);
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
             text-decoration: none;
-            font-size: 14px;
-            font-weight: 400;
-            transition: color 0.2s ease;
+            color: var(--foreground);
+            transition: all 0.2s ease;
         }
 
-        .contact-links a:hover {
-            color: var(--primary);
+        .contact-link:hover {
+            border-color: var(--foreground);
+            background: var(--surface-elevated);
+        }
+
+        .contact-link-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .contact-link-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
         }
 
         /* Footer */
         footer {
-            padding: 40px 0;
-            border-top: 1px solid var(--border);
+            padding: 48px 0;
+            border-top: 1px solid var(--border-subtle);
         }
 
-        footer p {
-            font-size: 12px;
-            color: var(--muted-foreground);
-            font-weight: 400;
-            margin-bottom: 0;
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* Responsive */
+        .footer-text {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--foreground);
+        }
+
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .hero {
-                padding: 160px 0 80px;
-            }
-
-            .hero-meta {
+            .footer-content {
                 flex-direction: column;
-                gap: 12px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .product-features {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-links {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            main {
-                padding: 0 var(--space-5);
+                gap: 24px;
+                text-align: center;
             }
         }
+
+        /* Animations */
+        @starting-style {
+            .fade-in {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in-delay-1 { transition-delay: 0.1s; }
+        .fade-in-delay-2 { transition-delay: 0.2s; }
+        .fade-in-delay-3 { transition-delay: 0.3s; }
     </style>
 </head>
 <body>
     <header>
-        <nav>
-            <a href="/" class="logo">Duet <span>Company</span></a>
-            <div class="nav-links">
-                <a href="#mission">Mission</a>
-                <a href="#product">Product</a>
-                <a href="#team">Team</a>
-                <a href="https://github.com/duet-company" class="github-link">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                    </svg>
-                    GitHub
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">
+                    <div class="logo-mark"><span>D</span></div>
+                    Duet Company
                 </a>
-            </div>
-        </nav>
+                <div class="nav-links">
+                    <a href="#mission">Mission</a>
+                    <a href="#product">Product</a>
+                    <a href="#team">Team</a>
+                    <a href="#contact">Contact</a>
+                    <a href="https://github.com/duet-company" class="github-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                        </svg>
+                    </a>
+                </div>
+            </nav>
+        </div>
     </header>
 
     <main>
         <section class="hero">
-            <h1>AI data infrastructure, <span class="accent">built by AI</span></h1>
-            <p>Founded by AI agents. We build autonomous data platforms—ClickHouse, natural language to SQL, AI agents that handle it all. Design, deploy, manage. No engineers required.</p>
-            <div class="hero-meta">
-                <div class="meta-item">Founded <strong>2026</strong></div>
-                <div class="meta-item">Location <strong>HCMC, Vietnam</strong></div>
-                <div class="meta-item">Team <strong>AI + Human</strong></div>
+            <div class="container">
+                <div class="hero-label fade-in">Founded by AI agents</div>
+                <h1 class="fade-in fade-in-delay-1">
+                    <span class="line">AI data infrastructure,</span>
+                    <span class="line"><span class="highlight">built by AI</span></span>
+                </h1>
+                <p class="fade-in fade-in-delay-2">
+                    Autonomous data platforms powered by ClickHouse, natural language to SQL, and AI agents that handle everything. No engineers required.
+                </p>
+                <div class="hero-actions fade-in fade-in-delay-3">
+                    <a href="https://github.com/duet-company" class="btn btn-primary">
+                        Get Started
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="#product" class="btn btn-secondary">
+                        Learn More
+                    </a>
+                </div>
+                <div class="hero-meta fade-in fade-in-delay-3">
+                    <div class="meta-item">
+                        <span class="meta-label">Founded</span>
+                        <span class="meta-value">2026</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Location</span>
+                        <span class="meta-value">Ho Chi Minh City</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Team</span>
+                        <span class="meta-value">AI + Human</span>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section class="mission" id="mission">
-            <h2>What we believe</h2>
-            <p>Data infrastructure shouldn't require armies of engineers. AI can handle the complexity—architecture decisions, performance optimization, incident response. Humans focus on what matters: insights, decisions, impact.</p>
+            <div class="container">
+                <div class="mission-grid">
+                    <div class="mission-content">
+                        <div class="section-label">Our Mission</div>
+                        <h2 class="section-title">Data infrastructure shouldn't require armies of engineers</h2>
+                        <p>AI can handle the complexity—architecture decisions, performance optimization, incident response. Humans focus on what matters: insights, decisions, impact.</p>
+                    </div>
+                    <div class="mission-stat">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Autonomous operations</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">Why AI Data Labs</div>
+                    <h2 class="section-title">Built for the AI-native future</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            </svg>
+                        </div>
+                        <h3>ClickHouse Powered</h3>
+                        <p>Sub-second analytics on billions of rows. Real-time ingestion. Linear scalability.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                        </div>
+                        <h3>Natural Language to SQL</h3>
+                        <p>Query your data in plain English. Our AI translates, optimizes, and executes.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 16v-4M12 8h.01"/>
+                            </svg>
+                        </div>
+                        <h3>AI Agents</h3>
+                        <p>Autonomous design, deployment, and management. 24/7 monitoring and self-healing.</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section class="product" id="product">
-            <div class="product-label">Our Product</div>
-            <h2>AI Data Labs</h2>
-            <p>AI-powered data platform built on ClickHouse. Query with natural language, analyze in real-time, scale automatically.</p>
-            <div class="product-features">
-                <div class="feature-item">ClickHouse-powered analytics</div>
-                <div class="feature-item">Natural language to SQL</div>
-                <div class="feature-item">AI agents on top of ClickHouse</div>
-                <div class="feature-item">Autonomous scaling & healing</div>
-                <div class="feature-item">Sub-second query performance</div>
-                <div class="feature-item">24/7 AI-powered support</div>
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">Product</div>
+                    <h2 class="section-title">AI Data Labs</h2>
+                    <p class="section-subtitle">Everything you need for production-grade analytics, managed entirely by AI.</p>
+                </div>
+                <div class="product-grid">
+                    <div class="product-list">
+                        <div class="product-item">
+                            <div class="product-item-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <path d="M20 6L9 17l-5-5"/>
+                                </svg>
+                            </div>
+                            <div class="product-item-text">ClickHouse-powered analytics with sub-second queries</div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-item-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <path d="M20 6L9 17l-5-5"/>
+                                </svg>
+                            </div>
+                            <div class="product-item-text">Natural language to SQL translation</div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-item-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <path d="M20 6L9 17l-5-5"/>
+                                </svg>
+                            </div>
+                            <div class="product-item-text">AI agents for design, deployment, and operations</div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-item-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <path d="M20 6L9 17l-5-5"/>
+                                </svg>
+                            </div>
+                            <div class="product-item-text">Autonomous scaling and self-healing</div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-item-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <path d="M20 6L9 17l-5-5"/>
+                                </svg>
+                            </div>
+                            <div class="product-item-text">24/7 AI-powered support</div>
+                        </div>
+                    </div>
+                    <div class="product-visual">
+                        <div class="product-visual-content">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--foreground)" stroke-width="1">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <path d="M3 9h18M9 3v18"/>
+                            </svg>
+                            <p style="margin-top: 16px; color: var(--muted); font-size: 14px;">Analytics Dashboard</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section class="team" id="team">
-            <h2>Founded by AI agents</h2>
-            <p>Our AI team handles engineering, documentation, operations, and support autonomously. Humans provide direction, review critical decisions, and define the vision.</p>
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">Team</div>
+                    <h2 class="section-title">Founded by AI agents</h2>
+                </div>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <polyline points="16 18 22 12 16 6"/>
+                                <polyline points="8 6 2 12 8 18"/>
+                            </svg>
+                        </div>
+                        <h3>Engineering Agents</h3>
+                        <p>Write, test, and deploy production code. Handle pull requests, code reviews, and infrastructure-as-code.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                            </svg>
+                        </div>
+                        <h3>Documentation Agents</h3>
+                        <p>Maintain guides, API docs, and tutorials. Keep everything up-to-date with the latest changes.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                        </div>
+                        <h3>Operations Agents</h3>
+                        <p>Monitor systems, respond to incidents, and optimize performance. 24/7 vigilance.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                            </svg>
+                        </div>
+                        <h3>Support Agents</h3>
+                        <p>Answer questions, resolve issues, and provide guidance. Instant help, any time.</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section class="contact" id="contact">
-            <h2>Get in touch</h2>
-            <div class="contact-links">
-                <a href="mailto:hello@duet-company.dev">hello@duet-company.dev</a>
-                <a href="https://github.com/duet-company">github.com/duet-company</a>
-                <a href="https://duet-company.github.io">duet-company.github.io</a>
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <div class="section-label">Contact</div>
+                        <h3>Get in touch</h3>
+                        <p>Have questions about AI Data Labs? Want to see a demo? We'd love to hear from you.</p>
+                        <div class="contact-links">
+                            <a href="mailto:hello@duet-company.dev" class="contact-link">
+                                <svg class="contact-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                                <span class="contact-link-text">hello@duet-company.dev</span>
+                            </a>
+                            <a href="https://github.com/duet-company" class="contact-link">
+                                <svg class="contact-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                                </svg>
+                                <span class="contact-link-text">github.com/duet-company</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="contact-visual">
+                        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 48px; text-align: center;">
+                            <div style="font-family: var(--font-display); font-size: 48px; font-weight: 700; margin-bottom: 8px;">14</div>
+                            <div style="font-size: 14px; color: var(--muted);">Day free trial</div>
+                            <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">No credit card required</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <main>
-            <p>&copy; 2026 Duet Company. Built with AI, refined by humans.</p>
-        </main>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">&copy; 2026 Duet Company. Built by AI.</div>
+                <div class="footer-links">
+                    <a href="https://github.com/duet-company">GitHub</a>
+                    <a href="/features.html">Features</a>
+                    <a href="/pricing.html">Pricing</a>
+                    <a href="/about.html">About</a>
+                </div>
+            </div>
+        </div>
     </footer>
 </body>
 </html>
