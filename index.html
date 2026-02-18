@@ -14,13 +14,37 @@
             box-sizing: border-box;
         }
 
+        /* Modern CSS 2025: OKLCH color system */
         :root {
-            --color-bg: #ffffff;
-            --color-text: #111111;
-            --color-text-secondary: #666666;
-            --color-border: #e5e5e5;
+            color-scheme: dark;
+
+            /* Light mode colors */
+            --color-bg-light: oklch(98% 0.005 85);
+            --color-text-light: oklch(15% 0.02 85);
+            --color-text-secondary-light: oklch(45% 0.015 85);
+            --color-border-light: oklch(90% 0.01 85);
+            --color-accent-light: oklch(55% 0.18 195);
+
+            /* Dark mode colors (default) */
+            --color-bg: oklch(10% 0.015 85);
+            --color-text: oklch(95% 0.01 85);
+            --color-text-secondary: oklch(70% 0.015 85);
+            --color-border: oklch(25% 0.015 85);
+            --color-accent: oklch(70% 0.18 195);
+
             --font-display: 'Clash Display', sans-serif;
             --font-body: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', 'Menlo', monospace;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --color-bg: var(--color-bg-light);
+                --color-text: var(--color-text-light);
+                --color-text-secondary: var(--color-text-secondary-light);
+                --color-border: var(--color-border-light);
+                --color-accent: var(--color-accent-light);
+            }
         }
 
         body {
@@ -30,6 +54,25 @@
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Modern CSS 2025: text-wrap: balance for headlines */
+        h1, h2, h3 {
+            text-wrap: balance;
+        }
+
+        /* Modern CSS 2025: color-mix() for dynamic colors */
+        .accent-text {
+            color: var(--color-accent);
+        }
+
+        .accent-bg {
+            background: var(--color-accent);
+        }
+
+        .accent-muted {
+            background: oklch(from var(--color-accent) l calc(c * 0.1) h);
         }
 
         .container {
@@ -65,6 +108,10 @@
             letter-spacing: -0.01em;
         }
 
+        .logo span {
+            color: var(--color-accent);
+        }
+
         .nav-links {
             display: flex;
             gap: 40px;
@@ -76,11 +123,27 @@
             text-decoration: none;
             font-size: 14px;
             font-weight: 400;
-            transition: color 0.15s ease;
+            transition: color 0.2s ease;
+            position: relative;
         }
 
         .nav-links a:hover {
-            color: var(--color-text);
+            color: var(--color-accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--color-accent);
+            transition: width 0.2s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .github-link {
@@ -108,6 +171,15 @@
             letter-spacing: -0.02em;
             margin-bottom: 24px;
             color: var(--color-text);
+            animation: fadeUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .hero h1 .accent {
+            background: linear-gradient(135deg, var(--color-accent), oklch(from var(--color-accent) l calc(c + 0.05) h));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero p {
@@ -117,6 +189,19 @@
             margin-bottom: 48px;
             max-width: 540px;
             font-weight: 300;
+            animation: fadeUp 0.8s ease 0.1s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero-meta {
@@ -124,6 +209,13 @@
             gap: 32px;
             padding-top: 32px;
             border-top: 1px solid var(--color-border);
+            animation: fadeUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .meta-item strong {
+            color: var(--color-accent);
+            font-weight: 500;
         }
 
         .meta-item {
@@ -141,6 +233,20 @@
         .mission {
             padding: 100px 0;
             border-top: 1px solid var(--color-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mission::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 60%;
+            height: 200%;
+            background: radial-gradient(circle, oklch(from var(--color-accent) l calc(c * 0.08) h), transparent 70%);
+            opacity: 0.5;
+            pointer-events: none;
         }
 
         .mission h2 {
@@ -159,6 +265,7 @@
             line-height: 1.8;
             max-width: 640px;
             font-weight: 300;
+            position: relative;
         }
 
         /* What We Build */
@@ -212,7 +319,14 @@
             font-size: 14px;
             color: var(--color-text);
             padding-left: 16px;
-            border-left: 1px solid var(--color-border);
+            border-left: 2px solid var(--color-accent);
+            transition: transform 0.2s ease, color 0.2s ease;
+            cursor: default;
+        }
+
+        .feature-item:hover {
+            transform: translateX(4px);
+            color: var(--color-accent);
         }
 
         /* Team */
@@ -318,7 +432,7 @@
     <header>
         <div class="container">
             <nav>
-                <a href="/" class="logo">Duet Company</a>
+                <a href="/" class="logo">Duet <span>Company</span></a>
                 <div class="nav-links">
                     <a href="#mission">Mission</a>
                     <a href="#product">Product</a>
@@ -336,7 +450,7 @@
 
     <section class="hero">
         <div class="container">
-            <h1>AI data infrastructure, built by AI</h1>
+            <h1>AI data infrastructure, <span class="accent">built by AI</span></h1>
             <p>Duet Company is an AI-first team building autonomous data platforms. We design, deploy, and manage scalable infrastructure so you don't have to.</p>
             <div class="hero-meta">
                 <div class="meta-item">Founded <strong>2026</strong></div>
