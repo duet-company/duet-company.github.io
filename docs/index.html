@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,54 +7,46 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Clash+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/oat.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Modern CSS 2025: OKLCH color system */
+        /* OAT CSS Custom Theme with OKLCH */
         :root {
-            color-scheme: dark;
+            /* Light mode */
+            --background-light: oklch(98% 0.005 85);
+            --foreground-light: oklch(15% 0.02 85);
+            --primary-light: oklch(55% 0.18 195);
+            --muted-foreground-light: oklch(45% 0.015 85);
+            --border-light: oklch(90% 0.01 85);
+            --faint-light: oklch(95% 0.005 85);
 
-            /* Light mode colors */
-            --color-bg-light: oklch(98% 0.005 85);
-            --color-text-light: oklch(15% 0.02 85);
-            --color-text-secondary-light: oklch(45% 0.015 85);
-            --color-border-light: oklch(90% 0.01 85);
-            --color-accent-light: oklch(55% 0.18 195);
+            /* Dark mode (default) */
+            --background: oklch(10% 0.015 85);
+            --foreground: oklch(95% 0.01 85);
+            --primary: oklch(70% 0.18 195);
+            --muted-foreground: oklch(70% 0.015 85);
+            --border: oklch(25% 0.015 85);
+            --faint: oklch(15% 0.015 85);
 
-            /* Dark mode colors (default) */
-            --color-bg: oklch(10% 0.015 85);
-            --color-text: oklch(95% 0.01 85);
-            --color-text-secondary: oklch(70% 0.015 85);
-            --color-border: oklch(25% 0.015 85);
-            --color-accent: oklch(70% 0.18 195);
-
-            --font-display: 'Clash Display', sans-serif;
-            --font-body: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+            /* Override OAT fonts */
+            --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-mono: 'JetBrains Mono', 'SF Mono', 'Menlo', monospace;
         }
 
         @media (prefers-color-scheme: light) {
             :root {
-                --color-bg: var(--color-bg-light);
-                --color-text: var(--color-text-light);
-                --color-text-secondary: var(--color-text-secondary-light);
-                --color-border: var(--color-border-light);
-                --color-accent: var(--color-accent-light);
+                --background: var(--background-light);
+                --foreground: var(--foreground-light);
+                --primary: var(--primary-light);
+                --muted-foreground: var(--muted-foreground-light);
+                --border: var(--border-light);
+                --faint: var(--faint-light);
             }
         }
 
+        /* Custom styles on top of OAT */
         body {
-            font-family: var(--font-body);
-            background: var(--color-bg);
-            color: var(--color-text);
-            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            transition: background 0.3s ease, color 0.3s ease;
         }
 
         /* Modern CSS 2025: text-wrap: balance for headlines */
@@ -62,23 +54,23 @@
             text-wrap: balance;
         }
 
-        /* Modern CSS 2025: color-mix() for dynamic colors */
-        .accent-text {
-            color: var(--color-accent);
+        /* Custom typography */
+        .logo {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
         }
 
-        .accent-bg {
-            background: var(--color-accent);
+        .logo span {
+            color: var(--primary);
         }
 
-        .accent-muted {
-            background: oklch(from var(--color-accent) l calc(c * 0.1) h);
-        }
-
-        .container {
+        /* Layout */
+        main {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 0 32px;
+            padding: 0 var(--space-6);
         }
 
         /* Header */
@@ -87,39 +79,29 @@
             top: 0;
             left: 0;
             right: 0;
-            background: var(--color-bg);
-            border-bottom: 1px solid var(--color-border);
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
             z-index: 100;
+            padding: var(--space-4) 0;
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
-        }
-
-        .logo {
-            font-family: var(--font-display);
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--color-text);
-            text-decoration: none;
-            letter-spacing: -0.01em;
-        }
-
-        .logo span {
-            color: var(--color-accent);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
         }
 
         .nav-links {
             display: flex;
-            gap: 40px;
+            gap: var(--space-8);
             align-items: center;
         }
 
         .nav-links a {
-            color: var(--color-text-secondary);
+            color: var(--muted-foreground);
             text-decoration: none;
             font-size: 14px;
             font-weight: 400;
@@ -128,7 +110,7 @@
         }
 
         .nav-links a:hover {
-            color: var(--color-accent);
+            color: var(--primary);
         }
 
         .nav-links a::after {
@@ -138,7 +120,7 @@
             left: 0;
             width: 0;
             height: 1px;
-            background: var(--color-accent);
+            background: var(--primary);
             transition: width 0.2s ease;
         }
 
@@ -164,19 +146,18 @@
         }
 
         .hero h1 {
-            font-family: var(--font-display);
+            font-family: 'Clash Display', sans-serif;
             font-size: 56px;
             font-weight: 600;
             line-height: 1.1;
             letter-spacing: -0.02em;
             margin-bottom: 24px;
-            color: var(--color-text);
             animation: fadeUp 0.8s ease forwards;
             opacity: 0;
         }
 
         .hero h1 .accent {
-            background: linear-gradient(135deg, var(--color-accent), oklch(from var(--color-accent) l calc(c + 0.05) h));
+            background: linear-gradient(135deg, var(--primary), oklch(from var(--primary) l calc(l + 5%) c h));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -184,13 +165,33 @@
 
         .hero p {
             font-size: 18px;
-            color: var(--color-text-secondary);
+            color: var(--muted-foreground);
             line-height: 1.7;
             margin-bottom: 48px;
             max-width: 540px;
             font-weight: 300;
             animation: fadeUp 0.8s ease 0.1s forwards;
             opacity: 0;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 32px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+            animation: fadeUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .meta-item {
+            font-size: 13px;
+            color: var(--muted-foreground);
+            font-weight: 400;
+        }
+
+        .meta-item strong {
+            color: var(--primary);
+            font-weight: 500;
         }
 
         @keyframes fadeUp {
@@ -204,35 +205,10 @@
             }
         }
 
-        .hero-meta {
-            display: flex;
-            gap: 32px;
-            padding-top: 32px;
-            border-top: 1px solid var(--color-border);
-            animation: fadeUp 0.8s ease 0.2s forwards;
-            opacity: 0;
-        }
-
-        .meta-item strong {
-            color: var(--color-accent);
-            font-weight: 500;
-        }
-
-        .meta-item {
-            font-size: 13px;
-            color: var(--color-text-secondary);
-            font-weight: 400;
-        }
-
-        .meta-item strong {
-            color: var(--color-text);
-            font-weight: 500;
-        }
-
         /* Mission */
         .mission {
             padding: 100px 0;
-            border-top: 1px solid var(--color-border);
+            border-top: 1px solid var(--border);
             position: relative;
             overflow: hidden;
         }
@@ -244,71 +220,62 @@
             right: -20%;
             width: 60%;
             height: 200%;
-            background: radial-gradient(circle, oklch(from var(--color-accent) l calc(c * 0.08) h), transparent 70%);
-            opacity: 0.5;
+            background: radial-gradient(circle, oklch(from var(--primary) l calc(l + 8%) c calc(c * 0.3)), transparent 70%);
+            opacity: 0.3;
             pointer-events: none;
         }
 
         .mission h2 {
-            font-family: var(--font-display);
+            font-family: 'Clash Display', sans-serif;
             font-size: 32px;
             font-weight: 600;
             line-height: 1.2;
             letter-spacing: -0.01em;
             margin-bottom: 24px;
-            color: var(--color-text);
         }
 
         .mission p {
             font-size: 16px;
-            color: var(--color-text-secondary);
+            color: var(--muted-foreground);
             line-height: 1.8;
             max-width: 640px;
             font-weight: 300;
             position: relative;
         }
 
-        /* What We Build */
+        /* Product */
         .product {
             padding: 100px 0;
-            border-top: 1px solid var(--color-border);
-        }
-
-        .product h2 {
-            font-family: var(--font-display);
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--color-text);
+            border-top: 1px solid var(--border);
         }
 
         .product-label {
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: var(--color-text-secondary);
+            color: var(--muted-foreground);
             margin-bottom: 24px;
             font-weight: 500;
         }
 
-        .product-name {
-            font-family: var(--font-display);
+        .product h2 {
+            font-family: 'Clash Display', sans-serif;
             font-size: 42px;
             font-weight: 600;
             margin-bottom: 16px;
             letter-spacing: -0.02em;
         }
 
-        .product-desc {
+        .product p {
             font-size: 17px;
-            color: var(--color-text-secondary);
+            color: var(--muted-foreground);
             line-height: 1.7;
             max-width: 600px;
             font-weight: 300;
+            margin-bottom: 40px;
         }
 
         .product-features {
-            margin-top: 40px;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 16px;
@@ -317,35 +284,34 @@
 
         .feature-item {
             font-size: 14px;
-            color: var(--color-text);
+            color: var(--foreground);
             padding-left: 16px;
-            border-left: 2px solid var(--color-accent);
+            border-left: 2px solid var(--primary);
             transition: transform 0.2s ease, color 0.2s ease;
             cursor: default;
         }
 
         .feature-item:hover {
             transform: translateX(4px);
-            color: var(--color-accent);
+            color: var(--primary);
         }
 
         /* Team */
         .team {
             padding: 100px 0;
-            border-top: 1px solid var(--color-border);
+            border-top: 1px solid var(--border);
         }
 
         .team h2 {
-            font-family: var(--font-display);
+            font-family: 'Clash Display', sans-serif;
             font-size: 24px;
             font-weight: 600;
             margin-bottom: 24px;
-            color: var(--color-text);
         }
 
-        .team-desc {
+        .team p {
             font-size: 16px;
-            color: var(--color-text-secondary);
+            color: var(--muted-foreground);
             line-height: 1.8;
             max-width: 640px;
             font-weight: 300;
@@ -354,15 +320,14 @@
         /* Contact */
         .contact {
             padding: 100px 0;
-            border-top: 1px solid var(--color-border);
+            border-top: 1px solid var(--border);
         }
 
         .contact h2 {
-            font-family: var(--font-display);
+            font-family: 'Clash Display', sans-serif;
             font-size: 24px;
             font-weight: 600;
             margin-bottom: 24px;
-            color: var(--color-text);
         }
 
         .contact-links {
@@ -371,27 +336,28 @@
         }
 
         .contact-links a {
-            color: var(--color-text-secondary);
+            color: var(--muted-foreground);
             text-decoration: none;
             font-size: 14px;
             font-weight: 400;
-            transition: color 0.15s ease;
+            transition: color 0.2s ease;
         }
 
         .contact-links a:hover {
-            color: var(--color-text);
+            color: var(--primary);
         }
 
         /* Footer */
         footer {
             padding: 40px 0;
-            border-top: 1px solid var(--color-border);
+            border-top: 1px solid var(--border);
         }
 
         footer p {
             font-size: 12px;
-            color: var(--color-text-secondary);
+            color: var(--muted-foreground);
             font-weight: 400;
+            margin-bottom: 0;
         }
 
         /* Responsive */
@@ -422,34 +388,32 @@
                 gap: 12px;
             }
 
-            .container {
-                padding: 0 24px;
+            main {
+                padding: 0 var(--space-5);
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="container">
-            <nav>
-                <a href="/" class="logo">Duet <span>Company</span></a>
-                <div class="nav-links">
-                    <a href="#mission">Mission</a>
-                    <a href="#product">Product</a>
-                    <a href="#team">Team</a>
-                    <a href="https://github.com/duet-company" class="github-link">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                        </svg>
-                        GitHub
-                    </a>
-                </div>
-            </nav>
-        </div>
+        <nav>
+            <a href="/" class="logo">Duet <span>Company</span></a>
+            <div class="nav-links">
+                <a href="#mission">Mission</a>
+                <a href="#product">Product</a>
+                <a href="#team">Team</a>
+                <a href="https://github.com/duet-company" class="github-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+        </nav>
     </header>
 
-    <section class="hero">
-        <div class="container">
+    <main>
+        <section class="hero">
             <h1>AI data infrastructure, <span class="accent">built by AI</span></h1>
             <p>Duet Company is an AI-first team building autonomous data platforms. We design, deploy, and manage scalable infrastructure so you don't have to.</p>
             <div class="hero-meta">
@@ -457,52 +421,44 @@
                 <div class="meta-item">Location <strong>HCMC, Vietnam</strong></div>
                 <div class="meta-item">Team <strong>AI + Human</strong></div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="mission" id="mission">
-        <div class="container">
+        <section class="mission" id="mission">
             <h2>What we believe</h2>
             <p>Data infrastructure shouldn't require armies of engineers. AI can handle the complexity—architecture decisions, performance optimization, incident response. Humans focus on what matters: insights, decisions, impact.</p>
-        </div>
-    </section>
+        </section>
 
-    <section class="product" id="product">
-        <div class="container">
+        <section class="product" id="product">
             <div class="product-label">Our Product</div>
-            <h2 class="product-name">AI Data Labs</h2>
-            <p class="product-desc">A data infrastructure platform that designs itself. Natural language queries, autonomous operations, real-time analytics on petabytes of data.</p>
+            <h2>AI Data Labs</h2>
+            <p>A data infrastructure platform that designs itself. Natural language queries, autonomous operations, real-time analytics on petabytes of data.</p>
             <div class="product-features">
                 <div class="feature-item">Natural language to SQL</div>
                 <div class="feature-item">Autonomous scaling & healing</div>
                 <div class="feature-item">Sub-second query performance</div>
                 <div class="feature-item">24/7 AI-powered support</div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="team" id="team">
-        <div class="container">
+        <section class="team" id="team">
             <h2>The team</h2>
-            <p class="team-desc">We're an AI-first company. Our agents handle engineering, documentation, operations, and support autonomously. Humans provide direction, review critical decisions, and define the vision.</p>
-        </div>
-    </section>
+            <p>We're an AI-first company. Our agents handle engineering, documentation, operations, and support autonomously. Humans provide direction, review critical decisions, and define the vision.</p>
+        </section>
 
-    <section class="contact" id="contact">
-        <div class="container">
+        <section class="contact" id="contact">
             <h2>Get in touch</h2>
             <div class="contact-links">
                 <a href="mailto:hello@duet-company.dev">hello@duet-company.dev</a>
                 <a href="https://github.com/duet-company">github.com/duet-company</a>
-                <a href="https://duet-company.dev">duet-company.dev</a>
+                <a href="https://duet-company.github.io">duet-company.github.io</a>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer>
-        <div class="container">
+        <main>
             <p>&copy; 2026 Duet Company. Built with AI, refined by humans.</p>
-        </div>
+        </main>
     </footer>
 </body>
 </html>

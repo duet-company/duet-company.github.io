@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Simple static site builder for AI Data Labs website.
-Reads markdown files and generates static HTML.
+Simple static site builder for AI Data Labs website using OAT CSS.
+Reads markdown files and generates static HTML with semantic OAT components.
 """
 
 import os
@@ -111,10 +111,20 @@ def generate_site():
     # Create output directory
     output_dir.mkdir(exist_ok=True)
 
+    # Copy OAT CSS and JS files
+    import shutil
+    oat_css = website_dir / 'oat.min.css'
+    oat_js = website_dir / 'oat.min.js'
+    if oat_css.exists():
+        shutil.copy(oat_css, output_dir / 'oat.min.css')
+        print(f"✓ Copied oat.min.css")
+    if oat_js.exists():
+        shutil.copy(oat_js, output_dir / 'oat.min.js')
+        print(f"✓ Copied oat.min.js")
+
     # Copy index.html
     index_html = website_dir / 'index.html'
     if index_html.exists():
-        import shutil
         shutil.copy(index_html, output_dir / 'index.html')
         print(f"✓ Copied index.html")
 
@@ -135,60 +145,55 @@ def generate_site():
             metadata, content = read_markdown_file(md_path)
             html_content = parse_markdown(content)
 
-            # Create page template with modern CSS 2025
+            # Create page template with OAT CSS
             page_html = f"""<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{metadata.get('title', 'AI Data Labs')}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Clash+Display:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Clash+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/oat.min.css">
     <style>
-        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-
-        /* Modern CSS 2025: OKLCH color system */
+        /* OAT CSS Custom Theme with OKLCH */
         :root {{
-            color-scheme: dark;
+            /* Light mode */
+            --background-light: oklch(98% 0.005 85);
+            --foreground-light: oklch(15% 0.02 85);
+            --primary-light: oklch(55% 0.18 195);
+            --muted-foreground-light: oklch(45% 0.015 85);
+            --border-light: oklch(90% 0.01 85);
+            --faint-light: oklch(95% 0.005 85);
 
-            /* Light mode colors */
-            --color-bg-light: oklch(98% 0.005 85);
-            --color-text-light: oklch(15% 0.02 85);
-            --color-text-secondary-light: oklch(45% 0.015 85);
-            --color-border-light: oklch(90% 0.01 85);
-            --color-accent-light: oklch(55% 0.18 195);
+            /* Dark mode (default) */
+            --background: oklch(10% 0.015 85);
+            --foreground: oklch(95% 0.01 85);
+            --primary: oklch(70% 0.18 195);
+            --muted-foreground: oklch(70% 0.015 85);
+            --border: oklch(25% 0.015 85);
+            --faint: oklch(15% 0.015 85);
 
-            /* Dark mode colors (default) */
-            --color-bg: oklch(10% 0.015 85);
-            --color-text: oklch(95% 0.01 85);
-            --color-text-secondary: oklch(70% 0.015 85);
-            --color-border: oklch(25% 0.015 85);
-            --color-accent: oklch(70% 0.18 195);
-
-            --font-display: 'Clash Display', sans-serif;
-            --font-body: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+            /* Override OAT fonts */
+            --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-mono: 'JetBrains Mono', 'SF Mono', 'Menlo', monospace;
         }}
 
         @media (prefers-color-scheme: light) {{
             :root {{
-                --color-bg: var(--color-bg-light);
-                --color-text: var(--color-text-light);
-                --color-text-secondary: var(--color-text-secondary-light);
-                --color-border: var(--color-border-light);
-                --color-accent: var(--color-accent-light);
+                --background: var(--background-light);
+                --foreground: var(--foreground-light);
+                --primary: var(--primary-light);
+                --muted-foreground: var(--muted-foreground-light);
+                --border: var(--border-light);
+                --faint: var(--faint-light);
             }}
         }}
 
         body {{
-            font-family: var(--font-body);
-            background: var(--color-bg);
-            color: var(--color-text);
-            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            transition: background 0.3s ease, color 0.3s ease;
         }}
 
         /* Modern CSS 2025: text-wrap: balance for headlines */
@@ -196,50 +201,53 @@ def generate_site():
             text-wrap: balance;
         }}
 
-        .container {{
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 24px;
+        .logo {{
+            font-family: 'Clash Display', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
         }}
 
+        .logo span {{
+            color: var(--primary);
+        }}
+
+        /* Layout */
+        main {{
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+        }}
+
+        /* Header */
         header {{
-            background: var(--color-bg);
-            border-bottom: 1px solid var(--color-border);
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
             z-index: 100;
+            padding: var(--space-4) 0;
         }}
 
         nav {{
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
-        }}
-
-        .logo {{
-            font-family: var(--font-display);
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--color-text);
-            text-decoration: none;
-            letter-spacing: -0.01em;
-        }}
-
-        .logo span {{
-            color: var(--color-accent);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
         }}
 
         .nav-links {{
             display: flex;
-            gap: 32px;
+            gap: var(--space-8);
             align-items: center;
         }}
 
         .nav-links a {{
-            color: var(--color-text-secondary);
+            color: var(--muted-foreground);
             text-decoration: none;
             font-size: 14px;
             font-weight: 400;
@@ -248,7 +256,7 @@ def generate_site():
         }}
 
         .nav-links a:hover {{
-            color: var(--color-accent);
+            color: var(--primary);
         }}
 
         .nav-links a::after {{
@@ -258,7 +266,7 @@ def generate_site():
             left: 0;
             width: 0;
             height: 1px;
-            background: var(--color-accent);
+            background: var(--primary);
             transition: width 0.2s ease;
         }}
 
@@ -277,19 +285,19 @@ def generate_site():
             height: 18px;
         }}
 
+        /* Content area */
         main {{
             padding-top: 160px;
             padding-bottom: 80px;
         }}
 
         h1 {{
-            font-family: var(--font-display);
+            font-family: 'Clash Display', sans-serif;
             font-size: 48px;
             font-weight: 600;
             line-height: 1.1;
             letter-spacing: -0.02em;
             margin-bottom: 24px;
-            color: var(--color-text);
             animation: fadeUp 0.8s ease forwards;
             opacity: 0;
         }}
@@ -298,7 +306,6 @@ def generate_site():
             font-size: 32px;
             font-weight: 600;
             margin: 3rem 0 1.5rem;
-            color: var(--color-text);
             animation: fadeUp 0.8s ease 0.1s forwards;
             opacity: 0;
         }}
@@ -307,51 +314,60 @@ def generate_site():
             font-size: 24px;
             font-weight: 600;
             margin: 2rem 0 1rem;
-            color: var(--color-text);
-        }}
-
-        p {{
-            color: var(--color-text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-            font-size: 16px;
             animation: fadeUp 0.8s ease 0.15s forwards;
             opacity: 0;
         }}
 
+        p {{
+            color: var(--muted-foreground);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-size: 16px;
+            animation: fadeUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }}
+
         a {{
-            color: var(--color-accent);
+            color: var(--primary);
             text-decoration: none;
             font-weight: 500;
             transition: color 0.2s ease;
         }}
 
         a:hover {{
-            color: var(--color-text);
+            text-decoration: underline;
         }}
 
         strong {{
-            color: var(--color-text);
+            color: var(--foreground);
             font-weight: 600;
-        }}
-
-        code {{
-            font-family: var(--font-mono);
-            background: oklch(from var(--color-bg) l calc(l - 5%) c h);
-            padding: 0.2rem 0.5rem;
-            border: 1px solid var(--color-border);
-            border-radius: 4px;
-            font-size: 14px;
-            color: var(--color-accent);
         }}
 
         em {{
             font-style: italic;
-            color: var(--color-text-secondary);
+            color: var(--muted-foreground);
             font-size: 14px;
             display: block;
             margin-top: -1rem;
             margin-bottom: 1.5rem;
+        }}
+
+        ul {{
+            margin-bottom: 1.5rem;
+        }}
+
+        li {{
+            color: var(--muted-foreground);
+            margin-bottom: 0.5rem;
+            padding-left: var(--space-2);
+            position: relative;
+        }}
+
+        li::before {{
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
         }}
 
         @keyframes fadeUp {{
@@ -365,25 +381,28 @@ def generate_site():
             }}
         }}
 
+        /* Footer */
         footer {{
-            border-top: 1px solid var(--color-border);
+            border-top: 1px solid var(--border);
             padding: 3rem 0;
             margin-top: 4rem;
         }}
 
         footer p {{
             font-size: 14px;
-            color: var(--color-text-secondary);
+            color: var(--muted-foreground);
             margin-bottom: 0.5rem;
+            animation: none;
+            opacity: 1;
         }}
 
         footer a {{
-            color: var(--color-text-secondary);
-            margin-left: 32px;
+            color: var(--muted-foreground);
+            margin-left: var(--space-8);
         }}
 
         footer a:hover {{
-            color: var(--color-accent);
+            color: var(--primary);
         }}
 
         @media (max-width: 768px) {{
@@ -391,41 +410,39 @@ def generate_site():
             h2 {{ font-size: 28px; }}
             main {{ padding-top: 140px; }}
             .nav-links {{ display: none; }}
-            .container {{ padding: 0 20px; }}
+            main {{ padding: 0 var(--space-5); }}
         }}
     </style>
 </head>
 <body>
     <header>
-        <div class="container">
-            <nav>
-                <a href="/" class="logo">Duet <span>Company</span></a>
-                <div class="nav-links">
-                    <a href="/">Home</a>
-                    <a href="/features.html">Features</a>
-                    <a href="/pricing.html">Pricing</a>
-                    <a href="/about.html">About</a>
-                    <a href="https://github.com/duet-company/duet-company.github.io" class="github-link">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                        </svg>
-                        GitHub
-                    </a>
-                </div>
-            </nav>
-        </div>
+        <nav>
+            <a href="/" class="logo">Duet <span>Company</span></a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/features.html">Features</a>
+                <a href="/pricing.html">Pricing</a>
+                <a href="/about.html">About</a>
+                <a href="https://github.com/duet-company/duet-company.github.io" class="github-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+        </nav>
     </header>
-    <main class="container">
+    <main>
         {html_content}
     </main>
     <footer>
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <main>
             <p>&copy; 2026 Duet Company. Built with AI, refined by humans.</p>
             <div>
                 <a href="https://github.com/duet-company">GitHub</a>
                 <a href="mailto:hello@duet-company.dev">Email</a>
             </div>
-        </div>
+        </main>
     </footer>
 </body>
 </html>"""
