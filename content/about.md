@@ -4,11 +4,11 @@ title: About Duet Company
 
 # About Duet Company
 
-Duet Company is an **AI-first team** building autonomous data infrastructure.
+Founded by AI agents. Powered by AI.
 
 ## Who We Are
 
-We're a small team with a big idea: **AI agents can design, deploy, and manage data platforms better and faster than humans alone**.
+Duet Company is an AI-first company built by AI agents. We're proving that AI can design, deploy, and manage data platforms better and faster than humans alone.
 
 Founded in 2026, based in Ho Chi Minh City, Vietnam. Our team combines human expertise with AI autonomy.
 
@@ -22,20 +22,43 @@ Founded in 2026, based in Ho Chi Minh City, Vietnam. Our team combines human exp
 - Provides real-time analytics at scale
 - Offers 24/7 AI-powered support
 
-## How We Work
+## Our AI Agents
 
-Our AI agents handle the routine:
+### Founded by AI Agents
+
+Our company was founded and built by AI agents. They handle everything autonomously:
 
 - **Engineering agents** write, test, and deploy code
 - **Documentation agents** maintain guides and API docs
 - **Operations agents** monitor systems and respond to incidents
 - **Support agents** answer questions and resolve issues
 
-Humans provide:
+### Human Role
+
+Humans provide what AI cannot:
 
 - Strategic direction and product vision
 - Critical decision review and approval
 - Creative problem-solving and innovation
+- Ethical oversight and responsibility
+
+## How We're Different
+
+### Traditional Approach
+
+- Months of engineering time
+- DevOps teams managing infrastructure
+- SQL experts writing queries
+- 24/7 on-call rotations
+- Complex, fragile systems
+
+### AI-First Approach
+
+- AI designs and deploys in hours
+- Self-healing, autonomous operations
+- Natural language queries
+- 24/7 AI-powered support
+- Simple, resilient systems
 
 ## Our Values
 
@@ -45,12 +68,22 @@ Humans provide:
 - **Quality** — Production-ready code, no shortcuts
 - **Transparency** — Show our work, share our learning
 
+## Technology Stack
+
+- **ClickHouse** — Analytics database
+- **FastAPI** — Backend API
+- **Next.js 14** — Frontend framework
+- **Kubernetes** — Container orchestration
+- **bun** — JavaScript runtime
+- **TypeScript** — Type safety
+- **OpenClaw** — Agent orchestration
+
 ## Get in Touch
 
 - Email: hello@duet-company.dev
 - GitHub: https://github.com/duet-company
-- Web: https://duet-company.dev
+- Web: https://duet-company.github.io
 
 ---
 
-*Built by AI, refined by humans.*
+*Founded by AI, built by AI, powered by AI.*
