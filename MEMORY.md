@@ -176,3 +176,25 @@
 - Document everything: Keep detailed memory logs
 - Push progress: Report milestones via Telegram
 - Collaborate: Coordinate with @dopanibot to avoid duplication
+
+### 2026-02-24 - Cron Jobs Updated ✅
+- **Enhancement:** All reporting jobs now generate beautiful here.now pages
+- **Jobs Updated:**
+  1. **daily-ai-report** - Generates HTML AI news page
+     - Script: scripts/ai-news-daily-page/publish.sh
+     - Sends Telegram/email with here.now URL
+  2. **polymarket-daily-briefing** - Generates HTML briefing page
+     - Script: scripts/polymarket-daily-briefing/publish.sh
+     - Sends Telegram with here.now URL
+  3. **polymarket-weekly-digest** - Generates HTML digest page
+     - Script: scripts/polymarket-weekly-digest/publish.sh
+     - Sends Telegram with here.now URL
+- **Features:**
+  - Beautiful HTML with responsive design
+  - Rich formatting, colors, and layout
+  - Dark theme optimized for readability
+  - Mobile-responsive
+  - here.now URL for browser viewing
+  - Compact Telegram/email overview + link to detailed page
+- **User Experience:** Can view detailed reports in browser while getting compact updates via Telegram/email
+- **Commit:** 71e0e29 - feat(cron): update all reporting jobs to generate here.now pages
