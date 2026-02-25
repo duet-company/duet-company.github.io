@@ -103,7 +103,7 @@ EOF
     
     # Publish to here.now
     cd "$output_dir"
-    bash "$TEMPLATE_DIR/../skills/here-now/scripts/publish.sh" "$output_file" 2>/dev/null || {
+    bash "$HOME/.openclaw/skills/here-now/scripts/publish.sh" "$output_file" 2>/dev/null || {
         echo "⚠️ Publishing failed, here.now script not found"
         URL="N/A"
     }
