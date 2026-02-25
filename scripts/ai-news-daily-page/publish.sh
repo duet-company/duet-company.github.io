@@ -5,7 +5,6 @@ set -e
 # Generates beautiful HTML report and publishes to here.now
 
 DATE=$(date +%Y-%m-%d)
-YESTERDAY=$(date -d "yesterday" +%Y-%m-%d)
 OUTPUT_DIR="$HOME/.openclaw/workspace/ai-news-daily-page"
 OUTPUT_FILE="$OUTPUT_DIR/ai-news-$DATE.html"
 
@@ -13,89 +12,55 @@ mkdir -p "$OUTPUT_DIR/.herenow"
 
 echo "Generating Daily AI News HTML..." > /dev/null
 
-# Build news content
-AI_NEWS=""
-
 # Function to add news item
 add_news() {
     local emoji="$1"
     local headline="$2"
     local link="$3"
-    AI_NEWS="$AI_NEWS\n$emoji $headline"
-    AI_NEWS="$AI_NEWS\n   $link"
+    NEWS_ITEMS="$NEWS_ITEMS
+<p style=\"margin-bottom: 20px; line-height: 1.8;\">
+$emoji $headline
+</p>
+<p style=\"margin: 0 0 0 20px;\">
+$link
+</p>"
 }
 
-# Search for AI news using web_search (date-filtered)
-echo "Searching for AI news from yesterday..." > /dev/null
+# Build news items
+NEWS_ITEMS=""
 
-# Get today's AI news from web_search
+# Search for AI news using web_search
+echo "Searching for AI news..." > /dev/null
+
 if command -v web_search &>/dev/null; then
+    # Search queries for different categories
     echo "Using web_search for AI news..." > /dev/null
     
-    # Search queries for different categories
-    SEARCH_RESULTS=""
-    
     # General AI news
-    if [ -n "$SEARCH_RESULTS" ]; then
-        GENERAL=$(web_search --count 5 --ui_lang en --search_lang en --freshness pd "AI news today \"artificial intelligence\" announcements" 2>/dev/null || echo "")
-        if [ -n "$GENERAL" ]; then
-            SEARCH_RESULTS="$SEARCH_RESULTS\n$GENERAL"
-            echo "Found general AI news results" > /dev/null
-        fi
-    fi
+    GENERAL=$(web_search --count 3 --ui_lang en --search_lang en --freshness pd "AI news today \"artificial intelligence\" announcements" 2>/dev/null || echo "")
     
     # Product launches and models
-    if [ -n "$SEARCH_RESULTS" ]; then
-        PRODUCTS=$(web_search --count 3 --ui_lang en --search_lang en --freshness pd "\"new AI model\" launch release OR \"AI tool\" announced" 2>/dev/null || echo "")
-        if [ -n "$PRODUCTS" ]; then
-            SEARCH_RESULTS="$SEARCH_RESULTS\n$PRODUCTS"
-            echo "Found AI product news" > /dev/null
-        fi
-    fi
+    PRODUCTS=$(web_search --count 2 --ui_lang en --search_lang en --freshness pd "\"new AI model\" launch release OR \"AI tool\" announced" 2>/dev/null || echo "")
     
     # Research and papers
-    if [ -n "$SEARCH_RESULTS" ]; then
-        RESEARCH=$(web_search --count 3 --ui_lang en --search_lang en --freshness pd "\"AI research paper\" breakthrough \"machine learning\" study" 2>/dev/null || echo "")
-        if [ -n "$RESEARCH" ]; then
-            SEARCH_RESULTS="$SEARCH_RESULTS\n$RESEARCH"
-            echo "Found AI research news" > /dev/null
-        fi
-    fi
+    RESEARCH=$(web_search --count 2 --ui_lang en --search_lang en --freshness pd "\"AI research paper\" breakthrough \"machine learning\" study" 2>/dev/null || echo "")
     
     # Industry and business
-    if [ -n "$SEARCH_RESULTS" ]; then
-        INDUSTRY=$(web_search --count 3 --ui_lang en --search_lang en --freshness pd "\"AI startup\" funding investment \"big tech\" partnership" 2>/dev/null || echo "")
-        if [ -n "$INDUSTRY" ]; then
-            SEARCH_RESULTS="$SEARCH_RESULTS\n$INDUSTRY"
-            echo "Found AI industry news" > /dev/null
-        fi
-    fi
+    INDUSTRY=$(web_search --count 2 --ui_lang en --search_lang en --freshness pd "\"AI startup\" funding investment \"big tech\" partnership" 2>/dev/null || echo "")
     
     # Tools and applications
-    if [ -n "$SEARCH_RESULTS" ]; then
-        TOOLS=$(web_search --count 2 --ui_lang en --search_lang en --freshness pd "\"AI application\" tool framework \"open source\" release" 2>/dev/null || echo "")
-        if [ -n "$TOOLS" ]; then
-            SEARCH_RESULTS="$SEARCH_RESULTS\n$TOOLS"
-            echo "Found AI tool news" > /dev/null
-        fi
-    fi
+    TOOLS=$(web_search --count 2 --ui_lang en --search_lang en --freshness pd "\"AI application\" tool framework \"open source\" release" 2>/dev/null || echo "")
     
     # Policy and ethics
-    if [ -n "$SEARCH_RESULTS" ]; then
-        POLICY=$(web_search --count 2 --ui_lang en --search_lang en --freshness pd "\"AI regulation\" policy safety ethics \"AI governance\" 2>/dev/null || echo "")
-        if [ -n "$POLICY" ]; then
-            SEARCH_RESULTS="$SEARCH_RESULTS\n$POLICY"
-            echo "Found AI policy news" > /dev/null
-        fi
-    fi
+    POLICY=$(web_search --count 2 --ui_lang en --search_lang en --freshness pd "\"AI regulation\" policy safety ethics \"AI governance\"" 2>/dev/null || echo "")
     
-    echo "Search completed. Parsing results..." > /dev/null
+    echo "Search completed. Building news items..." > /dev/null
 else
     echo "web_search not available, using placeholder content" > /dev/null
 fi
 
 # Count news items
-NEWS_COUNT=$(echo "$AI_NEWS" | grep -c "🔥\|📈\|💡\|🤖" 2>/dev/null || echo "0")
+NEWS_COUNT=$(echo "$NEWS_ITEMS" | grep -c "<p" 2>/dev/null || echo "0")
 
 # Generate HTML report
 cat > "$OUTPUT_FILE" << EOF
@@ -195,37 +160,15 @@ cat > "$OUTPUT_FILE" << EOF
             transform: translateX(8px);
             border-left-color: var(--accent-green);
         }
-        .news-category {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .news-item p {
+            margin: 0;
         }
-        .cat-breaking { background: var(--accent-orange); color: #000; }
-        .cat-important { background: var(--accent-blue); color: #fff; }
-        .cat-trend { background: var(--accent-purple); color: #fff; }
-        .cat-blog { background: var(--accent-green); color: #000; }
-        .news-content {
-            color: var(--text-primary);
-            font-size: 1rem;
-            margin-bottom: 16px;
-            white-space: pre-wrap;
-            line-height: 1.8;
-        }
-        .news-content strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-        .news-content a {
+        .news-item a {
             color: var(--accent-blue);
             text-decoration: none;
             font-weight: 500;
         }
-        .news-content a:hover {
+        .news-item a:hover {
             text-decoration: underline;
         }
         .footer {
@@ -238,7 +181,6 @@ cat > "$OUTPUT_FILE" << EOF
         @media (max-width: 768px) {
             h1 { font-size: 2rem; }
             .stats { flex-direction: column; gap: 20px; }
-            .section-title { font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -262,9 +204,7 @@ cat > "$OUTPUT_FILE" << EOF
 
         <div class="section">
             <div class="news-item">
-                <div class="news-content">
-$AI_NEWS
-                </div>
+$NEWS_ITEMS
             </div>
         </div>
 
@@ -298,14 +238,16 @@ else
 fi
 
 # Output for Telegram (compact format)
-if [ -n "$AI_NEWS" ]; then
+if [ -n "$NEWS_ITEMS" ]; then
     echo "🤖 Daily AI Report - $DATE"
     echo ""
-    echo "$AI_NEWS"
+    echo "Searching for latest AI news across multiple sources..."
+    echo ""
+    echo "$NEWS_ITEMS"
     echo ""
     if [ "$URL" != "N/A" ]; then
         echo "🌐 Full Report: $URL"
     fi
 else
-    echo "⏳ AI news gathering in progress or no news found..."
+    echo "⏳ AI news gathering in progress..."
 fi
