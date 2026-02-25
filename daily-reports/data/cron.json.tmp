@@ -1,0 +1,14 @@
+ID                                   Name                     Schedule                         Next       Last       Status    Target    Agent     
+polymarket-alerts-hourly             polymarket-alerts-hourly cron 0 * * * * @ UTC (stagger... in 13m     47m ago    ok        isolated  main
+8e532319-08b5-4b8e-b6fb-192471ecbdee website-work             every 1h                         in 13m     47m ago    skipped   main      main
+1a7c09b0-0065-496a-a6a0-d1ae79536910 duet-company-daily-sync  cron 0 */4 * * * @ Asia/Saigo... in 14m     4h ago     ok        isolated  main
+polymarket-position-monitor          polymarket-position-m... cron 0 */6 * * * @ UTC (stagg... in 1h      3h ago     skipped   main      main
+bec3a0af-b326-46dd-b6a9-a43d37beb886 openclaw-config-backup   every 6h                         in 2h      4h ago     ok        isolated  main
+openclaw-daily-upgrade               openclaw-daily-upgrade   cron 0 9 * * * @ UTC (exact)     in 4h      -          pending   isolated  main
+82f03d0e-3a34-40b3-a42c-d0f0b69432d1 daily-ai-report          cron 0 2 * * * @ UTC (exact)     in 9h      15h ago    ok        isolated  main
+4d294994-b396-4286-aec7-84d618857ca8 daily-blog-post          cron 0 3 * * * @ UTC (exact)     in 10h     14h ago    ok        isolated  main
+system-health-daily                  system-health-check      cron 0 6 * * * @ UTC (exact)     in 13h     11h ago    ok        isolated  main
+polymarket-daily-briefing            polymarket-daily-brie... cron 0 7 * * * @ UTC (exact)     in 14h     -          pending   isolated  main
+daily-comprehensive-report           daily-comprehensive-r... cron 30 7 * * * @ UTC (exact)    in 24h     -          pending   isolated  main
+polymarket-weekly-digest             polymarket-weekly-digest cron 0 10 * * 0 @ UTC (exact)    in 2d      -          pending   isolated  main
+log-cleanup-weekly                   log-cleanup              cron 0 0 * * 0 @ UTC (exact)     in 6d      17h ago    ok        isolated  main

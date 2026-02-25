@@ -1,0 +1,1 @@
+/root/.agents/skills/here-now/scripts/publish.sh

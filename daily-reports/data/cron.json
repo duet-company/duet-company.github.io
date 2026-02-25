@@ -1,0 +1,67 @@
+[
+  {
+    "name": "polymarket-position-monitor",
+    "status": "skipped",
+    "nextRun": null
+  },
+  {
+    "name": "polymarket-alerts-hourly",
+    "status": "ok",
+    "nextRun": null
+  },
+  {
+    "name": "website-work",
+    "status": "skipped",
+    "nextRun": null
+  },
+  {
+    "name": "openclaw-config-backup",
+    "status": "ok",
+    "nextRun": null
+  },
+  {
+    "name": "openclaw-daily-upgrade",
+    "status": "pending",
+    "nextRun": null
+  },
+  {
+    "name": "duet-company-daily-sync",
+    "status": "ok",
+    "nextRun": null
+  },
+  {
+    "name": "daily-ai-report",
+    "status": "ok",
+    "nextRun": null
+  },
+  {
+    "name": "daily-blog-post",
+    "status": "ok",
+    "nextRun": null
+  },
+  {
+    "name": "system-health-check",
+    "status": "ok",
+    "nextRun": null
+  },
+  {
+    "name": "polymarket-daily-briefing",
+    "status": "pending",
+    "nextRun": null
+  },
+  {
+    "name": "daily-comprehensive-report",
+    "status": "pending",
+    "nextRun": null
+  },
+  {
+    "name": "polymarket-weekly-digest",
+    "status": "pending",
+    "nextRun": null
+  },
+  {
+    "name": "log-cleanup",
+    "status": "ok",
+    "nextRun": null
+  }
+]

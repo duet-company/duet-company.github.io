@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "skills": {
+    "daily-ai-news-skill": {
+      "version": "0.1.0",
+      "installedAt": 1771666238779
+    },
+    "polymarketodds": {
+      "version": "1.0.0",
+      "installedAt": 1771743473094
+    },
+    "tavily-search": {
+      "version": "1.0.0",
+      "installedAt": 1771743680669
+    },
+    "self-improving-agent": {
+      "version": "1.0.10",
+      "installedAt": 1771743769369
+    },
+    "markdown-converter": {
+      "version": "1.0.0",
+      "installedAt": 1771748291797
+    }
+  }
+}

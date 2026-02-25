@@ -1,0 +1,11 @@
+{
+  "publishes": {
+    "duyet-ai-news": {
+      "actualSlug": "merry-mirage-97xp",
+      "siteUrl": "https://merry-mirage-97xp.here.now"
+    },
+    "merry-mirage-97xp": {
+      "siteUrl": "https://merry-mirage-97xp.here.now/"
+    }
+  }
+}

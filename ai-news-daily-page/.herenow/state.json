@@ -1,0 +1,16 @@
+{
+  "publishes": {
+    "quick-summit-8s3c": {
+      "siteUrl": "https://quick-summit-8s3c.here.now/"
+    },
+    "arctic-reef-x7es": {
+      "siteUrl": "https://arctic-reef-x7es.here.now/"
+    },
+    "indigo-hollow-a9cp": {
+      "siteUrl": "https://indigo-hollow-a9cp.here.now/"
+    },
+    "whole-fossil-m27e": {
+      "siteUrl": "https://whole-fossil-m27e.here.now/"
+    }
+  }
+}

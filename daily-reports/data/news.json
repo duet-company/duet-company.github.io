@@ -1,0 +1,37 @@
+[
+  {
+    "title": "OpenAI o1-preview models now available to all free users",
+    "source": "OpenAI Blog",
+    "date": "2025-02-22",
+    "category": "release",
+    "link": "https://openai.com/blog"
+  },
+  {
+    "title": "Google Gemini 2.0 Pro with 1M token context",
+    "source": "Google",
+    "date": "2025-02-21",
+    "category": "product",
+    "link": "https://blog.google/technology/ai/"
+  },
+  {
+    "title": "Anthropic releases Claude 4 Sonnet with improved reasoning",
+    "source": "Anthropic",
+    "date": "2025-02-20",
+    "category": "model",
+    "link": "https://www.anthropic.com/news"
+  },
+  {
+    "title": "Meta releases Llama 4 with 405B parameters",
+    "source": "Meta AI",
+    "date": "2025-02-19",
+    "category": "model",
+    "link": "https://ai.meta.com/blog"
+  },
+  {
+    "title": "New study shows transformers can learn in-context without backpropagation",
+    "source": "arXiv",
+    "date": "2025-02-18",
+    "category": "research",
+    "link": "https://arxiv.org/abs/2502.x"
+  }
+]
