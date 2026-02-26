@@ -1,0 +1,235 @@
+name: Infrastructure CI/CD
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'infrastructure/**'
+      - '.github/workflows/infrastructure-ci.yml'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'infrastructure/**'
+
+env:
+  TERRAFORM_VERSION: '1.6.0'
+  REGISTRY: ghcr.io
+
+jobs:
+  terraform-validate:
+    name: Terraform Validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+      
+      - name: Terraform Format Check
+        run: |
+          cd infrastructure/terraform
+          terraform fmt -check -recursive
+      
+      - name: Terraform Init
+        run: |
+          cd infrastructure/terraform
+          terraform init
+      
+      - name: Terraform Validate
+        run: |
+          cd infrastructure/terraform
+          terraform validate
+      
+      - name: tflint
+        uses: terraform-linters/tflint@master
+        with:
+          working-directory: infrastructure/terraform
+      
+      - name: Security Scan with tfsec
+        uses: aquasecurity/tfsec-action@master
+        with:
+          working_directory: infrastructure/terraform
+          format: sarif
+          output_file: tfsec-results.sarif
+      
+      - name: Upload tfsec results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: tfsec-results.sarif
+      
+      - name: Security Scan with Checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: infrastructure/terraform
+          framework: terraform
+          output_format: cli
+          soft_fail: false
+
+  terraform-plan:
+    name: Terraform Plan
+    runs-on: ubuntu-latest
+    needs: terraform-validate
+    if: github.event_name == 'pull_request'
+    outputs:
+      plan-exists: ${{ steps.plan.outputs.plan-exists }}
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+      
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      
+      - name: Terraform Init
+        run: |
+          cd infrastructure/terraform
+          terraform init
+      
+      - name: Terraform Plan
+        id: plan
+        run: |
+          cd infrastructure/terraform
+          terraform plan -no-color -out=tfplan > tfplan.txt
+          echo "plan-exists=true" >> $GITHUB_OUTPUT
+      
+      - name: Comment PR with Terraform Plan
+        uses: actions/github-script@v7
+        if: github.event_name == 'pull_request'
+        with:
+          script: |
+            const fs = require('fs');
+            const plan = fs.readFileSync('infrastructure/terraform/tfplan.txt', 'utf8');
+            const output = `#### Terraform Plan 📋\n\`\`\`\n${plan}\n\`\`\``;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
+  terraform-apply:
+    name: Terraform Apply
+    runs-on: ubuntu-latest
+    needs: [terraform-validate, terraform-plan]
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main'
+    environment:
+      name: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+      
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      
+      - name: Terraform Init
+        run: |
+          cd infrastructure/terraform
+          terraform init
+      
+      - name: Terraform Apply
+        run: |
+          cd infrastructure/terraform
+          terraform apply -auto-approve
+      
+      - name: Terraform Output
+        id: output
+        run: |
+          cd infrastructure/terraform
+          terraform output -json > outputs.json
+      
+      - name: Upload Terraform outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-outputs
+          path: infrastructure/terraform/outputs.json
+
+  ansible-lint:
+    name: Ansible Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install ansible-lint
+        run: |
+          pip install ansible-lint yamllint
+      
+      - name: Run ansible-lint
+        run: |
+          cd infrastructure/ansible
+          ansible-lint
+      
+      - name: Run yamllint
+        run: |
+          yamllint infrastructure/ansible/
+
+  ansible-syntax-check:
+    name: Ansible Syntax Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install Ansible
+        run: |
+          pip install ansible-core
+      
+      - name: Run ansible-playbook syntax check
+        run: |
+          cd infrastructure/ansible
+          for playbook in *.yml; do
+            ansible-playbook --syntax-check "$playbook"
+          done
+
+  cost-estimate:
+    name: Infrastructure Cost Estimate
+    runs-on: ubuntu-latest
+    needs: terraform-plan
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+      
+      - name: Terraform Init
+        run: |
+          cd infrastructure/terraform
+          terraform init
+      
+      - name: Run Infracost
+        uses: infracost/infracost-action@master
+        env:
+          INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          path: infrastructure/terraform
+          pricing_api_endpoint: https://pricing.api.infracost.io
