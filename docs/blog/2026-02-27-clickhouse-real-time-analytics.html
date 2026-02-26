@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Real-Time Analytics with ClickHouse - Duet Company Blog</title>
+    <meta name="description" content="ClickHouse is a columnar database designed for high-performance analytical queries on large datasets. In this guide, we'll explore how to build real-t...">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-elevated: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --accent: #10b981;
+            --accent-dark: #059669;
+            --border: #334155;
+            --border-subtle: #1e293b;
+            --code-bg: #1a1a2e;
+            --code-text: #a5b4fc;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        header {
+            text-align: center;
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .meta {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 8px;
+        }
+        .meta span {
+            display: inline-block;
+            margin: 0 12px;
+        }
+        .content {
+            padding: 40px 0;
+        }
+        .content h2 {
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            color: var(--accent);
+        }
+        .content h3 {
+            font-size: 1.4rem;
+            margin: 30px 0 16px;
+        }
+        .content p {
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+        .content pre {
+            background: var(--code-bg);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 1px solid var(--border);
+        }
+        .content code {
+            color: var(--code-text);
+            font-family: 'SF Mono', 'Menlo', monospace;
+            font-size: 0.9rem;
+        }
+        .content ul, .content ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        .content li {
+            margin-bottom: 8px;
+        }
+        .content blockquote {
+            border-left: 4px solid var(--accent);
+            margin: 20px 0;
+            padding: 16px 20px;
+            background: var(--bg-secondary);
+            border-radius: 0 8px 8px 0;
+        }
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+        }
+        .content th, .content td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .content th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .footer {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+        }
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 16px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .content h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Building Real-Time Analytics with ClickHouse</h1>
+            <div class="meta">
+                <span>📅 February 26, 2026</span>
+                <span>⏱️ 13 min read</span>
+                <span>🏷️ Engineering</span>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <article class="content">
+            <p>ClickHouse is a columnar database designed for high-performance analytical queries on large datasets. In this guide, we'll explore how to build real-time analytics systems using ClickHouse, focusing on sub-second query performance, efficient data ingestion, and scalable architecture.</p>
+
+<h2>Why ClickHouse for Real-Time Analytics</h2>
+
+<p>ClickHouse excels at analytical workloads due to several key advantages:</p>
+
+<ul>
+<li><strong>Columnar storage:</strong> Reduces I/O by only reading required columns</li>
+<li><strong>Vectorized execution:</strong> Processes data in batches using CPU SIMD instructions</li>
+<li><strong>Primary index with optional secondary indexes:</strong> Enables fast point queries</li>
+<li><strong>MergeTree engine family:</strong> Optimized for write-heavy workloads with efficient merges</li>
+<li><strong>Compression:</strong> Reduces storage costs by 5-10x compared to row-oriented databases</li>
+<li><strong>SQL support:</strong> Familiar query language with powerful analytical functions</li>
+</ul>
+
+<strong>Performance characteristics:</strong>
+<ul>
+<li>Scan speed: 1-10 GB/s per core (depending on compression)</li>
+<li>Query latency: 10-100ms for most analytical queries on billions of rows</li>
+<li>Ingestion rate: 100K-1M+ rows/sec per node</li>
+<li>Compression ratio: 5-10x compared to uncompressed data</li>
+</ul>
+
+<h2>Core Architecture Components</h2>
+
+<p>A typical real-time analytics pipeline with ClickHouse consists of:</p>
+
+<p>1. <strong>Data collection layer:</strong> Event streaming from applications, sensors, APIs
+2. <strong>Buffer layer:</strong> Kafka, RabbitMQ, or message queue for decoupling
+3. <strong>Ingestion layer:</strong> ClickHouse native protocols or batch import
+4. <strong>Storage layer:</strong> ClickHouse cluster with replication
+5. <strong>Query layer:</strong> Application servers, BI tools, API endpoints</p>
+
+<pre><code>Applications → Message Queue → ClickHouse → Analytics/BI
+               (Kafka)         Cluster
+                                   ↓
+                              Materialized Views
+                                   ↓
+                            Aggregated Tables
+</code></pre>
+
+<h2>ClickHouse Installation and Setup</h2>
+
+<h3>Installation Options</h3>
+
+<strong>Option 1: Docker (Recommended for Development)</strong>
+<pre><code>docker run -d \
+  --name clickhouse-server \
+  -p 8123:8123 \
+  -p 9000:9000 \
+  --ulimit nofile=262144:262144 \
+  -v $(pwd)/data:/var/lib/clickhouse \
+  clickhouse/clickhouse-server:latest
+</code></pre>
+
+<strong>Option 2: Package Manager (Production)</strong>
+<pre><code><h1>Debian/Ubuntu</h1>
+sudo apt-get install -y apt-transport-https ca-certificates dirmngr
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 8919F6BD2B48D754
+
+<p>echo "deb https://packages.clickhouse.com/deb stable main" | sudo tee \
+  /etc/apt/sources.list.d/clickhouse.list</p>
+
+<p>sudo apt-get update
+sudo apt-get install -y clickhouse-server clickhouse-client</p>
+
+<h1>Start service</h1>
+sudo clickhouse start
+</code></pre>
+
+<strong>Option 3: Kubernetes (Clustered Deployment)</strong>
+<pre><code><h1>clickhouse-statefulset.yaml</h1>
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: clickhouse
+spec:
+  serviceName: clickhouse
+  replicas: 3
+  selector:
+    matchLabels:
+      app: clickhouse
+  template:
+    metadata:
+      labels:
+        app: clickhouse
+    spec:
+      containers:
+      - name: clickhouse
+        image: clickhouse/clickhouse-server:latest
+        ports:
+        - containerPort: 9000  # Native protocol
+        - containerPort: 8123  # HTTP interface
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/clickhouse
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "2"
+          limits:
+            memory: "8Gi"
+            cpu: "4"
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 100Gi
+</code></pre>
+
+<h3>Basic Configuration</h3>
+
+<strong>config.xml:</strong>
+<pre><code><clickhouse>
+    <!-- Listen on all interfaces -->
+    <listen_host>::</listen_host>
+
+<!-- HTTP interface -->
+    <http_port>8123</http_port>
+
+<!-- Native protocol -->
+    <tcp_port>9000</tcp_port>
+
+<!-- MySQL compatibility (optional) -->
+    <mysql_port>9004</mysql_port>
+
+<!-- PostgreSQL compatibility (optional) -->
+    <postgresql_port>9005</postgresql_port>
+
+<!-- Logging -->
+    <logger>
+        <level>information</level>
+        <log>/var/log/clickhouse/clickhouse-server.log</log>
+        <errorlog>/var/log/clickhouse/clickhouse-server.err.log</errorlog>
+        <size>100M</size>
+        <count>10</count>
+    </logger>
+
+<!-- User directories -->
+    <users_config>/etc/clickhouse-server/users.xml</users_config>
+    <default_profile>default</default_profile>
+    <default_database>default</default_database>
+
+<!-- Data directory -->
+    <path>/var/lib/clickhouse/</path>
+</clickhouse>
+</code></pre>
+
+<h2>Data Modeling for Analytics</h2>
+
+<h3>Choosing the Right Table Engine</h3>
+
+<p>ClickHouse offers multiple table engines optimized for different use cases:</p>
+
+<p>| Engine | Use Case | Pros | Cons |
+|--------|----------|------|------|
+| <strong>MergeTree</strong> | General-purpose analytics | Fast writes, efficient merges | No replication alone |
+| <strong>ReplicatedMergeTree</strong> | Production clusters | Replication, data safety | Requires ZooKeeper |
+| <strong>SummingMergeTree</strong> | Pre-aggregated data | Automatic aggregation | Limited sum operations |
+| <strong>AggregatingMergeTree</strong> | Advanced aggregation | Complex aggregates | Requires special functions |
+| <strong>CollapsingMergeTree</strong> | Upserts/deletes | Supports row updates | Requires sign column |
+| <strong>VersionedCollapsingMergeTree</strong> | Row versioning | Handles out-of-order data | Higher overhead |
+| <strong>ReplacingMergeTree</strong> | Latest state | Automatic deduplication | Non-deterministic until merge |
+| <strong>Distributed</strong> | Query federation | Splits queries across cluster | No data storage |</p>
+
+<h3>Schema Design Best Practices</h3>
+
+<strong>Example: Event Tracking Schema</strong>
+<pre><code>-- Create database
+CREATE DATABASE analytics;
+
+<p>-- Use the database
+USE analytics;</p>
+
+<p>-- Raw events table (ReplicatedMergeTree)
+CREATE TABLE events ON CLUSTER '{cluster}' (
+    -- Primary metadata
+    event_id String,
+    event_time DateTime,
+    event_date Date MATERIALIZED toDate(event_time),</p>
+
+<p>-- Event details
+    event_type LowCardinality(String),
+    event_name String,</p>
+
+<p>-- User context
+    user_id String,
+    session_id String,
+    device_type LowCardinality(String),
+    os_type LowCardinality(String),
+    browser LowCardinality(String),</p>
+
+<p>-- Request context
+    request_method LowCardinality(String),
+    request_path String,
+    request_params String,
+    response_status UInt16,
+    response_time_ms UInt32,</p>
+
+<p>-- Custom properties (as map)
+    properties Map(String, String),</p>
+
+<p>-- Geographic data (if available)
+    country_code LowCardinality(FixedString(2)),
+    city String,</p>
+
+<p>-- Technical fields
+    ip_address IPv4,</p>
+
+<p>-- For deduplication
+    _insert_time DateTime DEFAULT now()
+) ENGINE = ReplicatedMergeTree(
+    '/clickhouse/tables/{shard}/events',
+    '{replica}'
+)
+PARTITION BY toYYYYMM(event_date)
+ORDER BY (event_date, event_type, user_id, event_time)
+TTL event_date + INTERVAL 90 DAY DELETE
+SETTINGS
+    index_granularity = 8192;
+</code></pre></p>
+
+<strong>Key design decisions:</strong>
+
+<p>1. <strong>PARTITION BY toYYYYMM(event_date):</strong> Monthly partitions for efficient data pruning
+2. <strong>ORDER BY (event_date, event_type, user_id, event_time):</strong> Optimal for time-series queries with user filtering
+3. <strong>TTL event_date + INTERVAL 90 DAY DELETE:</strong> Automatic data retention
+4. <strong>LowCardinality(String):</strong> Reduces memory for repetitive values
+5. <strong>Map(String, String) properties:</strong> Flexible schema for custom fields</p>
+
+<strong>Aggregated events table (SummingMergeTree):</strong>
+<pre><code>CREATE TABLE events_daily_agg ON CLUSTER '{cluster}' (
+    event_date Date,
+    event_type LowCardinality(String),
+    event_name String,
+    device_type LowCardinality(String),
+    country_code LowCardinality(FixedString(2)),
+
+<p>-- Metrics (will be summed)
+    event_count UInt32 MATERIALIZED 1,
+    unique_users UInt32,
+    response_time_sum UInt64,
+    response_time_max UInt32,
+    error_count UInt32 MATERIALIZED
+        multiIf(response_status >= 500, 1, 0),</p>
+
+<p>-- For merge
+    _insert_time DateTime DEFAULT now()
+) ENGINE = SummingMergeTree()
+PARTITION BY toYYYYMM(event_date)
+ORDER BY (event_date, event_type, event_name, device_type, country_code)
+TTL event_date + INTERVAL 365 DAY DELETE;</p>
+
+<p>-- Materialized view to populate aggregated table
+CREATE MATERIALIZED VIEW events_daily_agg_mv TO events_daily_agg AS
+SELECT
+    event_date,
+    event_type,
+    event_name,
+    device_type,
+    country_code,
+    uniqExact(user_id) AS unique_users,
+    sum(response_time_ms) AS response_time_sum,
+    max(response_time_ms) AS response_time_max,
+    1 AS event_count,
+    _insert_time
+FROM events
+GROUP BY
+    event_date,
+    event_type,
+    event_name,
+    device_type,
+    country_code,
+    _insert_time;
+</code></pre></p>
+
+<h3>Partitioning Strategy</h3>
+
+<strong>Good partitioning:</strong>
+<ul>
+<li>Time-based: Daily, weekly, or monthly depending on data volume</li>
+<li>Cardinality: 100-1000 partitions total (not per table)</li>
+<li>Balance: Query pruning benefits vs. merge overhead</li>
+</ul>
+
+<strong>Example: Time-based partitioning</strong>
+<pre><code>-- Daily partitions (high write volume)
+PARTITION BY event_date
+
+<p>-- Monthly partitions (moderate write volume)
+PARTITION BY toYYYYMM(event_date)</p>
+
+<p>-- Yearly partitions (archival data)
+PARTITION BY toYYYY(event_date)
+</code></pre></p>
+
+<strong>Avoid:</strong>
+<ul>
+<li>High-cardinality columns (user_id, session_id) → thousands of partitions</li>
+<li>Too granular partitions (hourly) → merge overhead dominates</li>
+</ul>
+
+<h3>Primary Key and Sorting Key</h3>
+
+<p>The ORDER BY clause defines the primary key and sorting order:</p>
+
+<pre><code>-- Simple primary key
+ORDER BY (event_date, user_id)
+
+<p>-- Compound primary key for multi-column filtering
+ORDER BY (event_date, event_type, user_id)</p>
+
+<p>-- Granularity control
+SETTINGS index_granularity = 8192  -- Default: 8192 rows per data mark
+</code></pre></p>
+
+<strong>Guidelines:</strong>
+<ul>
+<li>First columns: Most frequently filtered in WHERE clause</li>
+<li>Second columns: Join keys or grouping columns</li>
+<li>Last columns: Range queries or ORDER BY columns</li>
+</ul>
+
+<h2>Data Ingestion Strategies</h2>
+
+<h3>Ingestion Options</h3>
+
+<p>| Method | Throughput | Latency | Use Case |
+|--------|-----------|---------|----------|
+| <strong>INSERT streaming</strong> | 100K-1M rows/sec | 100-500ms | Real-time, low-latency |
+| <strong>Batch INSERT</strong> | 1-10M rows/batch | 1-5s | Hourly/daily loads |
+| <strong>clickhouse-local</strong> | N/A | N/A | ETL, data processing |
+| <strong>Kafka Engine</strong> | 100K-1M rows/sec | 100-500ms | Streaming from Kafka |
+| <strong>S3/URL table function</strong> | High | Variable | One-time imports |</p>
+
+<h3>Streaming Insert (Recommended for Real-Time)</h3>
+
+<strong>HTTP interface:</strong>
+<pre><code>curl -X POST 'http://localhost:8123/?query=INSERT%20INTO%20analytics.events%20FORMAT%20JSONEachRow' \
+  --data-binary @events.json
+</code></pre>
+
+<strong>ClickHouse client:</strong>
+<pre><code>clickhouse-client --query="INSERT INTO analytics.events FORMAT JSONEachRow" < events.json
+</code></pre>
+
+<strong>Batch insert for high throughput:</strong>
+<pre><code>-- Insert multiple rows in one statement
+INSERT INTO analytics.events FORMAT JSONEachRow
+{"event_id":"1","event_time":"2026-02-27 10:00:00","event_type":"page_view",...}
+{"event_id":"2","event_time":"2026-02-27 10:00:01","event_type":"click",...}
+...
+{"event_id":"1000","event_time":"2026-02-27 10:00:59","event_type":"scroll",...}
+</code></pre>
+
+<h3>Kafka Integration</h3>
+
+<strong>Create Kafka table:</strong>
+<pre><code>CREATE TABLE events_kafka (
+    event_id String,
+    event_time DateTime,
+    event_type String,
+    user_id String,
+    -- ... other columns
+) ENGINE = Kafka()
+SETTINGS
+    kafka_broker_list = 'kafka-1:9092,kafka-2:9092,kafka-3:9092',
+    kafka_topic_list = 'events',
+    kafka_group_name = 'clickhouse_consumer',
+    kafka_format = 'JSONEachRow',
+    kafka_num_consumers = 3,
+    kafka_max_block_size = 65536;
+</code></pre>
+
+<strong>Create materialized view to consume from Kafka:</strong>
+<pre><code>CREATE MATERIALIZED VIEW events_consumer TO analytics.events AS
+SELECT
+    parseDateTime(JSONExtractString(_message, 'event_time')) AS event_time,
+    JSONExtractString(_message, 'event_id') AS event_id,
+    JSONExtractString(_message, 'event_type') AS event_type,
+    JSONExtractString(_message, 'user_id') AS user_id,
+    -- ... other columns
+FROM events_kafka;
+</code></pre>
+
+<h3>Batch Import from Files</h3>
+
+<strong>Import from CSV:</strong>
+<pre><code>clickhouse-client --query="
+    INSERT INTO analytics.events
+    FORMAT CSVWithNames
+" < events.csv
+</code></pre>
+
+<strong>Import from JSON:</strong>
+<pre><code>clickhouse-client --query="
+    INSERT INTO analytics.events
+    FORMAT JSONEachRow
+" < events.json
+</code></pre>
+
+<h2>Query Optimization Techniques</h2>
+
+<h3>Query Performance Analysis</h3>
+
+<strong>EXPLAIN plan:</strong>
+<pre><code>EXPLAIN PLAN
+SELECT
+    event_type,
+    count() AS event_count,
+    avg(response_time_ms) AS avg_response_time
+FROM analytics.events
+WHERE event_date BETWEEN '2026-02-20' AND '2026-02-26'
+GROUP BY event_type
+ORDER BY event_count DESC;
+</code></pre>
+
+<strong>EXPLAIN pipeline (detailed):</strong>
+<pre><code>EXPLAIN PIPELINE
+SELECT user_id, count() AS event_count
+FROM analytics.events
+WHERE event_date = today()
+GROUP BY user_id
+ORDER BY event_count DESC
+LIMIT 10;
+</code></pre>
+
+<h3>Partition Pruning</h3>
+
+<strong>Effective query (uses partition pruning):</strong>
+<pre><code>-- Queries only relevant partitions
+SELECT <em>
+FROM analytics.events
+WHERE event_date BETWEEN '2026-02-20' AND '2026-02-26';
+</code></pre>
+
+<strong>Ineffective query (scans all partitions):</strong>
+<pre><code>-- Function on partition column prevents pruning
+SELECT </em>
+FROM analytics.events
+WHERE toYYYYMM(event_date) = 202602;
+</code></pre>
+
+<strong>Solution:</strong>
+<pre><code>-- Use partition column directly
+SELECT <em>
+FROM analytics.events
+WHERE event_date >= '2026-02-01' AND event_date < '2026-03-01';
+</code></pre>
+
+<h3>Using Materialized Views for Pre-Aggregation</h3>
+
+<strong>Real-time rollups with materialized view:</strong>
+<pre><code>-- Create pre-aggregated table
+CREATE TABLE events_hourly_agg (
+    event_hour DateTime,
+    event_type LowCardinality(String),
+    event_count UInt32,
+    unique_users UInt32,
+    response_time_avg Float64
+) ENGINE = AggregatingMergeTree()
+ORDER BY (event_hour, event_type);
+
+<p>-- Create materialized view
+CREATE MATERIALIZED VIEW events_hourly_agg_mv
+AS
+SELECT
+    toStartOfHour(event_time) AS event_hour,
+    event_type,
+    countState() AS event_count,
+    uniqExactState(user_id) AS unique_users,
+    avgState(response_time_ms) AS response_time_avg
+FROM analytics.events
+GROUP BY event_hour, event_type;</p>
+
+<p>-- Query pre-aggregated data (much faster)
+SELECT
+    event_hour,
+    event_type,
+    countMerge(event_count) AS event_count,
+    uniqExactMerge(unique_users) AS unique_users,
+    avgMerge(response_time_avg) AS avg_response_time
+FROM events_hourly_agg
+WHERE event_hour >= now() - INTERVAL 24 HOUR
+GROUP BY event_hour, event_type;
+</code></pre></p>
+
+<h3>Skip Indexes for Faster Queries</h3>
+
+<strong>Minmax index (built-in):</strong>
+<pre><code>-- Automatically created on all columns in ORDER BY
+SELECT </em>
+FROM analytics.events
+WHERE event_date = '2026-02-27';  -- Uses minmax index
+</code></pre>
+
+<strong>Bloom filter index (manual):</strong>
+<pre><code>-- Add bloom filter to user_id
+ALTER TABLE analytics.events
+ADD INDEX idx_user_id_bloom user_id TYPE bloom_filter GRANULARITY 4;
+
+<p>-- Query uses bloom filter
+SELECT count()
+FROM analytics.events
+WHERE user_id = 'user_12345';
+</code></pre></p>
+
+<strong>Set index:</strong>
+<pre><code>-- Add set index for fast IN queries
+ALTER TABLE analytics.events
+ADD INDEX idx_event_type_set event_type TYPE set(2) GRANULARITY 4;
+
+<p>-- Query uses set index
+SELECT count()
+FROM analytics.events
+WHERE event_type IN ('page_view', 'click', 'scroll');
+</code></pre></p>
+
+<h2>Real-Time Analytics Examples</h2>
+
+<h3>Time-Series Analytics</h3>
+
+<strong>Events per minute (last hour):</strong>
+<pre><code>SELECT
+    toStartOfMinute(event_time) AS minute,
+    count() AS events_per_minute
+FROM analytics.events
+WHERE event_time >= now() - INTERVAL 1 HOUR
+GROUP BY minute
+ORDER BY minute;
+</code></pre>
+
+<strong>Rolling window (5-minute rolling average):</strong>
+<pre><code>SELECT
+    minute,
+    events_per_minute,
+    avg(events_per_minute) OVER (
+        ORDER BY minute
+        ROWS BETWEEN 4 PRECEDING AND CURRENT ROW
+    ) AS rolling_avg_5min
+FROM (
+    SELECT
+        toStartOfMinute(event_time) AS minute,
+        count() AS events_per_minute
+    FROM analytics.events
+    WHERE event_time >= now() - INTERVAL 1 HOUR
+    GROUP BY minute
+)
+ORDER BY minute;
+</code></pre>
+
+<h3>Funnel Analysis</h3>
+
+<strong>User conversion funnel:</strong>
+<pre><code>-- Funnel stages: page_view → product_view → add_to_cart → purchase
+WITH funnel_stages AS (
+    SELECT
+        user_id,
+        event_name,
+        min(event_time) AS first_event_time
+    FROM analytics.events
+    WHERE event_name IN ('page_view', 'product_view', 'add_to_cart', 'purchase')
+    GROUP BY user_id, event_name
+),
+funnel AS (
+    SELECT
+        user_id,
+        anyIf('page_view', event_name = 'page_view') AS stage1,
+        anyIf('product_view', event_name = 'product_view') AS stage2,
+        anyIf('add_to_cart', event_name = 'add_to_cart') AS stage3,
+        anyIf('purchase', event_name = 'purchase') AS stage4
+    FROM funnel_stages
+    GROUP BY user_id
+)
+SELECT
+    count() AS total_users,
+    countIf(stage1 = 'page_view') AS stage1_users,
+    countIf(stage2 = 'product_view') AS stage2_users,
+    countIf(stage3 = 'add_to_cart') AS stage3_users,
+    countIf(stage4 = 'purchase') AS stage4_users,
+    round(stage2_users <em> 100.0 / stage1_users, 2) AS stage1_to_stage2_pct,
+    round(stage3_users </em> 100.0 / stage2_users, 2) AS stage2_to_stage3_pct,
+    round(stage4_users <em> 100.0 / stage3_users, 2) AS stage3_to_stage4_pct
+FROM funnel;
+</code></pre>
+
+<h3>Cohort Analysis</h3>
+
+<strong>Monthly user cohorts:</strong>
+<pre><code>WITH user_cohorts AS (
+    SELECT
+        user_id,
+        toStartOfMonth(min(event_time)) AS cohort_month
+    FROM analytics.events
+    WHERE event_name = 'page_view'
+    GROUP BY user_id
+),
+cohort_activity AS (
+    SELECT
+        c.cohort_month,
+        toStartOfMonth(e.event_time) AS activity_month,
+        countDistinct(c.user_id) AS active_users
+    FROM user_cohorts c
+    JOIN analytics.events e ON c.user_id = e.user_id
+    GROUP BY c.cohort_month, activity_month
+)
+SELECT
+    cohort_month,
+    sumIf(active_users, activity_month = cohort_month) AS month_0_users,
+    sumIf(active_users, activity_month = cohort_month + INTERVAL 1 MONTH) AS month_1_users,
+    sumIf(active_users, activity_month = cohort_month + INTERVAL 2 MONTH) AS month_2_users,
+    sumIf(active_users, activity_month = cohort_month + INTERVAL 3 MONTH) AS month_3_users,
+    round(month_1_users </em> 100.0 / month_0_users, 2) AS m1_retention_pct,
+    round(month_2_users <em> 100.0 / month_0_users, 2) AS m2_retention_pct,
+    round(month_3_users </em> 100.0 / month_0_users, 2) AS m3_retention_pct
+FROM cohort_activity
+GROUP BY cohort_month
+ORDER BY cohort_month;
+</code></pre>
+
+<h3>Anomaly Detection</h3>
+
+<strong>Z-score based anomaly detection:</strong>
+<pre><code>WITH metrics AS (
+    SELECT
+        event_date,
+        event_type,
+        count() AS event_count
+    FROM analytics.events
+    WHERE event_date >= now() - INTERVAL 30 DAY
+    GROUP BY event_date, event_type
+),
+stats AS (
+    SELECT
+        event_type,
+        avg(event_count) AS mean_events,
+        stddevPop(event_count) AS stddev_events
+    FROM metrics
+    GROUP BY event_type
+)
+SELECT
+    m.event_date,
+    m.event_type,
+    m.event_count,
+    s.mean_events,
+    s.stddev_events,
+    round((m.event_count - s.mean_events) / s.stddev_events, 2) AS z_score,
+    CASE
+        WHEN abs((m.event_count - s.mean_events) / s.stddev_events) > 3
+        THEN 'ANOMALY'
+        ELSE 'NORMAL'
+    END AS status
+FROM metrics m
+JOIN stats s ON m.event_type = s.event_type
+WHERE m.event_date >= now() - INTERVAL 7 DAY
+ORDER BY abs((m.event_count - s.mean_events) / s.stddev_events) DESC;
+</code></pre>
+
+<h2>Performance Tuning</h2>
+
+<h3>Memory Management</h3>
+
+<strong>Max memory usage per query:</strong>
+<pre><code>-- Set maximum memory per query (in bytes)
+SET max_memory_usage = 10000000000;  -- 10GB
+
+<p>-- Set maximum memory usage for all queries
+SET max_memory_usage_all = 20000000000;  -- 20GB
+</code></pre></p>
+
+<strong>Memory for JOINs:</strong>
+<pre><code>-- Use smaller table for JOIN optimization
+SELECT large_table.<em>
+FROM large_table
+JOIN (
+    -- Small table in memory
+    SELECT user_id, user_segment
+    FROM user_segments
+    WHERE active = 1
+) small_table ON large_table.user_id = small_table.user_id
+SETTINGS join_algorithm = 'hash';  -- Hash join (default for small tables)
+</code></pre>
+
+<h3>Parallel Query Execution</h3>
+
+<strong>Parallel read from multiple replicas:</strong>
+<pre><code>-- Enable parallel reads from replicas
+SELECT count()
+FROM analytics.events
+WHERE event_date = today()
+SETTINGS max_parallel_replicas = 2;
+</code></pre>
+
+<strong>Parallel insert:</strong>
+<pre><code>-- Insert data in parallel
+INSERT INTO analytics.events
+SELECT </em> FROM remote('node{1,2,3}', analytics.events, 'default', '<em><strong>');
+</code></pre>
+
+<h3>Compression Settings</h3>
+
+</strong>ZSTD compression (recommended):<strong>
+<pre><code>-- Set compression codec
+ALTER TABLE analytics.events
+MODIFY SETTING compression_codec = 'ZSTD(3)';  -- Level 1-22, 3 is balanced
+</code></pre>
+
+</strong>Different compression per column:<strong>
+<pre><code>-- Column-specific compression
+ALTER TABLE analytics.events
+MODIFY COLUMN event_date SETTINGS codec = 'ZSTD(3)';
+
+<p>ALTER TABLE analytics.events
+MODIFY COLUMN user_id SETTINGS codec = 'ZSTD(1)';  -- Lower level for faster reads
+</code></pre></p>
+
+<h2>Monitoring and Maintenance</h2>
+
+<h3>System Queries</h3>
+
+</strong>Table size:<strong>
+<pre><code>SELECT
+    database,
+    table,
+    sum(rows) AS total_rows,
+    formatReadableSize(sum(data_bytes)) AS data_size,
+    formatReadableSize(sum(bytes_on_disk)) AS disk_size
+FROM system.parts
+WHERE active
+GROUP BY database, table
+ORDER BY data_size DESC;
+</code></pre>
+
+</strong>Query performance:<strong>
+<pre><code>SELECT
+    query_duration_ms,
+    type,
+    query,
+    formatReadableSize(memory_usage) AS memory_used
+FROM system.query_log
+WHERE type = 'QueryFinish'
+  AND event_date >= today()
+ORDER BY query_duration_ms DESC
+LIMIT 10;
+</code></pre>
+
+</strong>Slow queries:<strong>
+<pre><code>SELECT
+    query_duration_ms / 1000 AS duration_sec,
+    type,
+    substring(query, 1, 100) AS query_preview
+FROM system.query_log
+WHERE type = 'QueryFinish'
+  AND query_duration_ms > 10000  -- Queries > 10 seconds
+  AND event_date >= today()
+ORDER BY query_duration_ms DESC;
+</code></pre>
+
+<h3>Maintenance Operations</h3>
+
+</strong>Optimize table (force merge):<strong>
+<pre><code>-- Optimize partitions
+OPTIMIZE TABLE analytics.events PARTITION 202602 FINAL;
+
+<p>-- Optimize entire table
+OPTIMIZE TABLE analytics.events FINAL;
+</code></pre></p>
+
+</strong>Check data integrity:<strong>
+<pre><code>-- Check table for corrupted parts
+CHECK TABLE analytics.events;
+</code></pre>
+
+</strong>Drop old partitions:</em>*
+<pre><code>-- Drop partitions older than 90 days
+ALTER TABLE analytics.events
+DROP PARTITION 202511;
+</code></pre>
+
+<h2>Production Deployment Checklist</h2>
+
+<ul>
+<li>[ ] Configure replication with ZooKeeper</li>
+<li>[ ] Set up backup and restore procedures</li>
+<li>[ ] Configure monitoring (Prometheus, Grafana)</li>
+<li>[ ] Set up alerts for query performance</li>
+<li>[ ] Configure TLS for client connections</li>
+<li>[ ] Implement RBAC for access control</li>
+<li>[ ] Configure query logging and audit</li>
+<li>[ ] Set up automated partition management</li>
+<li>[ ] Test failover and recovery</li>
+<li>[ ] Document disaster recovery procedures</li>
+</ul>
+
+<h2>Conclusion</h2>
+
+<p>ClickHouse provides exceptional performance for real-time analytics workloads. With proper schema design, efficient data ingestion, and query optimization, you can achieve sub-second query response times even on billions of rows.</p>
+
+<p>Key takeaways:
+<ul>
+<li>Use ReplicatedMergeTree for production clusters</li>
+<li>Partition by time, order by query patterns</li>
+<li>Leverage materialized views for pre-aggregation</li>
+<li>Use skip indexes for frequent filters</li>
+<li>Monitor query performance and optimize hot paths</li>
+<li>Set up automated maintenance and backups</li>
+</ul></p>
+
+<p>By following the patterns and best practices in this guide, you can build scalable, high-performance real-time analytics systems with ClickHouse that handle millions of events per day while maintaining sub-second query latencies.</p>
+        </article>
+        <footer class="footer">
+            <p>© 2026 Duet Company. AI-first data infrastructure.</p>
+            <p>
+                <a href="../index.html">← Back to Home</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

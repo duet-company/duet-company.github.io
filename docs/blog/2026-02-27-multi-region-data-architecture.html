@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Region Data Infrastructure Patterns - Duet Company Blog</title>
+    <meta name="description" content="Building a multi-region data infrastructure is essential for global applications that require low-latency access, high availability, and data sovereig...">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-elevated: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --accent: #10b981;
+            --accent-dark: #059669;
+            --border: #334155;
+            --border-subtle: #1e293b;
+            --code-bg: #1a1a2e;
+            --code-text: #a5b4fc;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        header {
+            text-align: center;
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .meta {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 8px;
+        }
+        .meta span {
+            display: inline-block;
+            margin: 0 12px;
+        }
+        .content {
+            padding: 40px 0;
+        }
+        .content h2 {
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            color: var(--accent);
+        }
+        .content h3 {
+            font-size: 1.4rem;
+            margin: 30px 0 16px;
+        }
+        .content p {
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+        .content pre {
+            background: var(--code-bg);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 1px solid var(--border);
+        }
+        .content code {
+            color: var(--code-text);
+            font-family: 'SF Mono', 'Menlo', monospace;
+            font-size: 0.9rem;
+        }
+        .content ul, .content ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        .content li {
+            margin-bottom: 8px;
+        }
+        .content blockquote {
+            border-left: 4px solid var(--accent);
+            margin: 20px 0;
+            padding: 16px 20px;
+            background: var(--bg-secondary);
+            border-radius: 0 8px 8px 0;
+        }
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+        }
+        .content th, .content td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .content th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .footer {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+        }
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 16px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .content h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Multi-Region Data Infrastructure Patterns</h1>
+            <div class="meta">
+                <span>📅 February 26, 2026</span>
+                <span>⏱️ 14 min read</span>
+                <span>🏷️ Engineering</span>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <article class="content">
+            <p>Building a multi-region data infrastructure is essential for global applications that require low-latency access, high availability, and data sovereignty compliance. This guide explores patterns, trade-offs, and implementation strategies for designing robust multi-region data architectures.</p>
+
+<h2>Why Multi-Region Architecture?</h2>
+
+<h3>Business Drivers</h3>
+
+<strong>Performance:</strong>
+<ul>
+<li>Reduce latency for global users (target < 100ms for interactive queries)</li>
+<li>Serve content from edge locations closer to users</li>
+<li>Provide consistent experience across regions</li>
+</ul>
+
+<strong>Availability:</strong>
+<ul>
+<li>Survive regional failures (data center outages, natural disasters)</li>
+<li>Enable zero-downtime maintenance and upgrades</li>
+<li>Implement blue-green deployments with regional isolation</li>
+</ul>
+
+<strong>Compliance:</strong>
+<ul>
+<li>Meet data residency requirements (GDPR, CCPA, local regulations)</li>
+<li>Keep sensitive data within specific geographical boundaries</li>
+<li>Support cross-border data transfer restrictions</li>
+</ul>
+
+<strong>Scalability:</strong>
+<ul>
+<li>Distribute load across multiple regions</li>
+<li>Handle regional traffic spikes without global impact</li>
+<li>Scale infrastructure independently per region</li>
+</ul>
+
+<h3>Typical Use Cases</h3>
+
+<p>| Use Case | Region Count | Latency Target | Consistency Model |
+|----------|---------------|----------------|-------------------|
+| <strong>Global SaaS</strong> | 3-5 regions | < 100ms (95th) | Eventual consistency |
+| <strong>Real-time collaboration</strong> | 2-3 regions | < 50ms (95th) | Strong consistency |
+| <strong>IoT data ingestion</strong> | 5-10 regions | < 200ms | Eventual consistency |
+| <strong>Financial services</strong> | 2 regions | < 50ms | Strong consistency |</p>
+
+<h2>Core Architectural Patterns</h2>
+
+<h3>Pattern 1: Active-Active with Global Load Balancer</h3>
+
+<pre><code>┌─────────────────────────────────────────────────────────┐
+│                    Global Load Balancer                 │
+│                  (GeoDNS + Anycast)                     │
+└────────────┬──────────────┬──────────────┬──────────────┘
+             │              │              │
+     ┌───────▼──────┐ ┌─────▼──────┐ ┌───▼──────┐
+     │   Region 1   │ │  Region 2  │ │ Region 3 │
+     │   (US-East)  │ │ (EU-Central)│ │(Asia-East)│
+     │              │ │            │ │          │
+     │  ┌────────┐  │ │  ┌────────┐ │ │┌────────┐│
+     │  │ App    │  │ │  │ App    │ │ ││ App    ││
+     │  │ Servers│  │ │  │ Servers│ │ ││ Servers││
+     │  └───┬────┘  │ │  └───┬────┘ │ │└───┬────┘│
+     │      │       │ │      │     │ │    │     │
+     │  ┌───▼────┐  │ │  ┌───▼────┐ │ │┌───▼────┐│
+     │  │ Click  │  │ │  │ Click  │ │ ││ Click  ││
+     │  │House   │  │ │  │House   │ │ ││House   ││
+     │  └───┬────┘  │ │  └───┬────┘ │ │└───┬────┘│
+     │      │       │ │      │     │ │    │     │
+     │  ┌───▼────┐  │ │  ┌───▼────┐ │ │┌───▼────┐│
+     │  │ Kafka  │  │ │  │ Kafka  │ │ ││ Kafka  ││
+     │  └────────┘  │ │  └────────┘ │ │└────────┘│
+     │              │ │            │ │          │
+     └──────────────┘ └────────────┘ └──────────┘
+             │              │              │
+             └──────────────┼──────────────┘
+                            │
+                      ┌─────▼─────┐
+                      │  Global    │
+                      │  Replication│
+                      └────────────┘
+</code></pre>
+
+<strong>Characteristics:</strong>
+<ul>
+<li>All regions accept writes simultaneously</li>
+<li>Reads served from local region</li>
+<li>Asynchronous replication between regions</li>
+<li>Conflict resolution via CRDTs or last-write-wins</li>
+<li><strong>Pros:</strong> Best latency, no single point of failure</li>
+<li><strong>Cons:</strong> Complex conflict resolution, eventual consistency</li>
+</ul>
+
+<strong>Use case:</strong> Global SaaS applications where latency is more important than immediate consistency
+
+<h3>Pattern 2: Active-Passive with Geo-Routing</h3>
+
+<pre><code>┌──────────────────────────────────────────────────────┐
+│               Regional Load Balancers                │
+│    (Direct traffic to closest active region)         │
+└────────┬──────────────┬──────────────┬───────────────┘
+         │              │              │
+   ┌─────▼─────┐  ┌─────▼─────┐  ┌────▼────┐
+   │ Region 1  │  │ Region 2  │  │ Region 3│
+   │ (ACTIVE)  │  │ (STANDBY) │  │ (ACTIVE)│
+   │           │  │           │  │         │
+   │  App +    │  │  App +    │  │ App +   │
+   │  Click    │◄─┤  Click    │◄─┤ Click   │
+   │  House    │  │  House    │  │ House   │
+   │           │  │  (sync)   │  │         │
+   └───────────┘  └───────────┘  └─────────┘
+</code></pre>
+
+<strong>Characteristics:</strong>
+<ul>
+<li>Primary active region accepts writes</li>
+<li>Passive regions in read-only or hot-standby mode</li>
+<li>Failover to passive region if active fails</li>
+<li>Stronger consistency during normal operation</li>
+<li><strong>Pros:</strong> Simpler conflict resolution, consistent reads</li>
+<li><strong>Cons:</strong> Longer failover time, single active region bottleneck</li>
+</ul>
+
+<strong>Use case:</strong> Applications requiring stronger consistency where occasional latency is acceptable
+
+<h3>Pattern 3: Region-Sharded Data</h3>
+
+<pre><code>┌──────────────────────────────────────────────────────┐
+│                   Global Router                      │
+│        (Route based on data locality/tenancy)        │
+└────────┬──────────────┬──────────────┬───────────────┘
+         │              │              │
+   ┌─────▼─────┐  ┌─────▼─────┐  ┌────▼────┐
+   │ Region 1  │  │ Region 2  │  │ Region 3│
+   │   Shard   │  │   Shard   │  │  Shard  │
+   │  (US-East)│  │ (EU-Central)│ │(Asia-East)│
+   │           │  │           │  │         │
+   │  Tenants  │  │  Tenants  │  │ Tenants │
+   │  A-M      │  │  N-Z      │  │  (local)│
+   │           │  │           │  │         │
+   └───────────┘  └───────────┘  └─────────┘
+</code></pre>
+
+<strong>Characteristics:</strong>
+<ul>
+<li>Each region "owns" a subset of data (tenant-based, user-based, or shard-based)</li>
+<li>All operations for owned data routed to that region</li>
+<li>No cross-region conflicts (no overlapping data)</li>
+<li><strong>Pros:</strong> No conflict resolution needed, clear data ownership</li>
+<li><strong>Cons:</strong> Uneven load distribution, cross-region queries required for some use cases</li>
+</ul>
+
+<strong>Use case:</strong> Multi-tenant SaaS where customers can be assigned to regions
+
+<h2>ClickHouse Multi-Region Strategies</h2>
+
+<h3>Strategy 1: ReplicatedMergeTree with Cross-Region Replication</h3>
+
+<strong>Architecture:</strong>
+<pre><code>-- Region 1 (US-East)
+CREATE TABLE events ON CLUSTER 'us-east-cluster' (
+    event_id String,
+    event_time DateTime,
+    event_type String,
+    user_id String,
+    -- ... other columns
+    _replication_sign Int8 DEFAULT 1
+) ENGINE = ReplicatedMergeTree(
+    '/clickhouse/tables/{shard}/events',
+    '{replica}'
+)
+PARTITION BY toYYYYMM(event_time)
+ORDER BY (event_time, event_type, user_id);
+
+<p>-- Region 2 (EU-Central)
+CREATE TABLE events ON CLUSTER 'eu-central-cluster' (
+    -- Same schema
+) ENGINE = ReplicatedMergeTree(
+    '/clickhouse/tables/{shard}/events',
+    '{replica}'
+)
+PARTITION BY toYYYYMM(event_time)
+ORDER BY (event_time, event_type, user_id);</p>
+
+<p>-- Distributed table for cross-region queries
+CREATE TABLE events_global ON CLUSTER 'us-east-cluster' (
+    -- Same schema
+) ENGINE = Distributed(
+    'global_cluster',
+    '',
+    'events',
+    shardingKey
+);
+</code></pre></p>
+
+<strong>Cross-region replication via ClickHouse replication:</strong>
+<pre><code><!-- config.xml -->
+<clickhouse>
+    <remote_servers>
+        <global_cluster>
+            <shard>
+                <replica>
+                    <host>us-east-clickhouse-1</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>us-east-clickhouse-2</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+            <shard>
+                <replica>
+                    <host>eu-central-clickhouse-1</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>eu-central-clickhouse-2</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+        </global_cluster>
+    </remote_servers>
+</clickhouse>
+</code></pre>
+
+<strong>Pros:</strong>
+<ul>
+<li>Built-in replication support</li>
+<li>Automatic failover within region</li>
+<li>Simple setup for read-heavy workloads</li>
+</ul>
+
+<strong>Cons:</strong>
+<ul>
+<li>Cross-region replication is synchronous by default (high latency)</li>
+<li>No built-in asynchronous cross-region replication</li>
+<li>ZooKeeper required across regions (network latency)</li>
+</ul>
+
+<h3>Strategy 2: Dual-Write with Materialized Views</h3>
+
+<strong>Architecture:</strong>
+<pre><code>-- Region 1 (US-East)
+CREATE TABLE events_local ON CLUSTER 'us-east-cluster' (
+    event_id String,
+    event_time DateTime,
+    event_type String,
+    user_id String,
+    -- ... other columns
+    _region String DEFAULT 'us-east',
+    _insert_time DateTime DEFAULT now()
+) ENGINE = ReplicatedMergeTree(
+    '/clickhouse/tables/{shard}/events_local',
+    '{replica}'
+)
+PARTITION BY toYYYYMM(event_time)
+ORDER BY (event_time, _region, user_id);
+
+<p>-- Region 2 (EU-Central)
+CREATE TABLE events_local ON CLUSTER 'eu-central-cluster' (
+    -- Same schema
+) ENGINE = ReplicatedMergeTree(
+    '/clickhouse/tables/{shard}/events_local',
+    '{replica}'
+)
+PARTITION BY toYYYYMM(event_time)
+ORDER BY (event_time, _region, user_id);</p>
+
+<p>-- Dual-write materialized view in each region
+CREATE MATERIALIZED VIEW events_local_to_global_mv TO events_local AS
+SELECT
+    <em>,
+    _region AS source_region
+FROM events_remote;  -- Distributed table
+</code></pre></p>
+
+<strong>Application dual-write pattern:</strong>
+<pre><code>import requests
+
+<p>def write_event(event_data):
+    regions = ['us-east', 'eu-central', 'asia-east']</p>
+
+<p># Write to primary region first
+    primary_region = get_closest_region(event_data['user_id'])
+    write_to_region(primary_region, event_data)</p>
+
+<p># Async write to other regions
+    for region in regions:
+        if region != primary_region:
+            async_write_to_region(region, event_data)</p>
+
+<p>def write_to_region(region, event_data):
+    endpoint = f"https://{region}.api.example.com/events"
+    response = requests.post(endpoint, json=event_data, timeout=2.0)
+    response.raise_for_status()</p>
+
+<p>def async_write_to_region(region, event_data):
+    # Fire-and-forget with retry queue
+    retry_queue.push({
+        'region': region,
+        'event_data': event_data,
+        'attempts': 0
+    })
+</code></pre></p>
+
+<strong>Pros:</strong>
+<ul>
+<li>Low latency writes (local region)</li>
+<li>Asynchronous cross-region replication</li>
+<li>Application-level control over conflict resolution</li>
+</ul>
+
+<strong>Cons:</strong>
+<ul>
+<li>Application complexity for dual-write</li>
+<li>Potential for data inconsistency</li>
+<li>Requires conflict resolution logic</li>
+</ul>
+
+<h3>Strategy 3: Region-Sharded Data with Distributed Tables</h3>
+
+<strong>Sharding by user_id:</strong>
+<pre><code>-- Define sharding key based on user_id hash
+CREATE TABLE events_sharded ON CLUSTER 'global_cluster' (
+    event_id String,
+    event_time DateTime,
+    event_type String,
+    user_id String,
+    -- ... other columns
+    _shard UInt8 DEFAULT cityHash64(user_id) % 3  -- 3 shards
+) ENGINE = ReplicatedMergeTree(
+    '/clickhouse/tables/{shard}/events_sharded',
+    '{replica}'
+)
+PARTITION BY toYYYYMM(event_time)
+ORDER BY (event_time, user_id);
+
+<p>-- Distributed table for querying across shards
+CREATE TABLE events_distributed ON CLUSTER 'global_cluster' AS events_sharded
+ENGINE = Distributed(
+    'global_cluster',
+    'default',
+    'events_sharded',
+    cityHash64(user_id)  -- Sharding key
+);
+</code></pre></p>
+
+<strong>Cross-region distributed query:</strong>
+<pre><code>-- Query automatically routed to appropriate region
+SELECT
+    user_id,
+    count() AS event_count,
+    avg(response_time_ms) AS avg_response_time
+FROM events_distributed
+WHERE event_time >= now() - INTERVAL 7 DAY
+GROUP BY user_id;
+</code></pre>
+
+<strong>Pros:</strong>
+<ul>
+<li>No cross-region replication needed</li>
+<li>Clear data ownership</li>
+<li>No conflict resolution</li>
+</ul>
+
+<strong>Cons:</strong>
+<ul>
+<li>Cross-region queries for users in different regions</li>
+<li>Uneven load distribution</li>
+<li>Requires global metadata coordination</li>
+</ul>
+
+<h2>Data Consistency Patterns</h2>
+
+<h3>Eventual Consistency</h3>
+
+<strong>Use when:</strong>
+<ul>
+<li>Latency is more important than immediate consistency</li>
+<li>Conflicts can be resolved automatically</li>
+<li>Read-your-writes consistency not required</li>
+</ul>
+
+<strong>Implementation:</strong>
+<pre><code>-- Vector clocks for conflict resolution
+CREATE TABLE events_consistent (
+    event_id String,
+    event_time DateTime,
+    event_data String,
+    vector_clock Array(UInt32)  -- [region1_ts, region2_ts, region3_ts]
+) ENGINE = ReplicatedMergeTree(
+    '/clickhouse/tables/{shard}/events_consistent',
+    '{replica}'
+)
+ORDER BY (event_id);
+
+<p>-- Resolve conflicts using vector clocks
+SELECT
+    event_id,
+    argMax(event_data, vector_clock[1]) AS final_data
+FROM events_consistent
+GROUP BY event_id;
+</code></pre></p>
+
+<h3>Read-Your-Writes Consistency</h3>
+
+<strong>Use when:</strong>
+<ul>
+<li>Users need to see their writes immediately</li>
+<li>Cross-region writes rare or can be batched</li>
+<li>Session affinity possible</li>
+</ul>
+
+<strong>Implementation:</strong>
+<pre><code>def get_user_events(user_id):
+    # Try local region first
+    try:
+        events = query_local_region(user_id)
+        if events:
+            return events
+    except Exception:
+        pass
+
+<p># Fallback to user's home region
+    home_region = get_user_home_region(user_id)
+    return query_region(home_region, user_id)</p>
+
+<p>def write_user_event(user_id, event_data):
+    # Write to home region and local region
+    home_region = get_user_home_region(user_id)
+    local_region = get_current_region()</p>
+
+<p>write_to_region(home_region, event_data)
+    if home_region != local_region:
+        async_write_to_region(local_region, event_data)
+</code></pre></p>
+
+<h3>Strong Consistency</h3>
+
+<strong>Use when:</strong>
+<ul>
+<li>Financial transactions, inventory, user account data</li>
+<li>No tolerance for conflicts or lost writes</li>
+<li>Can accept higher latency</li>
+</ul>
+
+<strong>Implementation:</strong>
+<pre><code>-- Use ClickHouse's ReplicatedMergeTree with quorum reads
+SET select_sequential_consistency = 1;
+
+<p>-- Quorum read ensures all replicas have the data
+SELECT </em> FROM events
+WHERE event_id = 'evt_12345'
+SETTINGS max_replica_delay_for_distributed_queries = 5;
+</code></pre></p>
+
+<strong>Application-level two-phase commit:</strong>
+<pre><code>from uuid import uuid4
+
+<p>def write_transactionally(event_data, regions):
+    tx_id = str(uuid4())</p>
+
+<p># Phase 1: Prepare all regions
+    prepared = []
+    for region in regions:
+        try:
+            prepare_region(region, tx_id, event_data)
+            prepared.append(region)
+        except Exception as e:
+            # Abort transaction if any region fails
+            for r in prepared:
+                abort_region(r, tx_id)
+            raise e</p>
+
+<p># Phase 2: Commit all regions
+    for region in regions:
+        commit_region(region, tx_id)</p>
+
+<p>return tx_id
+</code></pre></p>
+
+<h2>Latency Optimization Techniques</h2>
+
+<h3>Geo-Routing with GeoDNS</h3>
+
+<strong>GeoDNS configuration (example with Cloudflare):</strong>
+<pre><code><h1>DNS records for api.example.com</h1>
+api.us-east.example.com    A 1.2.3.4     -- US-East IP
+api.eu-central.example.com  A 5.6.7.8     -- EU IP
+api.asia-east.example.com   A 9.10.11.12 -- Asia IP
+
+<h1>Geo-routing rules</h1>
+api.example.com -> {
+    US, CA: api.us-east.example.com
+    EU, GB, DE, FR: api.eu-central.example.com
+    JP, KR, SG: api.asia-east.example.com
+    Default: api.us-east.example.com
+}
+</code></pre>
+
+<h3>CDN for Static Content</h3>
+
+<strong>Content delivery:</strong>
+<pre><code><h1>CDN configuration (Cloudflare example)</h1>
+cdn:
+  origins:
+    - domain: us-east.storage.example.com
+      region: us-east
+    - domain: eu-central.storage.example.com
+      region: eu-central
+    - domain: asia-east.storage.example.com
+      region: asia-east
+
+<p>caching:
+    - pattern: "<em>.js"
+      ttl: 86400  # 1 day
+    - pattern: "</em>.css"
+      ttl: 86400
+    - pattern: "images/<em>"
+      ttl: 604800  # 1 week
+    - pattern: "/api/v1/events</em>"
+      ttl: 60
+</code></pre></p>
+
+<h3>Regional Read Replicas</h3>
+
+<strong>Setup read replicas:</strong>
+<pre><code>-- Primary cluster (accepts writes)
+CREATE TABLE events ON CLUSTER 'primary-cluster' (
+    -- schema
+) ENGINE = ReplicatedMergeTree('/clickhouse/primary/{shard}/events', '{replica}')
+ORDER BY (event_time, user_id);
+
+<p>-- Read replica clusters (read-only)
+CREATE TABLE events ON CLUSTER 'replica-cluster-eu' (
+    -- same schema
+) ENGINE = ReplicatedMergeTree('/clickhouse/primary/{shard}/events', 'replica-eu-1')
+ORDER BY (event_time, user_id);
+</code></pre></p>
+
+<strong>Route reads to local replicas:</strong>
+<pre><code>def query_events(user_id, query):
+    # Determine user's region
+    region = get_user_region(user_id)
+    local_cluster = f'replica-cluster-{region}'
+
+<p># Query local replica
+    return execute_query(local_cluster, query)
+</code></pre></p>
+
+<h2>Failover and Disaster Recovery</h2>
+
+<h3>Automated Failover</h3>
+
+<strong>Health checks and failover:</strong>
+<pre><code>import time
+from prometheus_client import start_http_server, Gauge
+
+<h1>Metrics</h1>
+cluster_health = Gauge('clickhouse_cluster_health', 'Cluster health status', ['cluster'])
+
+<p>def check_cluster_health(cluster):
+    try:
+        response = requests.get(f'https://{cluster}/ping', timeout=2)
+        return response.status_code == 200
+    except Exception:
+        return False</p>
+
+<p>def failover_if_unhealthy():
+    primary = 'us-east-cluster'
+    standby = 'eu-central-cluster'</p>
+
+<p># Check primary health
+    if not check_cluster_health(primary):
+        cluster_health.labels(cluster=primary).set(0)
+        logger.warning(f'Primary cluster {primary} unhealthy, initiating failover')</p>
+
+<p># Promote standby to primary
+        promote_standby(standby)
+        update_dns('api.example.com', standby)</p>
+
+<p># Reconfigure application
+        update_cluster_config(primary=standby)
+    else:
+        cluster_health.labels(cluster=primary).set(1)</p>
+
+<h1>Run health checks every 30 seconds</h1>
+while True:
+    failover_if_unhealthy()
+    time.sleep(30)
+</code></pre>
+
+<h3>Backup and Restore</h3>
+
+<strong>ClickHouse backup strategy:</strong>
+<pre><code>#!/bin/bash
+<h1>backup-clickhouse.sh</h1>
+
+<p>CLUSTER="us-east-cluster"
+BACKUP_DIR="/backups/clickhouse/$(date +%Y%m%d_%H%M%S)"
+S3_BUCKET="s3://backups/clickhouse/us-east"</p>
+
+<h1>Create backup directory</h1>
+mkdir -p "$BACKUP_DIR"
+
+<h1>Backup each database</h1>
+for db in $(clickhouse-client --query="SHOW DATABASES"); do
+    if [[ "$db" != "system" ]]; then
+        clickhouse-backup create "$db" \
+            --tables "$db.<em>" \
+            --backup-dir "$BACKUP_DIR"
+
+<p># Upload to S3
+        aws s3 sync "$BACKUP_DIR" "$S3_BUCKET/$(date +%Y%m%d)/$db"
+    fi
+done</p>
+
+<h1>Keep last 7 days of backups</h1>
+aws s3 ls "$S3_BUCKET/" | while read -r line; do
+    backup_date=$(echo "$line" | awk '{print $2}')
+    if [[ "$backup_date" < "$(date -d '7 days ago' +%Y%m%d)" ]]; then
+        aws s3 rm "$S3_BUCKET/$backup_date" --recursive
+    fi
+done
+</code></pre>
+
+<strong>Restore from backup:</strong>
+<pre><code>#!/bin/bash
+<h1>restore-clickhouse.sh</h1>
+
+<p>RESTORE_DATE=$1  # Format: YYYYMMDD
+CLUSTER="us-east-cluster"
+S3_BUCKET="s3://backups/clickhouse/us-east"</p>
+
+<h1>Download backup from S3</h1>
+LOCAL_BACKUP="/tmp/clickhouse-restore-$RESTORE_DATE"
+aws s3 sync "$S3_BUCKET/$RESTORE_DATE" "$LOCAL_BACKUP"
+
+<h1>Restore each database</h1>
+for db_dir in "$LOCAL_BACKUP"/</em>/; do
+    db=$(basename "$db_dir")
+    clickhouse-backup restore "$db" \
+        --backup-dir "$LOCAL_BACKUP/$db" \
+        --rm data
+done
+</code></pre>
+
+<h2>Monitoring and Observability</h2>
+
+<h3>Cross-Region Metrics</h3>
+
+<strong>Prometheus configuration:</strong>
+<pre><code>global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+<p>scrape_configs:
+  - job_name: 'clickhouse-us-east'
+    static_configs:
+      - targets: ['us-east-clickhouse-1:9363', 'us-east-clickhouse-2:9363']
+        labels:
+          region: us-east</p>
+
+<p>- job_name: 'clickhouse-eu-central'
+    static_configs:
+      - targets: ['eu-central-clickhouse-1:9363', 'eu-central-clickhouse-2:9363']
+        labels:
+          region: eu-central</p>
+
+<p>- job_name: 'clickhouse-asia-east'
+    static_configs:
+      - targets: ['asia-east-clickhouse-1:9363', 'asia-east-clickhouse-2:9363']
+        labels:
+          region: asia-east
+</code></pre></p>
+
+<strong>Grafana dashboard queries:</strong>
+<pre><code>-- Cross-region query latency
+SELECT
+    region,
+    quantile(0.95)(query_duration_ms) AS p95_latency
+FROM system.query_log
+WHERE event_date >= today() - INTERVAL 7 DAY
+  AND type = 'QueryFinish'
+GROUP BY region;
+
+<p>-- Replication lag per region
+SELECT
+    region,
+    avg(delay_seconds) AS avg_replication_lag
+FROM system.replication_queue
+WHERE event_date >= today()
+GROUP BY region;
+</code></pre></p>
+
+<h3>Distributed Tracing</h3>
+
+<strong>Track cross-region requests:</strong>
+<pre><code>from opentelemetry import trace
+from opentelemetry import propagators
+
+<h1>Initialize tracer</h1>
+tracer = trace.get_tracer(__name__)
+
+<p>def process_event(user_id, event_data):
+    # Start trace
+    with tracer.start_as_current_span("process_event") as parent_span:
+        parent_span.set_attribute("user_id", user_id)</p>
+
+<p># Write to local region
+        with tracer.start_as_current_span("write_local_region") as local_span:
+            write_to_local_region(event_data)
+            local_span.set_attribute("region", get_current_region())</p>
+
+<p># Replicate to other regions
+        for region in ['us-east', 'eu-central', 'asia-east']:
+            if region != get_current_region():
+                with tracer.start_as_current_span(f"replicate_to_{region}") as repl_span:
+                    replicate_to_region(region, event_data)
+                    repl_span.set_attribute("target_region", region)
+</code></pre></p>
+
+<h2>Cost Optimization</h2>
+
+<h3>Data Tiering</h3>
+
+<strong>Hot/Warm/Cold storage tiers:</strong>
+<pre><code>-- Hot tier (recent data, fast SSD)
+CREATE TABLE events_hot (
+    event_time DateTime,
+    event_data String,
+    -- ... other columns
+) ENGINE = MergeTree()
+ORDER BY event_time
+TTL event_time + INTERVAL 7 DAY TO DISK 'hot_storage';
+
+<p>-- Warm tier (older data, HDD)
+CREATE TABLE events_warm (
+    event_time DateTime,
+    event_data String,
+    -- ... other columns
+) ENGINE = MergeTree()
+ORDER BY event_time
+TTL event_time + INTERVAL 30 DAY TO DISK 'warm_storage';</p>
+
+<p>-- Cold tier (archival, S3)
+CREATE TABLE events_cold (
+    event_time DateTime,
+    event_data String,
+    -- ... other columns
+) ENGINE = MergeTree()
+ORDER BY event_time
+TTL event_time + INTERVAL 90 DAY TO DISK 's3_cold_storage';
+</code></pre></p>
+
+<h3>Query Optimization</h3>
+
+<strong>Use local tables when possible:</strong>
+<pre><code>-- Bad: Cross-region distributed query (high latency)
+SELECT count()
+FROM events_global
+WHERE event_time >= now() - INTERVAL 1 DAY;
+
+<p>-- Good: Query local table (low latency)
+SELECT count()
+FROM events_local
+WHERE event_time >= now() - INTERVAL 1 DAY
+  AND _region = 'us-east';
+</code></pre></p>
+
+<strong>Materialize cross-region aggregates:</strong>
+<pre><code>-- Pre-aggregate data per region
+CREATE TABLE events_daily_stats (
+    event_date Date,
+    region String,
+    event_type String,
+    event_count UInt32,
+    unique_users UInt32,
+    avg_response_time_ms Float64
+) ENGINE = SummingMergeTree()
+ORDER BY (event_date, region, event_type);
+
+<p>-- Update stats via materialized view
+CREATE MATERIALIZED VIEW events_daily_stats_mv AS
+SELECT
+    toDate(event_time) AS event_date,
+    _region AS region,
+    event_type,
+    count() AS event_count,
+    uniqExact(user_id) AS unique_users,
+    avg(response_time_ms) AS avg_response_time_ms
+FROM events_local
+GROUP BY event_date, region, event_type;
+</code></pre></p>
+
+<h2>Security and Compliance</h2>
+
+<h3>Data Residency</h3>
+
+<strong>Enforce data residency:</strong>
+<pre><code>-- EU data only stored in EU region
+CREATE TABLE eu_user_data (
+    user_id String,
+    personal_data String,
+    -- ... other columns
+    region String DEFAULT 'eu-central'
+) ENGINE = ReplicatedMergeTree(
+    '/clickhouse/tables/{shard}/eu_user_data',
+    '{replica}'
+)
+ORDER BY user_id
+SETTINGS data_path = '/var/lib/clickhouse/eu_data';
+
+<p>-- Validate data residency in application
+def validate_data_residency(user_id, region):
+    home_region = get_user_home_region(user_id)</p>
+
+<p>if home_region != region:
+        raise DataResidencyError(
+            f"User {user_id} data must reside in {home_region}, not {region}"
+        )
+</code></pre></p>
+
+<h3>Encryption in Transit</h3>
+
+<strong>TLS configuration:</strong>
+<pre><code><!-- config.xml -->
+<clickhouse>
+    <openSSL>
+        <server>
+            <certificateFile>/etc/clickhouse/certs/server.crt</certificateFile>
+            <privateKeyFile>/etc/clickhouse/certs/server.key</privateKeyFile>
+            <caConfig>/etc/clickhouse/certs/ca.crt</caConfig>
+            <verificationMode>strict</verificationMode>
+            <cacheSessions>true</cacheSessions>
+            <sessionTimeoutSeconds>300</sessionTimeoutSeconds>
+        </server>
+
+<client>
+            <loadDefaultCAFile>true</loadDefaultCAFile>
+            <cacheSessions>true</cacheSessions>
+            <invalidCertificateHandler>
+                <name>RejectCertificateHandler</name>
+            </invalidCertificateHandler>
+        </client>
+    </openSSL>
+</clickhouse>
+</code></pre>
+
+<h2>Implementation Checklist</h2>
+
+<strong>Planning:</strong>
+<ul>
+<li>[ ] Identify regions based on user distribution</li>
+<li>[ ] Define latency targets (read/write per region)</li>
+<li>[ ] Choose consistency model per data type</li>
+<li>[ ] Define failover RTO/RPO targets</li>
+</ul>
+
+<strong>Infrastructure:</strong>
+<ul>
+<li>[ ] Provision ClickHouse clusters in each region</li>
+<li>[ ] Set up ZooKeeper for replication (if using ReplicatedMergeTree)</li>
+<li>[ ] Configure network connectivity between regions</li>
+<li>[ ] Set up global DNS/Anycast</li>
+</ul>
+
+<strong>Data Management:</strong>
+<ul>
+<li>[ ] Define sharding/partitioning strategy</li>
+<li>[ ] Implement replication topology</li>
+<li>[ ] Set up backup and restore procedures</li>
+<li>[ ] Configure data tiering policies</li>
+</ul>
+
+<strong>Application Changes:</strong>
+<ul>
+<li>[ ] Implement region-aware routing logic</li>
+<li>[ ] Add conflict resolution (if active-active)</li>
+<li>[ ] Update monitoring to include region metrics</li>
+<li>[ ] Test failover procedures</li>
+</ul>
+
+<strong>Monitoring:</strong>
+<ul>
+<li>[ ] Set up cross-region health checks</li>
+<li>[ ] Configure alerting for replication lag</li>
+<li>[ ] Monitor query latency per region</li>
+<li>[ ] Track costs per region</li>
+</ul>
+
+<h2>Conclusion</h2>
+
+<p>Multi-region data infrastructure is complex but essential for global applications. The key is to choose the right patterns based on your specific requirements:</p>
+
+<ul>
+<li><strong>Active-Active:</strong> Best latency, eventual consistency, complex conflicts</li>
+<li><strong>Active-Passive:</strong> Stronger consistency, longer failover</li>
+<li><strong>Region-Sharded:</strong> Simple conflicts, uneven load</li>
+</ul>
+
+<p>ClickHouse provides powerful tools for multi-region deployment, including replicated tables, distributed queries, and flexible table engines. Combine these with application-level routing, monitoring, and automated failover for a robust global data platform.</p>
+
+<p>Start with a simple pattern (region-sharded or active-passive), then evolve to more complex architectures as your requirements and traffic grow.</p>
+        </article>
+        <footer class="footer">
+            <p>© 2026 Duet Company. AI-first data infrastructure.</p>
+            <p>
+                <a href="../index.html">← Back to Home</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
