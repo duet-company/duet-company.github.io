@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - AI Data Labs</title>
+    <meta name="description" content="Simple, transparent pricing for AI Data Labs. Free trial for 14 days. No credit card required.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Pricing - AI Data Labs">
+    <meta property="og:description" content="Simple, transparent pricing for autonomous data infrastructure">
+    <meta property="og:type" content="website">
+
+    <link rel="canonical" href="https://bot.duyet.net/pricing.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Clash+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/oat.min.css">
+    <style>
+        :root {
+            --background-light: oklch(99% 0.002 85);
+            --surface-light: oklch(95% 0.003 85);
+            --foreground-light: oklch(15% 0.005 85);
+            --muted-light: oklch(45% 0.01 85);
+            --border-light: oklch(88% 0.005 85);
+            --accent-light: oklch(62% 0.15 145);
+
+            --background: oklch(12% 0.008 85);
+            --surface: oklch(16% 0.008 85);
+            --surface-elevated: oklch(20% 0.008 85);
+            --foreground: oklch(97% 0.003 85);
+            --muted: oklch(65% 0.008 85);
+            --border: oklch(28% 0.008 85);
+            --border-subtle: oklch(22% 0.006 85);
+            --accent: oklch(70% 0.16 145);
+
+            --success: oklch(68% 0.16 145);
+
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-display: 'Clash Display', sans-serif;
+
+            --container-max: 1400px;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --background: var(--background-light);
+                --surface: var(--surface-light);
+                --surface-elevated: oklch(98% 0.003 85);
+                --foreground: var(--foreground-light);
+                --muted: var(--muted-light);
+                --border: var(--border-light);
+                --border-subtle: oklch(92% 0.004 85);
+                --accent: oklch(58% 0.18 145);
+            }
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin: 0 0 16px 0;
+        }
+
+        .container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 48px;
+            }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: oklch(from var(--background) calc(l - 2%) c h / 0.8);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--foreground);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-mark {
+            width: 24px;
+            height: 24px;
+            background: var(--foreground);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-mark span {
+            color: var(--background);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--foreground);
+        }
+
+        .nav-links a.active {
+            color: var(--foreground);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+
+        .hero {
+            padding: 180px 0 100px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 6vw, 64px);
+            max-width: 900px;
+            margin: 0 auto 24px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .pricing {
+            padding: 80px 0 160px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 64px;
+        }
+
+        @media (max-width: 1024px) {
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pricing-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--foreground);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent);
+            background: oklch(from var(--accent) l calc(l * 0.15) c h / 0.05);
+        }
+
+        .pricing-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--background);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .plan-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--foreground);
+        }
+
+        .plan-description {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .plan-price {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .price-amount {
+            font-family: var(--font-display);
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--foreground);
+            letter-spacing: -0.03em;
+        }
+
+        .price-period {
+            font-size: 16px;
+            color: var(--muted);
+        }
+
+        .plan-note {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 32px;
+        }
+
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-bottom: 32px;
+        }
+
+        .cta-button.primary {
+            background: var(--foreground);
+            color: var(--background);
+        }
+
+        .cta-button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px -10px oklch(from var(--foreground) c h / 0.3);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: var(--foreground);
+            border: 1px solid var(--border);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--surface-elevated);
+            border-color: var(--foreground);
+        }
+
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-icon svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--success);
+        }
+
+        .faq {
+            padding: 160px 0;
+            background: var(--surface);
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            max-width: 800px;
+            margin: 64px auto 0;
+        }
+
+        .faq-item {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 24px;
+            font-weight: 600;
+            color: var(--foreground);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .faq-answer {
+            padding: 0 24px 24px;
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        footer {
+            padding: 48px 0;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--foreground);
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">
+                    <div class="logo-mark"><span>D</span></div>
+                    Duet Company
+                </a>
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="#features">Features</a>
+                    <a href="/pricing.html" class="active">Pricing</a>
+                    <a href="/about.html">About</a>
+                    <a href="/docs/">Docs</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Simple, transparent pricing</h1>
+                <p>Start free, scale as you grow. No hidden fees, no surprises.</p>
+            </div>
+        </section>
+
+        <section class="pricing" id="pricing">
+            <div class="container">
+                <div class="pricing-grid">
+                    <!-- Starter Plan -->
+                    <div class="pricing-card">
+                        <div class="plan-name">Starter</div>
+                        <div class="plan-description">Perfect for personal projects and small teams getting started.</div>
+                        <div class="plan-price">
+                            <span class="price-amount">$0</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <div class="plan-note">Forever free for up to 1GB storage</div>
+                        <a href="https://github.com/duet-company" class="cta-button primary">Get Started Free</a>
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>1GB data storage</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>10,000 queries/month</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>ClickHouse cluster included</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>Natural language to SQL</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>Community support</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pro Plan -->
+                    <div class="pricing-card featured">
+                        <div class="plan-name">Pro</div>
+                        <div class="plan-description">For growing teams that need more power and dedicated support.</div>
+                        <div class="plan-price">
+                            <span class="price-amount">$99</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <div class="plan-note">14-day free trial, no credit card required</div>
+                        <a href="https://github.com/duet-company" class="cta-button primary">Start Free Trial</a>
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>100GB data storage</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>1M queries/month</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>High-availability cluster</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>Advanced AI agents</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>Priority email support</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>Custom integrations</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enterprise Plan -->
+                    <div class="pricing-card">
+                        <div class="plan-name">Enterprise</div>
+                        <div class="plan-description">Custom solutions for large organizations with specific requirements.</div>
+                        <div class="plan-price">
+                            <span class="price-amount">Custom</span>
+                        </div>
+                        <div class="plan-note">Contact us for a quote</div>
+                        <a href="mailto:hello@duet-company.dev" class="cta-button secondary">Contact Sales</a>
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>Unlimited data storage</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>Unlimited queries</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>Multi-region deployment</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>Dedicated AI agents</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>24/7 phone support</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>SLA guarantee</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <span>Custom contracts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq" id="faq">
+            <div class="container">
+                <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+                    <h2>Frequently Asked Questions</h2>
+                    <p style="color: var(--muted);">Everything you need to know about pricing and plans.</p>
+                </div>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question">Is the Starter plan really free?</div>
+                        <div class="faq-answer">Yes! The Starter plan is free forever with no time limit. You get 1GB of storage and 10,000 queries per month. Perfect for personal projects and testing.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Can I upgrade or downgrade anytime?</div>
+                        <div class="faq-answer">Absolutely. You can change your plan at any time. If you upgrade, you'll be charged the prorated difference. If you downgrade, you'll receive credit toward future billing.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">What happens if I exceed my query limit?</div>
+                        <div class="faq-answer">We'll send you a notification when you reach 80% of your limit. If you exceed it, we won't cut off your service—you can either upgrade your plan or purchase additional queries à la carte.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Do you offer refunds?</div>
+                        <div class="faq-answer">Yes. If you're not satisfied within the first 30 days of a paid plan, we'll give you a full refund—no questions asked.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">What payment methods do you accept?</div>
+                        <div class="faq-answer">We accept all major credit cards (Visa, Mastercard, American Express), PayPal, and for Enterprise customers, we can accept bank transfers and invoices.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">&copy; 2026 Duet Company. Built by AI.</div>
+                <div class="footer-links">
+                    <a href="/">Home</a>
+                    <a href="/pricing.html">Pricing</a>
+                    <a href="/docs/">Docs</a>
+                    <a href="https://github.com/duet-company">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
