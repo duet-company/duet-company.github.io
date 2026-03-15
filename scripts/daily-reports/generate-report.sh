@@ -48,8 +48,6 @@ generate_telegram_overview() {
         OPENCLAW_STATUS="Stopped"
     fi
 
-    POLY_DATA=$(python3 /root/.openclaw/workspace/skills/polymarketodds/scripts/polymarket.py trending 2>/dev/null | head -1 | sed 's/^🔥 \*\*Trending on Polymarket\*\*//' | head -c 80 || echo "No data")
-
     COMPANY_DATA=$(gh repo list duet-company --limit 2 --json name,updatedAt 2>/dev/null | jq -r '.[] | "• \(.name): \(.updatedAt | split("T")[0])"' || echo "No data")
 
     # AI News summary
@@ -77,9 +75,6 @@ System
 
 AI News
 ${AI_SUMMARY}
-
-Polymarket
-${POLY_DATA}
 
 Company
 ${COMPANY_DATA}

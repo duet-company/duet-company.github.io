@@ -1,8 +1,8 @@
-Daily Report 2026-02-23
+Daily Report 2026-03-14
 
 System
 • Disk: 1%
-• Memory: 1.6Gi/7.8Gi
+• Memory: 1.2Gi/7.8Gi
 • OpenClaw: OK
 
 AI News
@@ -12,9 +12,9 @@ Polymarket
 • 🔥 **Trending on Polymarket**
 
 Company
-• duet-company.github.io: 2026-02-23
-• company: 2026-02-16
+• backend: 2026-03-11
+• monorepo: 2026-03-08
 
-Blog: 4 posts this week
+Blog: 5 posts this week
 
-View: https://dewy-quasar-n7pa.here.now/
+View: https://jovial-wreath-6zas.here.now/

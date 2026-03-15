@@ -10,7 +10,7 @@ TEMPLATE_DIR="$HOME/.openclaw/workspace/templates"
 OUTPUT_DIR="$HOME/.openclaw/workspace/ai-news-daily-page"
 
 # Generate HTML using unified template
-bash "$TEMPLATE_DIR/generate-report.sh" ai-news "Daily AI News" "" "" "$OUTPUT_DIR" "Daily AI news briefing covering latest developments"
+bash "$TEMPLATE_DIR/generate-report.sh" ai-news "Daily AI News" "$BASE_DIR/ai-news-daily-page/content.html" "$OUTPUT_DIR" "Daily AI news briefing covering latest developments"
 
 # Output result
 if [ -f "$OUTPUT_DIR/latest-url.txt" ]; then

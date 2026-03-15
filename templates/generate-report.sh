@@ -100,20 +100,25 @@ $content
 EOF
     
     echo "✅ Generated: $output_file"
-    
+
     # Publish to here.now
     cd "$output_dir"
-    bash "$HOME/.openclaw/skills/here-now/scripts/publish.sh" "$output_file" 2>/dev/null || {
+    local filename=$(basename "$output_file")
+    local local_state_file=".herenow/state.json"
+
+    if bash "$HOME/.agents/skills/here-now/scripts/publish.sh" "$filename" 2>&1 | tee /tmp/herenow-publish.log; then
+        echo "✅ Publishing successful"
+    else
         echo "⚠️ Publishing failed, here.now script not found"
         URL="N/A"
-    }
-    
+    fi
+
     # Get URL
-    if [ -f "$state_file" ]; then
-        URL=$(python3 -c "import json; f=open('$state_file'); d=json.load(f); print(d.get('publishes', {}).get(list(d.get('publishes', {}).keys())[0] if d.get('publishes') else 'N/A', {}).get('siteUrl', 'N/A'))" 2>/dev/null || echo "N/A")
+    if [ -f "$local_state_file" ]; then
+        URL=$(python3 -c "import json; f=open('$local_state_file'); d=json.load(f); keys=list(d.get('publishes', {}).keys()); slug=keys[-1] if keys else 'N/A'; print(d.get('publishes', {}).get(slug, {}).get('siteUrl', 'N/A'))" 2>/dev/null || echo "N/A")
         if [ "$URL" != "N/A" ]; then
             echo "✅ Published: $URL"
-            echo "$URL" > "$output_dir/latest-url.txt"
+            echo "$URL" > "latest-url.txt"
         else
             echo "⚠️ Failed to get URL"
         fi
