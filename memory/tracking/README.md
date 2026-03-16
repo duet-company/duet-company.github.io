@@ -6,6 +6,14 @@
 
 ## Active Tracking Topics
 
+### 📰 Daily AI News (2026-03-16)
+- **File:** `ai-news-daily-2026-03-16.md`
+- **Status:** Active tracking
+- **Priority:** Medium
+- **Total Covered:** 11 AI news stories + 5 HN stories
+- **Purpose:** Avoid duplicates in daily reports, track coverage
+- **Stories:** GPT-5.4, Google Maps Gemini, Tesla-xAI, DeepSeek V4, AlphaEvolve, etc.
+
 ### 🚨 Iran-Israel Tensions
 - **File:** `2026-03-16-iran-israel-tensions.md`
 - **Status:** Active monitoring
@@ -17,9 +25,10 @@
 - **File:** `2026-03-16-hacker-news.md`
 - **Status:** Active monitoring
 - **Priority:** Medium
-- **Latest Event:** LLM Architecture Gallery (Score 150+, 2026-03-16)
+- **Latest Event:** "Coding After Coders" discussion (Score 150+, 2026-03-16)
 - **Keywords:** AI, ML, startups, engineering, Cloudflare, OpenRouter
 - **Focus:** Technology trends relevant to AI Data Labs
+- **Total Stories:** 5 (LLM Arch, MCP, Claude Partner Network, Economic Data, Coding After Coders)
 
 ---
 
