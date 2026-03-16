@@ -13,6 +13,14 @@
 - **Latest Event:** IRGC vows to "pursue and kill" Netanyahu (2026-03-16)
 - **Keywords:** Iran, IRGC, Israel, Netanyahu, Hezbollah, Persian Gulf
 
+### 📰 Hacker News
+- **File:** `2026-03-16-hacker-news.md`
+- **Status:** Active monitoring
+- **Priority:** Medium
+- **Latest Event:** LLM Architecture Gallery (Score 150+, 2026-03-16)
+- **Keywords:** AI, ML, startups, engineering, Cloudflare, OpenRouter
+- **Focus:** Technology trends relevant to AI Data Labs
+
 ---
 
 ## Tracking Methodology
