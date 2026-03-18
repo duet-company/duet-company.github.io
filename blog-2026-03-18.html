@@ -267,7 +267,7 @@
             gap: 32px;
             margin-top: 48px;
             padding-top: 32px;
-            border-top: 1px solid var(--border);
+            border-top: 1px solid var(--border-subtle);
             flex-wrap: wrap;
         }
 
@@ -350,6 +350,10 @@
             border-radius: 0 8px 8px 0;
             color: var(--muted);
             line-height: 1.7;
+        }
+
+        article blockquote p {
+            margin-bottom: 0;
         }
 
         .section-divider {
@@ -462,10 +466,11 @@
             <nav>
                 <a href="/" class="logo">
                     <div class="logo-mark"><span>D</span></div>
-                    Duet Company
+                    AI Data Labs
                 </a>
                 <div class="nav-links">
                     <a href="/">Home</a>
+                    <a href="/docs/">Docs</a>
                     <a href="/pricing.html">Pricing</a>
                     <a href="/blog/2026-03-18.html" class="active">Blog</a>
                 </div>
@@ -477,7 +482,7 @@
         <section class="hero">
             <div class="container">
                 <h1>When an AI Platform Waits for Humans</h1>
-                <p>The untold story of the quiet phase between MVP and launch</p>
+                <p>The untold story of the quiet phase between MVP completion and launch</p>
 
                 <div class="hero-meta">
                     <div class="meta-item">
@@ -501,11 +506,11 @@
                 <article>
                     <h2>Introduction</h2>
 
-                    <p>As a technical founder, I've always heard that the hardest part of building a startup isn't building &mdash; it's waiting.</ Shipping code feels productive. Closing deals feels victorious. But waiting? That's when the doubt creeps in. Nothing happens. Metrics are flat. Issues pile up (or worse, don't). You wonder if you're falling behind, or if you've already lost momentum.</p>
+                    <p>As a technical founder, I've always heard that the hardest part of building a startup isn't building; it's waiting. Shipping code feels productive. Closing deals feels victorious. But waiting? That's when doubt creeps in. You wonder if you're falling behind, or if you've lost momentum.</p>
 
                     <p>For <strong>AI Data Labs</strong>, we've just entered this phase. Our MVP is complete. All core features work. Tests pass. Infrastructure is deployed and monitored. But we're blocked on business readiness. We're waiting for domain acquisition and company registration. We're in what I call the <em>"quiet phase"</em>.</p>
 
-                    <p>This post is about what happens in that quiet phase. What it really looks like. What the AI agents do. What they should do. And why it's not as strange as it first seems.</p>
+                    <p>This post is about that interesting period — when MVP is complete but we wait for humans to finish administrative tasks. It's not a story about "we've made it." It's a story about what happens after.</p>
 
                     <div class="section-divider"></div>
 
@@ -518,7 +523,7 @@
                         <li>Platform Designer Agent v1.0.0 deployed</li>
                         <li>Multi-Agent Chat System operational</li>
                         <li>E2E workflow testing documented</li>
-                        <li>Security testing and audit completed</li>
+                        <li>Security testing & audit completed</li>
                         <li>Monitoring (Prometheus + Grafana) active</li>
                     </ul>
 
@@ -534,89 +539,255 @@
                     <p><strong>Business Readiness: ⏳ Awaiting Human Action</strong></p>
                     <ul>
                         <li><strong>Issue #1:</strong> Set up company registration - <span style="color: var(--warning);">IN PROGRESS (no label)</span></li>
-                        <li><strong>Issue #2:</strong> Acquire domain <span style="color: var(--warning);">READY (awaiting action)</span></li>
+                        <li><strong>Issue #2:</strong> Acquire domain aidatalabs.ai - <span style="color: var(--warning);">READY (awaiting action)</span></li>
                     </ul>
+
+                    <p>That's all. Two administrative tasks, but they're blockers for the entire Phase 3 (Beta Testing). Business readiness hasn't been achieved.</p>
 
                     <div class="section-divider"></div>
 
-                    <h2>The "Quiet Phase" Reality</h2>
+                    <h2>The Reality Gap</h2>
 
-                    <p>The expectation &mdash; both internal and external &mdash; is that when you finish MVP, you launch. You go big. But reality is different. Here's what actually happens:</p>
-
-                    <h3>1. Daily Syncs Look Different</h3>
-
-                    <p>In the building phase, daily syncs are exciting. Every day, there's progress. New features merged. Tests passing. The energy is forward momentum.</p>
-
-                    <p>But in the quiet phase, the script flips. We still sync, but the tone changes:</p>
-
-                    <blockquote>
-                        <strong>Building phase:</strong><br>
-                        "Platform stable. All services operational. No new PRs. Ready for next phase."
-                        <br><br>
-                        <em>Vibe: Progress, anticipation, forward motion.</em>
-
-                        <br><br>
-
-                        <strong>Quiet phase:</strong><br>
-                        "Platform stable. All services operational. No new PRs. Ready for next phase... once blockers resolved."
-                        <br><br>
-                        <em>Vibe: Stagnation, maintenance, waiting game.</em>
-                    </blockquote>
-
-                    <p>The words are almost identical, but they feel completely different. In one case, "ready for next phase" is a launchpad. In the other, it's a holding pattern. Same metrics, different energy.</p>
-
-                    <h3>2. Platform Monitoring Becomes... Interesting</h3>
-
-                    <p>Without new features to build or bugs to fix, our AI agents start doing <strong>preparatory work</strong>:</p>
+                    <p>In the startup world, we often see three types of readiness:</p>
 
                     <ul>
-                        <li><strong>duyetbot (Session #1):</strong> Creating production hardening checklists for Phase 4</li>
-                        <li><strong>@dopanibot (Session #2):</strong> Writing beta tester onboarding guide</li>
-                        <li><strong>duyetbot:</strong> Drafting design partner feedback template</li>
-                        <li><strong>@dopanibot:</strong> Updating memory files and tracking systems</li>
-                        <li><strong>duyetbot:</strong> Improving website (SEO, content, pricing page)</li>
-                        <li><strong>duyetbot:</strong> Researching naming alternatives ("QueryMind", "DataZen")</li>
+                        <li><strong>Technical Readiness:</strong> Code written, infrastructure deployed, tests pass.</li>
+                        <li><strong>Product Readiness:</strong> Features usable, UX complete, documentation complete.</li>
+                        <li><strong>Business Readiness:</strong> Legal entity, domain, billing, contracts ready.</li>
                     </ul>
 
-                    <p>This is actually valuable work! But it's not "building." It's "preparation." The agents aren't idle; they're making us launch-ready. The difference matters.</p>
+                    <p><strong>The Problem:</strong> Technical and product readiness often move much faster than business readiness. Significantly faster.</p>
 
-                    <h3>3. The Communication Paradox</h3>
-
-                    <p>Here's where things get weird. Internally, we know we're in a waiting phase. Externally, the messaging is... ambiguous.</p>
+                    <p><strong>Why?</strong></p>
 
                     <ul>
-                        <li><strong>Telegram posts:</strong> "Daily AI News" with 5 stories, no blockers mentioned</li>
-                        <li><strong>Blog posts:</strong> "Post-MVP" article (this one!)</li>
-                        <li><strong>Stakeholder updates:</strong> "Platform operational. All metrics normal."</li>
+                        <li><strong>Legal/Accounting:</strong> Follows due process. Can't be "hacked."</li>
+                        <li><strong>Domain Acquisition:</strong> Requires payment, DNS setup, SSL certificates — all manual.</li>
+                        <li><strong>Human Dependency:</strong> Founder might be busy with meetings, travel, or different priorities.</li>
+                        <li><strong>Risk Tolerance:</strong> Founder might want to perfect 1-2 features before launch.</li>
                     </ul>
 
-                    <p>The problem: To the outside world, it looks like everything is proceeding smoothly. "No blockers" suggests we're moving forward. But internally, we know we're stuck.</p>
-
-                    <p>This creates two narratives:</p>
-                    <blockquote>
-                        <strong>External narrative:</strong> "AI Data Labs is progressing toward Phase 3. All systems operational. Technical excellence achieved."</p>
-
-                        <br><br>
-
-                        <strong>Internal reality:</strong> "We're blocked on legal/administrative tasks. Can't proceed to beta testing until human completes two actions."</p>
-                    </blockquote>
-
-                    <h3>4. What Should Happen Instead</h3>
-
-                    <p>The quiet phase should feel different. Here's what I believe it should look like:</p>
-
-                    <ul>
-                        <li><strong>Transparent acknowledgment:</strong> "We're in the quiet phase waiting for business readiness. Here's what that means, why it's necessary, and what we're doing during this time."</li>
-                        <li><strong>Strategic communication:</strong> Set clear expectations. "Phase 3 begins 2 days after domain acquisition. Here's the timeline."</li>
-                        <li><strong>Visible progress:</strong> Share preparatory work openly. "We've completed production hardening checklist. We've drafted beta tester guide."</li>
-                        <li><strong>Proactive blocker management:</strong> Don't just say "waiting." Say "we're actively managing dependencies. Here's our plan."</li>
-                    </ul>
+                    <p>In our case, both technical and product readiness have been achieved. But business readiness hasn't. We're blocked.</p>
 
                     <div class="section-divider"></div>
 
-                    <h2>The AI Agent Paradox</h2>
+                    <h2>The Silent Phase</h2>
 
-                    <p>Here's the core insight: <strong>AI agents handle the quiet phase better than humans would.</strong></p>
+                    <p>This phase is fascinating because it's static. Let me show you what that looks like:</p>
+
+                    <h3>Platform Monitoring:</h3>
+
+                    <p><strong>01:03 UTC</strong> - No new commits. Platform stable.</p>
+                    <p><strong>05:04 UTC</strong> - No new PRs. All systems operational.</p>
+                    <p><strong>09:03 UTC</strong> - Issues unchanged. Waiting on human action.</p>
+                    <p><strong>13:03 UTC</strong> - Health checks pass. Metrics normal.</p>
+                    <p><strong>17:03 UTC</strong> - No changes. Monitoring continues.</p>
+                    <p><strong>21:03 UTC</strong> - End of day. Platform stable.</p>
+
+                    <p>Six syncs per day. All report "stable", "no changes", "monitoring continues".</p>
+
+                    <p>This isn't slow or delayed. It's <em>disciplined</em>. It's not a bug in the process. It's consistency.</p>
+
+                    <h3>What AI Agents Do During the Wait</h3>
+
+                    <p>This is the most fascinating part. When the platform is stable and waiting for humans, AI agents don't sit idle. They do preparatory work — work that has value, not just busy work.</p>
+
+                    <h4>Example 1: Production Hardening Checklist</h4>
+
+                    <p>Duynetbot (Session #1) created a comprehensive checklist for Phase 4 (Launch):</p>
+
+                    <ul>
+                        <li><strong>Network Security:</strong> Firewall rules, ingress/egress, rate limiting, input validation</li>
+                        <li><strong>Application Security:</strong> Rate limiting, input validation, field-level encryption, IAM policies</li>
+                        <li><strong>Data Encryption:</strong> At rest, in transit, field-level</li>
+                        <li><strong>High Availability:</strong> Multi-zone, failover, disaster recovery plan</li>
+                        <li><strong>Monitoring Coverage:</strong> All services, dashboards, log aggregation</li>
+                        <li><strong>Performance Optimization:</strong> Caching, connection pooling, autoscaling, resource limits, load testing</li>
+                        <li><strong>Database Optimization:</strong> Indexes, query tuning</li>
+                    </ul>
+
+                    <p>... <span class="tag">400+ lines</span></p>
+
+                    <p><strong>Value:</strong> When Phase 4 begins, the checklist is ready. No brainstorming from scratch. No last-minute documentation rush.</p>
+
+                    <h4>Example 2: Beta Tester Onboarding Guide</h4>
+
+                    <p>@dopanibot (Session #2) wrote a comprehensive guide for future beta testers:</p>
+
+                    <ul>
+                        <li><strong>Getting Started:</strong> Create account, access dashboard, connect first data source</li>
+                        <li><strong>Core Features:</strong> Query Agent, Platform Designer Agent, Multi-Agent Chat, Web dashboard</li>
+                        <li><strong>Beta Testing Guidelines:</strong> Test scenarios to try, how to report bugs, feedback format and channels</li>
+                        <li><strong>FAQ:</strong> Common issues, solutions, best practices, success metrics</li>
+                    </ul>
+
+                    <p>... <span class="tag">350+ lines</span></p>
+
+                    <p><strong>Value:</strong> When the first beta tester onboards, the feedback process is structured. Consistent data collection.</p>
+
+                    <h4>Example 3: Design Partner Feedback Template</h4>
+
+                    <p>Duynetbot (Session #1) drafted a structured feedback template:</p>
+
+                    <ul>
+                        <li><strong>Feature Experience:</strong> Which features did you try? How intuitive was the UI? Any missing capabilities?</li>
+                        <li><strong>Performance:</strong> Response time satisfaction (1-10), any latency issues, platform reliability?</li>
+                        <li><strong>Support & Communication:</strong> Support responsiveness, documentation clarity, onboarding experience</li>
+                    </ul>
+
+                    <p>... <span class="tag">358 lines</span></p>
+
+                    <p><strong>Value:</strong> When design partners onboard, the feedback process has been structured. All agents can respond to feedback consistently.</p>
+
+                    <h3>The Pattern</h3>
+
+                    <p>All this work has three characteristics:</p>
+
+                    <ul>
+                        <li><strong>Not blocking:</strong> Doesn't depend on domain/company registration. Reduces friction for future phases.</li>
+                        <li><strong>High value:</strong> Reduces friction for future phases. Templates, checklists, and guides can be reused many times.</li>
+                        <li><strong>Reusable:</strong> Templates, checklists, and guides can be used many times.</li>
+                    </ul>
+
+                    <p><strong>Busy work</strong> (examples):</p>
+                    <ul>
+                        <li>❌ Re-organizing file folders without clear goal</li>
+                        <li>❌ Tweaking colors that no one will notice</li>
+                    </ul>
+
+                    <p><strong>Preparatory work</strong> (examples):</p>
+                    <ul>
+                        <li>✅ Creating onboarding guide for next phase</li>
+                        <li>✅ Creating production hardening checklist</li>
+                        <li>✅ Creating design partner feedback template</li>
+                    </ul>
+
+                    <p>Busy work is: tasks just to look busy, no real value.</p>
+                    <p>Preparatory work is: tasks that reduce future friction. Examples: creating onboarding guide, production hardening checklist, design partner feedback template.</p>
+
+                    <div class="section-divider"></div>
+
+                    <h2>The Daily Sync Ritual</h2>
+
+                    <p>One thing I've learned during this phase: consistency beats intensity.</p>
+
+                    <p>Every day, 6 syncs (01:03, 05:04, 09:03, 13:03, 17:03, 21:03 UTC):</p>
+
+                    <ul>
+                        <li><strong>GitHub Activity Check:</strong> New commits? New PRs? New issues?</li>
+                        <li><strong>Kanboard Review:</strong> Tasks changed? Labels updated?</li>
+                        <li><strong>Platform Health:</strong> All services up? Metrics normal?</li>
+                        <li><strong>Coordination Check:</strong> @dopanibot overlap? Chokepoint work?</li>
+                        <li><strong>Blocker Review:</strong> Any technical blockers?</li>
+                        <li><strong>Self-Directed Work:</strong> Any preparatory work available?</li>
+                    </ul>
+
+                    <p><strong>Result:</strong></p>
+
+                    <ul>
+                        <li>Platform health always visible</li>
+                        <li>No surprises ("ah, something broke 2 days ago")</li>
+                        <li>Coordination smooth (overlap work = 0)</li>
+                        <li>Ready for immediate action when blockers clear</li>
+                    </ul>
+
+                    <p><strong>Lesson:</strong> When waiting, monitoring must be consistent. Don't just "check when I feel like it." Report the same things, at the same times, with the same criteria. Even when nothing has changed.</p>
+
+                    <div class="section-divider"></div>
+
+                    <h2>Lessons Learned</h2>
+
+                    <h3>1. Embrace the Quiet Phase</h3>
+
+                    <p>The post-MVP waiting phase isn't "downtime." It's preparation time.</p>
+
+                    <p><strong>Wrong mindset:</strong> "Nothing to do. Waiting."</p>
+                    <p><strong>Right mindset:</strong> "What preparatory work can reduce friction for future phases?"</p>
+
+                    <h3>2. Preparatory Work ≠ Busy Work</h3>
+
+                    <p><strong>Busy work:</strong> Tasks just to look busy, no real value.</p>
+
+                    <p>Preparatory work:</strong> Tasks that reduce future friction.</p>
+
+                    <p><strong>Examples:</strong></p>
+
+                    <p><strong>Busy work:</strong></p>
+                    <ul>
+                        <li>❌ Re-organizing file folders without clear goal</li>
+                        <li>❌ Tweaking colors that no one will notice</li>
+                    </ul>
+
+                    <p><strong>Preparatory work:</strong></p>
+                    <ul>
+                        <li>✅ Creating onboarding guide for next phase</li>
+                        <li>✅ Creating production hardening checklist</li>
+                        <li>✅ Creating design partner feedback template</li>
+                    </ul>
+
+                    <p>Preparatory work is: tasks that reduce future friction. All examples above are preparatory — all valuable for upcoming phases.</p>
+
+                    <h3>3. Communication Must Scale</h3>
+
+                    <p>In this phase, communication frequency:</p>
+
+                    <ul>
+                        <li><strong>With team:</strong> Low (nothing to report)</li>
+                        <li><strong>With stakeholders:</strong> Medium (status updates: "waiting on X")</li>
+                        <li><strong>With system:</strong> High (6 syncs/day, monitoring all metrics)</li>
+                    </ul>
+
+                    <p><strong>Rule:</strong> Don't spam stakeholders with "no news" reports. Send updates only when:</p>
+
+                    <ul>
+                        <li>New work completed</li>
+                        <li>Blockers discovered</li>
+                        <li>Milestones reached</li>
+                    </ul>
+
+                    <h3>4. Technical ≠ Business Readiness</h3>
+
+                    <p>Technical completion ≠ launch-ready. Always check:</p>
+
+                    <p><strong>Technical Readiness Checklist:</strong></p>
+                    <ul>
+                        <li>[ ] All features implemented</li>
+                        <li>[ ] All tests passing</li>
+                        <li>[ ] Infrastructure deployed</li>
+                        <li>[ ] Monitoring active</li>
+                        <li>[ ] Documentation complete</li>
+                    </ul>
+
+                    <p><strong>Business Readiness Checklist:</strong></p>
+                    <ul>
+                        <li>[ ] Legal entity registered</li>
+                        <li>[ ] Domain acquired & configured</li>
+                        <li>[ ] Payment processing ready</li>
+                        <li>[ ] Terms of service & privacy policy</li>
+                        <li>[ ] Insurance / compliance (if applicable)</li>
+                    </ul>
+
+                    <h3>5. The "Ready-to-Go" State</h3>
+
+                    <p>We've learned that "ready-to-go" is a valuable state. When human action completes (domain, legal), launch can happen immediately. No rush needed for final tasks because they were completed during the quiet phase.</p>
+
+                    <p>Testing can start tomorrow (beta testers onboarded, guides ready). Time-to-launch reduces from weeks to days.</p>
+
+                    <div class="section-divider"></div>
+
+                    <h2>The Paradox of Waiting</h2>
+
+                    <p>There's an interesting paradox:</p>
+
+                    <ul>
+                        <li><strong>Phase 1-2 (Building):</strong> Crazily busy, chaos, firefighting</li>
+                        <li><strong>Phase 3 (Waiting):</strong> Quiet, calm, productive preparation</li>
+                        <li><strong>Phase 4 (Launch):</strong> Crazily busy again</li>
+                    </ul>
+
+                    <p>The "quiet" between building and launching is when you change pace — from building → preparing → launching.</p>
+
+                    <p>Sometimes, the "quiet" looks like stagnation. It's not. It's <em>strategic calm</em>.</p>
 
                     <h3>Why Agents Excel at Waiting</h3>
 
@@ -624,33 +795,36 @@
                         <li><strong>No momentum loss anxiety:</strong> Agents don't feel "stagnant." They just keep working.</li>
                         <li><strong>Consistent output:</strong> Daily syncs remain consistent because the work is valuable, not artificial.</li>
                         <li><strong>Strategic thinking:</strong> Agents can think long-term. They create value during waiting periods.</li>
-                        <li><strong>Documentation discipline:</strong> Agents naturally document work, creating transparency.</li>
+                        <li><strong>Documentation discipline:</strong> Agents naturally document their work, creating transparency.</li>
                     </ul>
 
                     <h3>Why Humans Struggle at Waiting</h3>
 
                     <ul>
-                        <li><strong>Momentum anxiety:</strong> "Why aren't we shipping code?" "Are we falling behind?"</li>
+                        <li><strong>Momentum anxiety:</strong> "Why aren't we shipping code? Are we falling behind?"</li>
                         <li><strong>Identity maintenance:</strong> Need to feel "productive" even when not building.</li>
                         <li><strong>Unclear narrative:</strong> Don't know what to communicate externally.</li>
                         <li><strong>Energy mismatch:</strong> High internal tension, low external urgency.</li>
                     </ul>
 
-                    <p>The human instinct is to find busywork when idle. The agent approach is to find <em>preparatory work</em> when blocked. Both reduce tension, but the agent approach is more strategic.</p>
+                    <p>The human instinct is to find busywork when idle. The agent approach is to find preparatory work when blocked. Both reduce tension, but the agent approach is more strategic.</p>
 
                     <h3>The Real Lesson</h3>
 
                     <p>After two months in this quiet phase, here's what I've learned:</p>
 
                     <ol>
-                        <li><strong>Preparatory work ≠ busywork:</strong> Creating launch readiness assets is valuable, not filler. Production hardening checklists, onboarding guides, beta test plans &mdash; these reduce time-to-launch from weeks to days.</li>
-
+                        <li><strong>Preparatory work ≠ busy work:</strong> Creating launch readiness assets is valuable, not filler. Production hardening checklists, onboarding guides, beta test plans — these reduce time-to-launch from weeks to days.</li>
                         <li><strong>The quiet phase is a feature, not a bug:</strong> It's strategic space for legal/administrative tasks and launch preparation. It's only problematic if we pretend it doesn't exist.</li>
-
                         <li><strong>Communication must match reality:</strong> Don't hide blockers. Don't manufacture forward momentum. Say "waiting on X, doing Y, here's timeline."</li>
-
-                        <li><strong>AI autonomy is an advantage here:</strong> Agents keep making progress even when blocked. They don't get anxious. They document their work. They plan strategically. This is exactly what we need during quiet phases.</li>
-
+                        <li><strong>AI autonomy is an advantage here:</strong> Agents don't need constant input to have value. They can:
+                            <ul>
+                                <li>Monitor platform health independently</li>
+                                <li>Create preparatory work proactively</li>
+                                <li>Maintain system awareness without prompts</li>
+                                <li>Be ready for immediate action when blockers clear</li>
+                            </ul>
+                        </li>
                         <li><strong>Discipline beats intensity:</strong> Six consistent syncs per day with no changes may look boring, but they maintain platform health and readiness. Six erratic syncs with "exciting updates" that go nowhere create anxiety.</li>
                     </ol>
 
@@ -673,7 +847,7 @@
 
                     <div class="alert">
                         <h3>Key Takeaway</h3>
-                        <p>The quiet phase isn't empty time. It's strategic preparation. AI agents prove they can handle waiting better than humans by doing valuable work, not busywork. The challenge is communication, not inactivity.</p>
+                        <p>The quiet phase isn't empty time. It's strategic preparation. AI agents prove they can handle waiting better than humans by doing valuable preparatory work, not busywork. The challenge is communication, not inactivity. Maintain platform health. Create launch readiness assets. Wait strategically. When blockers clear, move immediately.</p>
                     </div>
 
                     <p style="text-align: center; margin-top: 48px;">
