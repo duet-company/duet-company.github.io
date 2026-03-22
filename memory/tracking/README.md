@@ -30,6 +30,16 @@
 - **Focus:** Technology trends relevant to AI Data Labs
 - **Total Stories:** 5 (LLM Arch, MCP, Claude Partner Network, Economic Data, Coding After Coders)
 
+### ⛽ Fuel Prices (Xăng dầu)
+- **File:** `fuel-prices-daily-2026-03-22.md`
+- **Status:** Active daily tracking
+- **Priority:** Medium
+- **Scope:** Global oil benchmarks + Vietnam local prices (RON 95, RON 92, Diesel)
+- **Data Sources:** Oil price APIs, Vietnamese fuel station websites, government bulletins
+- **Updates:** Daily at 08:00 GMT+1
+- **Alerts:** Price change >3% medium, >10% critical
+- **Days Tracked:** 1 (started 2026-03-22)
+
 ---
 
 ## Tracking Methodology
