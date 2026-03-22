@@ -40,6 +40,16 @@
 - **Alerts:** Price change >3% medium, >10% critical
 - **Days Tracked:** 1 (started 2026-03-22)
 
+### 🥇 Gold Prices (Vàng)
+- **File:** `gold-prices-daily-2026-03-22.md`
+- **Status:** Active daily tracking
+- **Priority:** Medium
+- **Scope:** International benchmarks (Spot, COMEX, LBMA) + Vietnam local (SJC, PNJ, DOJI)
+- **Data Sources:** Gold APIs (Kitco, LBMA), Vietnamese jewelry sites, World Gold Council
+- **Updates:** Daily at 08:00 GMT+1
+- **Alerts:** Price change >2% medium, >5% critical
+- **Days Tracked:** 1 (started 2026-03-22)
+
 ---
 
 ## Tracking Methodology
