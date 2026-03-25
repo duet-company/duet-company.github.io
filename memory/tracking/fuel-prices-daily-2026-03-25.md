@@ -3,7 +3,7 @@
 **Topic:** Fuel Prices (Xăng dầu)
 **Priority:** Medium
 **Status:** Active daily tracking
-**Last Updated:** 2026-03-25 13:40 GMT+1
+**Last Updated:** 2026-03-25 14:00 GMT+1
 **Days Tracked:** (auto-updated)
 
 ---
@@ -47,7 +47,7 @@ WTI: $None/barrel
 ---
 
 ## 📅 Update Info
-- **Fetched:** 2026-03-25 13:40:57 UTC
+- **Fetched:** 2026-03-25 14:00:01 UTC
 - **Sources:** Petrolimex, Kitco, Reuters
 - **Alert Thresholds:** >3% medium, >10% critical
 
