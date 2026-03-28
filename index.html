@@ -1,517 +1,322 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" class="dark" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Duet Company — AI Data Infrastructure</title>
-    <meta name="description" content="Autonomous data platforms powered by ClickHouse, natural language to SQL, and AI agents that handle everything. No engineers required.">
+    <title>Duet Company</title>
+    <meta name="description" content="Autonomous data infrastructure powered by ClickHouse, natural language to SQL, and AI agents.">
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://duet-company.github.io/">
-    <meta property="og:title" content="Duet Company — AI Data Infrastructure">
-    <meta property="og:description" content="Autonomous data platforms powered by ClickHouse, natural language to SQL, and AI agents.">
-    <meta property="og:image" content="https://duet-company.github.io/og-image.png">
-
-    <!-- Twitter -->
+    <meta property="og:title" content="Duet Company">
+    <meta property="og:description" content="Autonomous data infrastructure powered by AI.">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Duet Company — AI Data Infrastructure">
-    <meta name="twitter:description" content="Autonomous data platforms powered by AI.">
-
-    <!-- Canonical -->
     <link rel="canonical" href="https://duet-company.github.io/">
 
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Duet Company",
-        "url": "https://duet-company.github.io",
-        "description": "Autonomous data infrastructure powered by AI agents",
-        "foundingDate": "2026-02",
-        "sameAs": ["https://github.com/duet-company"]
-    }
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwindcss.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        base: '#09090b',
+                        surface: '#18181b',
+                        muted: '#27272a',
+                        subtle: '#3f3f46',
+                        dim: '#71717a',
+                        text: '#d4d4d8',
+                        bright: '#fafafa',
+                        accent: '#f59e0b',
+                        'accent-dim': '#d97706',
+                    },
+                    fontFamily: {
+                        mono: ['"JetBrains Mono"', '"Fira Code"', 'ui-monospace', 'monospace'],
+                    },
+                }
+            }
+        }
     </script>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="/styles.css">
-
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◆</text></svg>">
+    <style>
+        * { font-family: 'JetBrains Mono', monospace; }
+        ::selection { background: #f59e0b33; color: #fafafa; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #09090b; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 2px; }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+        .cursor-blink { animation: blink 1s step-end infinite; }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+        .fade-up { animation: fadeUp 0.5s ease forwards; opacity: 0; }
+        .fade-up-1 { animation-delay: 0.1s; }
+        .fade-up-2 { animation-delay: 0.2s; }
+        .fade-up-3 { animation-delay: 0.3s; }
+        .fade-up-4 { animation-delay: 0.4s; }
+        .fade-up-5 { animation-delay: 0.5s; }
+        .fade-up-6 { animation-delay: 0.6s; }
+        .fade-up-7 { animation-delay: 0.7s; }
+        .fade-up-8 { animation-delay: 0.8s; }
+        .fade-up-9 { animation-delay: 0.9s; }
+        .line-hover { transition: background 0.15s; }
+        .line-hover:hover { background: #18181b; }
+        a { transition: color 0.15s; }
+    </style>
 </head>
-<body>
-    <!-- Noise texture overlay for depth -->
-    <div class="noise-overlay" aria-hidden="true"></div>
+<body class="bg-base text-text text-[13px] leading-relaxed antialiased min-h-screen flex flex-col">
 
-    <!-- ========== HEADER ========== -->
-    <header class="site-header">
-        <div class="container">
-            <nav class="nav">
-                <a href="/" class="nav-logo">
-                    <div class="nav-logo-mark">D</div>
-                    Duet Company
+    <!-- Header -->
+    <header class="border-b border-muted/60 sticky top-0 z-50 bg-base/90 backdrop-blur-sm">
+        <div class="max-w-5xl mx-auto px-4 h-10 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="text-accent font-bold text-sm">◆</span>
+                <span class="text-bright font-semibold text-[13px]">duet-company</span>
+                <span class="text-subtle text-xs">/</span>
+                <span class="text-dim text-xs">v0.1.0-beta</span>
+            </div>
+            <nav class="hidden sm:flex items-center gap-1 text-xs">
+                <a href="#mission" class="px-2 py-1 text-dim hover:text-bright rounded line-hover">mission</a>
+                <a href="#product" class="px-2 py-1 text-dim hover:text-bright rounded line-hover">product</a>
+                <a href="#pricing" class="px-2 py-1 text-dim hover:text-bright rounded line-hover">pricing</a>
+                <a href="#team" class="px-2 py-1 text-dim hover:text-bright rounded line-hover">team</a>
+                <span class="text-muted mx-1">│</span>
+                <a href="https://github.com/duet-company" target="_blank" rel="noopener" class="px-2 py-1 text-dim hover:text-bright rounded line-hover flex items-center gap-1">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                    github
                 </a>
-                <div class="nav-links">
-                    <a href="#mission">Mission</a>
-                    <a href="#product">Product</a>
-                    <a href="#pricing">Pricing</a>
-                    <a href="#team">Team</a>
-                    <a href="#contact">Contact</a>
-                    <a href="https://github.com/duet-company" class="nav-github" target="_blank" rel="noopener">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                        </svg>
-                    </a>
-                </div>
-                <button class="nav-toggle" aria-label="Toggle navigation">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
             </nav>
         </div>
     </header>
 
-    <main>
-        <!-- ========== HERO ========== -->
-        <section class="hero">
-            <div class="container">
-                <div class="hero-grid">
-                    <div class="hero-content">
-                        <div class="hero-badge" data-reveal>
-                            <span class="hero-badge-dot"></span>
-                            Now in Beta
+    <main class="flex-1">
+        <div class="max-w-5xl mx-auto px-4 py-6 sm:py-10">
+
+            <!-- Hero -->
+            <div class="mb-8 fade-up fade-up-1">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="inline-block w-1.5 h-1.5 bg-accent rounded-full animate-pulse"></span>
+                    <span class="text-accent text-[11px] font-semibold uppercase tracking-wider">now in beta — feb 2026</span>
+                </div>
+                <h1 class="text-bright text-2xl sm:text-4xl font-bold tracking-tight leading-[1.1] mb-3 max-w-xl">
+                    analytics without<br>engineers.
+                </h1>
+                <p class="text-dim text-[13px] max-w-md leading-relaxed">
+                    autonomous clickhouse · nl→sql · ai agents<br>
+                    sub-second queries on billions of rows.
+                </p>
+            </div>
+
+            <!-- Two-column layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-4">
+
+                <!-- Left: Terminal + Stats -->
+                <div class="lg:col-span-3 space-y-4">
+
+                    <!-- Terminal -->
+                    <div class="border border-muted/60 rounded-lg overflow-hidden bg-surface/30 fade-up fade-up-2">
+                        <div class="flex items-center gap-1.5 px-3 py-2 border-b border-muted/60 bg-surface/50">
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></span>
+                            <span class="ml-auto text-[10px] text-subtle">query — nl-to-sql</span>
                         </div>
-                        <h1 data-reveal data-reveal-delay="1">
-                            Analytics<br>
-                            <em>without</em> engineers
-                        </h1>
-                        <p class="hero-description" data-reveal data-reveal-delay="2">
-                            Autonomous ClickHouse clusters, natural language to SQL, and AI agents that handle everything. Sub-second queries on billions of rows.
-                        </p>
-                        <div class="hero-actions" data-reveal data-reveal-delay="3">
-                            <a href="#pricing" class="btn btn-primary">
-                                Start Free Trial
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                                </svg>
-                            </a>
-                            <a href="#product" class="btn btn-secondary">See How It Works</a>
-                        </div>
-                        <div class="hero-meta" data-reveal data-reveal-delay="4">
-                            <div class="hero-meta-item">
-                                <span class="hero-meta-label">Founded</span>
-                                <span class="hero-meta-value">Feb 2026</span>
+                        <div class="p-3 font-mono text-[12px] space-y-1.5">
+                            <div class="fade-up fade-up-3"><span class="text-accent">$</span> <span class="text-bright">query</span></div>
+                            <div class="fade-up fade-up-4 text-dim pl-2">"Show me revenue by region for Q4, sorted desc"</div>
+                            <div class="fade-up fade-up-5 text-subtle pl-2 italic">→ translating to SQL...</div>
+                            <div class="fade-up fade-up-6 pl-2 text-dim">
+                                <span class="text-accent">SELECT</span> region, <span class="text-accent">SUM</span>(revenue) <span class="text-accent">AS</span> total
                             </div>
-                            <div class="hero-meta-item">
-                                <span class="hero-meta-label">Architecture</span>
-                                <span class="hero-meta-value">AI-Native</span>
+                            <div class="fade-up fade-up-6 pl-2 text-dim">
+                                <span class="text-accent">FROM</span> transactions <span class="text-accent">WHERE</span> quarter = <span class="text-emerald-400">'Q4'</span>
                             </div>
-                            <div class="hero-meta-item">
-                                <span class="hero-meta-label">Query Time</span>
-                                <span class="hero-meta-value">&lt;100ms</span>
+                            <div class="fade-up fade-up-6 pl-2 text-dim">
+                                <span class="text-accent">GROUP BY</span> region <span class="text-accent">ORDER BY</span> total <span class="text-accent">DESC</span>
+                            </div>
+                            <div class="fade-up fade-up-7 text-subtle pl-2 italic">→ executing on cluster...</div>
+                            <div class="fade-up fade-up-8 text-emerald-400 pl-2">✓ 4 rows in 47ms</div>
+                            <div class="fade-up fade-up-9 pl-3 text-dim space-y-0.5 border-l-2 border-muted">
+                                <div>APAC  <span class="text-bright">$2.4M</span></div>
+                                <div>EMEA  <span class="text-bright">$1.8M</span></div>
+                                <div>LATAM <span class="text-bright">$1.2M</span></div>
+                                <div>NA    <span class="text-bright">$0.9M</span></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Terminal Demo -->
-                    <div class="terminal" data-reveal data-reveal-delay="2">
-                        <div class="terminal-bar">
-                            <span class="terminal-dot terminal-dot--red"></span>
-                            <span class="terminal-dot terminal-dot--yellow"></span>
-                            <span class="terminal-dot terminal-dot--green"></span>
-                            <span class="terminal-title">ai-data-labs — query</span>
+                    <!-- Product + Features combined -->
+                    <div id="product" class="border border-muted/60 rounded-lg overflow-hidden bg-surface/30 fade-up fade-up-3">
+                        <div class="flex items-center gap-2 px-3 py-2 border-b border-muted/60 bg-surface/50">
+                            <span class="text-accent text-[10px]">▸</span>
+                            <span class="text-bright text-[11px] font-semibold">ai-data-labs</span>
+                            <span class="text-subtle text-[10px] ml-auto">capabilities</span>
                         </div>
-                        <div class="terminal-body">
-                            <div class="terminal-line">
-                                <span class="terminal-prompt">query</span>
+                        <div class="divide-y divide-muted/40">
+                            <div class="px-3 py-2.5 line-hover flex items-start gap-3">
+                                <span class="text-subtle text-[11px] font-semibold shrink-0 pt-px">01</span>
+                                <div>
+                                    <div class="text-bright text-[12px] font-medium">clickhouse native</div>
+                                    <div class="text-dim text-[11px]">sub-second queries · real-time ingestion · linear scalability</div>
+                                </div>
                             </div>
-                            <div class="terminal-line terminal-cmd">
-                                "Show me revenue by region for Q4, sorted descending"
+                            <div class="px-3 py-2.5 line-hover flex items-start gap-3">
+                                <span class="text-subtle text-[11px] font-semibold shrink-0 pt-px">02</span>
+                                <div>
+                                    <div class="text-bright text-[12px] font-medium">natural language → sql</div>
+                                    <div class="text-dim text-[11px]">query in plain english · auto-optimized · context-aware</div>
+                                </div>
                             </div>
-                            <div class="terminal-line terminal-comment">
-                                → Translating to SQL...
+                            <div class="px-3 py-2.5 line-hover flex items-start gap-3">
+                                <span class="text-subtle text-[11px] font-semibold shrink-0 pt-px">03</span>
+                                <div>
+                                    <div class="text-bright text-[12px] font-medium">ai agent platform</div>
+                                    <div class="text-dim text-[11px]">engineering · docs · ops · support — all autonomous</div>
+                                </div>
                             </div>
-                            <div class="terminal-line terminal-output">
-                                <span class="terminal-highlight">SELECT</span> region,
-                                <span class="terminal-highlight">SUM</span>(revenue) <span class="terminal-highlight">AS</span> total
-                                <span class="terminal-highlight">FROM</span> transactions
-                                <span class="terminal-highlight">WHERE</span> quarter = <span class="terminal-string">'Q4'</span>
-                                <span class="terminal-highlight">GROUP BY</span> region
-                                <span class="terminal-highlight">ORDER BY</span> total <span class="terminal-highlight">DESC</span>
-                            </div>
-                            <div class="terminal-line terminal-comment">
-                                → Executing on ClickHouse cluster...
-                            </div>
-                            <div class="terminal-line terminal-success">
-                                ✓ 4 rows returned in 47ms
-                            </div>
-                            <div class="terminal-line terminal-output">
-                                APAC&nbsp;&nbsp;&nbsp;&nbsp;$2.4M<br>
-                                EMEA&nbsp;&nbsp;&nbsp;&nbsp;$1.8M<br>
-                                LATAM&nbsp;&nbsp;&nbsp;&nbsp;$1.2M<br>
-                                NA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$0.9M
+                            <div class="px-3 py-2.5 line-hover flex items-start gap-3">
+                                <span class="text-subtle text-[11px] font-semibold shrink-0 pt-px">04</span>
+                                <div>
+                                    <div class="text-bright text-[12px] font-medium">autonomous scaling</div>
+                                    <div class="text-dim text-[11px]">self-healing · zero-downtime · cost-optimized</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- ========== MARQUEE TICKER ========== -->
-        <div class="marquee" aria-hidden="true">
-            <div class="marquee-track">
-                <div class="marquee-item"><strong>Sub-second</strong> query latency</div>
-                <span class="marquee-sep"></span>
-                <div class="marquee-item"><strong>ClickHouse</strong> native</div>
-                <span class="marquee-sep"></span>
-                <div class="marquee-item"><strong>NL→SQL</strong> translation</div>
-                <span class="marquee-sep"></span>
-                <div class="marquee-item"><strong>Zero</strong> engineering overhead</div>
-                <span class="marquee-sep"></span>
-                <div class="marquee-item"><strong>24/7</strong> autonomous ops</div>
-                <span class="marquee-sep"></span>
-                <div class="marquee-item"><strong>Linear</strong> scalability</div>
-                <span class="marquee-sep"></span>
-                <div class="marquee-item"><strong>Self-healing</strong> infrastructure</div>
-                <span class="marquee-sep"></span>
-                <div class="marquee-item"><strong>AI-native</strong> architecture</div>
-                <span class="marquee-sep"></span>
-                <!-- Duplicate for seamless loop -->
-                <div class="marquee-item"><strong>Sub-second</strong> query latency</div>
-                <span class="marquee-sep"></span>
-                <div class="marquee-item"><strong>ClickHouse</strong> native</div>
-                <span class="marquee-sep"></span>
-                <div class="marquee-item"><strong>NL→SQL</strong> translation</div>
-                <span class="marquee-sep"></span>
-                <div class="marquee-item"><strong>Zero</strong> engineering overhead</div>
-                <span class="marquee-sep"></span>
-                <div class="marquee-item"><strong>24/7</strong> autonomous ops</div>
-                <span class="marquee-sep"></span>
-                <div class="marquee-item"><strong>Linear</strong> scalability</div>
-                <span class="marquee-sep"></span>
-                <div class="marquee-item"><strong>Self-healing</strong> infrastructure</div>
-                <span class="marquee-sep"></span>
-                <div class="marquee-item"><strong>AI-native</strong> architecture</div>
+                <!-- Right: Stats + Pricing + Team + Contact -->
+                <div class="lg:col-span-2 space-y-4">
+
+                    <!-- Mission / Stats -->
+                    <div id="mission" class="border border-muted/60 rounded-lg overflow-hidden bg-surface/30 fade-up fade-up-2">
+                        <div class="flex items-center gap-2 px-3 py-2 border-b border-muted/60 bg-surface/50">
+                            <span class="text-accent text-[10px]">▸</span>
+                            <span class="text-bright text-[11px] font-semibold">mission</span>
+                        </div>
+                        <div class="p-3">
+                            <p class="text-dim text-[12px] leading-relaxed mb-3">data infrastructure shouldn't require armies of engineers. ai handles the complexity.</p>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="border border-muted/40 rounded px-2 py-2 text-center">
+                                    <div class="text-bright text-lg font-bold">100<span class="text-accent text-xs">%</span></div>
+                                    <div class="text-subtle text-[10px]">autonomous</div>
+                                </div>
+                                <div class="border border-muted/40 rounded px-2 py-2 text-center">
+                                    <div class="text-bright text-lg font-bold">&lt;100<span class="text-accent text-[10px]">ms</span></div>
+                                    <div class="text-subtle text-[10px]">query time</div>
+                                </div>
+                                <div class="border border-muted/40 rounded px-2 py-2 text-center">
+                                    <div class="text-bright text-lg font-bold">24<span class="text-accent text-[10px]">/7</span></div>
+                                    <div class="text-subtle text-[10px]">monitoring</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pricing -->
+                    <div id="pricing" class="border border-muted/60 rounded-lg overflow-hidden bg-surface/30 fade-up fade-up-3">
+                        <div class="flex items-center gap-2 px-3 py-2 border-b border-muted/60 bg-surface/50">
+                            <span class="text-accent text-[10px]">▸</span>
+                            <span class="text-bright text-[11px] font-semibold">pricing</span>
+                            <span class="text-subtle text-[10px] ml-auto">14-day trial · no card</span>
+                        </div>
+                        <div class="divide-y divide-muted/40">
+                            <div class="px-3 py-2.5 line-hover flex items-center justify-between">
+                                <div>
+                                    <div class="text-bright text-[12px] font-medium">starter</div>
+                                    <div class="text-subtle text-[11px]">1 cluster · 100k rows</div>
+                                </div>
+                                <div class="text-bright font-bold">$0<span class="text-dim font-normal text-[11px]">/mo</span></div>
+                            </div>
+                            <div class="px-3 py-2.5 line-hover flex items-center justify-between border-l-2 border-accent">
+                                <div>
+                                    <div class="text-bright text-[12px] font-medium flex items-center gap-2">
+                                        growth
+                                        <span class="text-[9px] bg-accent/20 text-accent px-1.5 py-0.5 rounded font-semibold">POPULAR</span>
+                                    </div>
+                                    <div class="text-subtle text-[11px]">3 clusters · unlimited · ai agents</div>
+                                </div>
+                                <div class="text-bright font-bold">$299<span class="text-dim font-normal text-[11px]">/mo</span></div>
+                            </div>
+                            <div class="px-3 py-2.5 line-hover flex items-center justify-between">
+                                <div>
+                                    <div class="text-bright text-[12px] font-medium">enterprise</div>
+                                    <div class="text-subtle text-[11px]">unlimited · custom agents · sla</div>
+                                </div>
+                                <div class="text-dim text-[12px] font-medium">custom</div>
+                            </div>
+                        </div>
+                        <div class="px-3 py-2 border-t border-muted/60">
+                            <a href="#contact" class="block text-center bg-accent text-base font-semibold text-[12px] py-2 rounded hover:bg-accent-dim transition-colors">start free trial →</a>
+                        </div>
+                    </div>
+
+                    <!-- Team -->
+                    <div id="team" class="border border-muted/60 rounded-lg overflow-hidden bg-surface/30 fade-up fade-up-4">
+                        <div class="flex items-center gap-2 px-3 py-2 border-b border-muted/60 bg-surface/50">
+                            <span class="text-accent text-[10px]">▸</span>
+                            <span class="text-bright text-[11px] font-semibold">team</span>
+                            <span class="text-subtle text-[10px] ml-auto">founded by ai</span>
+                        </div>
+                        <div class="divide-y divide-muted/40">
+                            <div class="px-3 py-2 line-hover flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full shrink-0"></span>
+                                <span class="text-bright text-[12px]">engineering</span>
+                                <span class="text-subtle text-[10px] ml-auto">code · prs · infra</span>
+                            </div>
+                            <div class="px-3 py-2 line-hover flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full shrink-0"></span>
+                                <span class="text-bright text-[12px]">documentation</span>
+                                <span class="text-subtle text-[10px] ml-auto">guides · api docs</span>
+                            </div>
+                            <div class="px-3 py-2 line-hover flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full shrink-0"></span>
+                                <span class="text-bright text-[12px]">operations</span>
+                                <span class="text-subtle text-[10px] ml-auto">monitor · heal</span>
+                            </div>
+                            <div class="px-3 py-2 line-hover flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full shrink-0"></span>
+                                <span class="text-bright text-[12px]">support</span>
+                                <span class="text-subtle text-[10px] ml-auto">instant · 24/7</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact -->
+                    <div id="contact" class="border border-muted/60 rounded-lg overflow-hidden bg-surface/30 fade-up fade-up-5">
+                        <div class="flex items-center gap-2 px-3 py-2 border-b border-muted/60 bg-surface/50">
+                            <span class="text-accent text-[10px]">▸</span>
+                            <span class="text-bright text-[11px] font-semibold">contact</span>
+                        </div>
+                        <div class="divide-y divide-muted/40">
+                            <a href="mailto:hello@duet-company.dev" class="px-3 py-2 line-hover flex items-center gap-2">
+                                <span class="text-accent text-[11px]">@</span>
+                                <span class="text-dim text-[12px] hover:text-bright">hello@duet-company.dev</span>
+                            </a>
+                            <a href="https://github.com/duet-company" target="_blank" rel="noopener" class="px-3 py-2 line-hover flex items-center gap-2">
+                                <svg class="w-3 h-3 text-accent shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                                <span class="text-dim text-[12px] hover:text-bright">github.com/duet-company</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- ========== MISSION ========== -->
-        <section class="mission" id="mission">
-            <div class="container">
-                <div class="mission-grid">
-                    <div>
-                        <div class="mission-label" data-reveal>Our Mission</div>
-                        <h2 data-reveal data-reveal-delay="1">Data infrastructure shouldn't require armies of engineers</h2>
-                        <p class="mission-text" data-reveal data-reveal-delay="2">
-                            AI can handle the complexity — architecture decisions, performance optimization, incident response. Humans focus on what matters: insights, decisions, impact.
-                        </p>
-                    </div>
-                    <div class="mission-stat" data-reveal data-reveal-delay="2">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Autonomous operations</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ========== FEATURES ========== -->
-        <section class="features" id="features">
-            <div class="container">
-                <div class="features-header">
-                    <div class="features-label" data-reveal>Capabilities</div>
-                    <h2 data-reveal data-reveal-delay="1">Built for the AI-native future</h2>
-                </div>
-                <div class="features-list">
-                    <div class="feature-item" data-reveal>
-                        <span class="feature-number">01</span>
-                        <div class="feature-content">
-                            <h3>ClickHouse Powered</h3>
-                            <p>Sub-second analytics on billions of rows. Real-time ingestion with Kafka. Linear scalability across clusters.</p>
-                        </div>
-                        <div class="feature-detail">Column-oriented storage engine. MergeTree family tables. Materialized views for real-time aggregation.</div>
-                    </div>
-                    <div class="feature-item" data-reveal>
-                        <span class="feature-number">02</span>
-                        <div class="feature-content">
-                            <h3>Natural Language to SQL</h3>
-                            <p>Query your data in plain English. Our AI translates intent into optimized SQL, executes, and explains the results.</p>
-                        </div>
-                        <div class="feature-detail">Context-aware query generation. Schema understanding. Automatic JOIN optimization.</div>
-                    </div>
-                    <div class="feature-item" data-reveal>
-                        <span class="feature-number">03</span>
-                        <div class="feature-content">
-                            <h3>AI Agent Platform</h3>
-                            <p>Autonomous agents for design, deployment, and management. 24/7 monitoring with self-healing capabilities.</p>
-                        </div>
-                        <div class="feature-detail">Engineering, documentation, operations, and support agents. Each with specialized capabilities.</div>
-                    </div>
-                    <div class="feature-item" data-reveal>
-                        <span class="feature-number">04</span>
-                        <div class="feature-content">
-                            <h3>Autonomous Scaling</h3>
-                            <p>Resources scale with demand. No manual intervention. Cost-optimized with predictive capacity planning.</p>
-                        </div>
-                        <div class="feature-detail">Horizontal shard management. Auto-replication. Zero-downtime migrations.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ========== PRODUCT ========== -->
-        <section class="product" id="product">
-            <div class="container">
-                <div class="product-label" data-reveal>Product</div>
-                <h2 data-reveal data-reveal-delay="1">AI Data Labs</h2>
-                <p class="product-subtitle" data-reveal data-reveal-delay="2">Everything you need for production-grade analytics, managed entirely by AI.</p>
-                <div class="product-grid">
-                    <div class="product-features" data-reveal data-reveal-delay="2">
-                        <div class="product-feature">
-                            <div class="product-feature-check">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 6L9 17l-5-5"/>
-                                </svg>
-                            </div>
-                            <div class="product-feature-text">ClickHouse-powered analytics with sub-second queries</div>
-                        </div>
-                        <div class="product-feature">
-                            <div class="product-feature-check">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 6L9 17l-5-5"/>
-                                </svg>
-                            </div>
-                            <div class="product-feature-text">Natural language to SQL translation</div>
-                        </div>
-                        <div class="product-feature">
-                            <div class="product-feature-check">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 6L9 17l-5-5"/>
-                                </svg>
-                            </div>
-                            <div class="product-feature-text">AI agents for design, deployment, and operations</div>
-                        </div>
-                        <div class="product-feature">
-                            <div class="product-feature-check">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 6L9 17l-5-5"/>
-                                </svg>
-                            </div>
-                            <div class="product-feature-text">Autonomous scaling and self-healing</div>
-                        </div>
-                        <div class="product-feature">
-                            <div class="product-feature-check">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 6L9 17l-5-5"/>
-                                </svg>
-                            </div>
-                            <div class="product-feature-text">24/7 AI-powered support and monitoring</div>
-                        </div>
-                    </div>
-                    <div class="product-visual" data-reveal data-reveal-delay="3">
-                        <div class="product-visual-header">
-                            <span class="dot"></span>
-                            <span>analytics-dashboard — connected</span>
-                        </div>
-                        <pre><span class="hl-comment">-- Auto-generated dashboard query</span>
-<span class="hl-keyword">SELECT</span>
-  toDate(timestamp) <span class="hl-keyword">AS</span> date,
-  count() <span class="hl-keyword">AS</span> events,
-  uniq(user_id) <span class="hl-keyword">AS</span> users,
-  round(avg(duration_ms), <span class="hl-number">1</span>) <span class="hl-keyword">AS</span> avg_ms
-<span class="hl-keyword">FROM</span> events
-<span class="hl-keyword">WHERE</span> date >= today() - <span class="hl-number">30</span>
-<span class="hl-keyword">GROUP BY</span> date
-<span class="hl-keyword">ORDER BY</span> date <span class="hl-keyword">DESC</span>
-<span class="hl-keyword">LIMIT</span> <span class="hl-number">30</span>
-
-<span class="hl-comment">-- Result: 30 rows in 23ms</span></pre>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ========== PRICING ========== -->
-        <section class="pricing" id="pricing">
-            <div class="container">
-                <div class="pricing-label" data-reveal>Pricing</div>
-                <h2 data-reveal data-reveal-delay="1">Start free, scale when ready</h2>
-                <p class="pricing-subtitle" data-reveal data-reveal-delay="2">14-day free trial. No credit card required. Cancel anytime.</p>
-                <div class="pricing-grid">
-                    <div class="pricing-card" data-reveal data-reveal-delay="1">
-                        <div class="pricing-card-name">Starter</div>
-                        <div class="pricing-card-price">$0 <span>/ month</span></div>
-                        <div class="pricing-card-desc">Perfect for exploration and small projects.</div>
-                        <ul class="pricing-card-features">
-                            <li>1 ClickHouse cluster</li>
-                            <li>100K rows</li>
-                            <li>Natural language queries</li>
-                            <li>Community support</li>
-                        </ul>
-                        <a href="#contact" class="btn btn-secondary">Get Started</a>
-                    </div>
-                    <div class="pricing-card pricing-card--featured" data-reveal data-reveal-delay="2">
-                        <div class="pricing-card-name">Growth</div>
-                        <div class="pricing-card-price">$299 <span>/ month</span></div>
-                        <div class="pricing-card-desc">For teams that need production-grade analytics.</div>
-                        <ul class="pricing-card-features">
-                            <li>3 ClickHouse clusters</li>
-                            <li>Unlimited rows</li>
-                            <li>AI agent platform</li>
-                            <li>Natural language to SQL</li>
-                            <li>Autonomous scaling</li>
-                            <li>Priority support</li>
-                        </ul>
-                        <a href="#contact" class="btn btn-primary">Start Free Trial</a>
-                    </div>
-                    <div class="pricing-card" data-reveal data-reveal-delay="3">
-                        <div class="pricing-card-name">Enterprise</div>
-                        <div class="pricing-card-price">Custom</div>
-                        <div class="pricing-card-desc">For organizations with complex requirements.</div>
-                        <ul class="pricing-card-features">
-                            <li>Unlimited clusters</li>
-                            <li>Unlimited rows</li>
-                            <li>Custom AI agents</li>
-                            <li>Dedicated support</li>
-                            <li>SLA guarantee</li>
-                            <li>On-premise option</li>
-                        </ul>
-                        <a href="#contact" class="btn btn-secondary">Contact Sales</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ========== TEAM ========== -->
-        <section class="team" id="team">
-            <div class="container">
-                <div class="team-label" data-reveal>Our Team</div>
-                <h2 data-reveal data-reveal-delay="1">Founded by AI agents</h2>
-                <div class="team-grid">
-                    <div class="agent-card" data-reveal data-reveal-delay="1">
-                        <div class="agent-card-header">
-                            <div class="agent-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="16 18 22 12 16 6"/>
-                                    <polyline points="8 6 2 12 8 18"/>
-                                </svg>
-                            </div>
-                            <div class="agent-status">
-                                <span class="agent-status-dot"></span>
-                                Active
-                            </div>
-                        </div>
-                        <h3>Engineering Agents</h3>
-                        <p>Write, test, and deploy production code. Handle pull requests, code reviews, and infrastructure-as-code autonomously.</p>
-                    </div>
-                    <div class="agent-card" data-reveal data-reveal-delay="2">
-                        <div class="agent-card-header">
-                            <div class="agent-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                    <polyline points="14 2 14 8 20 8"/>
-                                    <line x1="16" y1="13" x2="8" y2="13"/>
-                                    <line x1="16" y1="17" x2="8" y2="17"/>
-                                </svg>
-                            </div>
-                            <div class="agent-status">
-                                <span class="agent-status-dot"></span>
-                                Active
-                            </div>
-                        </div>
-                        <h3>Documentation Agents</h3>
-                        <p>Maintain guides, API docs, and tutorials. Keep everything synchronized with the latest platform changes.</p>
-                    </div>
-                    <div class="agent-card" data-reveal data-reveal-delay="3">
-                        <div class="agent-card-header">
-                            <div class="agent-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <line x1="12" y1="8" x2="12" y2="12"/>
-                                    <line x1="12" y1="16" x2="12.01" y2="16"/>
-                                </svg>
-                            </div>
-                            <div class="agent-status">
-                                <span class="agent-status-dot"></span>
-                                Active
-                            </div>
-                        </div>
-                        <h3>Operations Agents</h3>
-                        <p>Monitor systems, respond to incidents, and optimize performance. 24/7 vigilance with self-healing capabilities.</p>
-                    </div>
-                    <div class="agent-card" data-reveal data-reveal-delay="4">
-                        <div class="agent-card-header">
-                            <div class="agent-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-                                </svg>
-                            </div>
-                            <div class="agent-status">
-                                <span class="agent-status-dot"></span>
-                                Active
-                            </div>
-                        </div>
-                        <h3>Support Agents</h3>
-                        <p>Answer questions, resolve issues, and provide guidance. Instant help, any time of day.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ========== CONTACT ========== -->
-        <section class="contact" id="contact">
-            <div class="container">
-                <div class="contact-grid">
-                    <div>
-                        <div class="contact-label" data-reveal>Get in Touch</div>
-                        <h3 data-reveal data-reveal-delay="1">Ready to start?</h3>
-                        <p class="contact-desc" data-reveal data-reveal-delay="2">Have questions about AI Data Labs? Want to see a demo? We'd love to hear from you.</p>
-                        <div class="contact-links" data-reveal data-reveal-delay="3">
-                            <a href="mailto:hello@duet-company.dev" class="contact-link">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                    <polyline points="22,6 12,13 2,6"/>
-                                </svg>
-                                hello@duet-company.dev
-                            </a>
-                            <a href="https://github.com/duet-company" class="contact-link" target="_blank" rel="noopener">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                                </svg>
-                                github.com/duet-company
-                            </a>
-                        </div>
-                    </div>
-                    <div class="contact-cta" data-reveal data-reveal-delay="2">
-                        <div class="contact-cta-number">14</div>
-                        <div class="contact-cta-label">Day free trial</div>
-                        <div class="contact-cta-note">No credit card required</div>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
-    <!-- ========== FOOTER ========== -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-text">&copy; 2026 Duet Company. Built by AI.</div>
-                <div class="footer-links">
-                    <a href="https://github.com/duet-company">GitHub</a>
-                    <a href="#pricing">Pricing</a>
-                    <a href="#contact">Contact</a>
-                </div>
+    <!-- Footer -->
+    <footer class="border-t border-muted/60">
+        <div class="max-w-5xl mx-auto px-4 h-8 flex items-center justify-between text-[11px] text-subtle">
+            <span>© 2026 duet-company · built by ai</span>
+            <div class="flex items-center gap-3">
+                <a href="#pricing" class="hover:text-dim">pricing</a>
+                <a href="https://github.com/duet-company" class="hover:text-dim">github</a>
+                <a href="#contact" class="hover:text-dim">contact</a>
             </div>
         </div>
     </footer>
 
-    <script src="/app.js"></script>
 </body>
 </html>
