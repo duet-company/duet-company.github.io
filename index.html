@@ -3,1102 +3,515 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Duet Company — AI Data Infrastructure | Autonomous Analytics Platform</title>
-    <meta name="description" content="AI Data Labs: Autonomous data infrastructure powered by AI. Get production-grade ClickHouse analytics, natural language to SQL, and AI agents that handle everything—no engineers required. 14-day free trial.">
-    <meta name="keywords" content="AI data infrastructure, ClickHouse, autonomous analytics, natural language to SQL, AI agents, data platform, real-time analytics">
-    <meta name="author" content="Duet Company">
+    <title>Duet Company — AI Data Infrastructure</title>
+    <meta name="description" content="Autonomous data platforms powered by ClickHouse, natural language to SQL, and AI agents that handle everything. No engineers required.">
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://bot.duyet.net/">
-    <meta property="og:title" content="AI Data Labs - Data Infrastructure, Built by AI">
-    <meta property="og:description" content="Autonomous ClickHouse clusters, natural language to SQL, and AI agents that handle everything. Get production-grade analytics without engineers.">
-    <meta property="og:image" content="https://bot.duyet.net/og-image.png">
+    <meta property="og:url" content="https://duet-company.github.io/">
+    <meta property="og:title" content="Duet Company — AI Data Infrastructure">
+    <meta property="og:description" content="Autonomous data platforms powered by ClickHouse, natural language to SQL, and AI agents.">
+    <meta property="og:image" content="https://duet-company.github.io/og-image.png">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="AI Data Labs - Data Infrastructure, Built by AI">
-    <meta name="twitter:description" content="Autonomous ClickHouse clusters, natural language to SQL, and AI agents that handle everything.">
-    <meta name="twitter:image" content="https://bot.duyet.net/og-image.png">
+    <meta name="twitter:title" content="Duet Company — AI Data Infrastructure">
+    <meta name="twitter:description" content="Autonomous data platforms powered by AI.">
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://bot.duyet.net/">
+    <!-- Canonical -->
+    <link rel="canonical" href="https://duet-company.github.io/">
 
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "AI Data Labs",
-        "description": "Autonomous data infrastructure powered by AI",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "Web",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD",
-            "description": "14-day free trial"
-        },
-        "author": {
-            "@type": "Organization",
-            "name": "Duet Company",
-            "url": "https://bot.duyet.net"
-        }
+        "@type": "Organization",
+        "name": "Duet Company",
+        "url": "https://duet-company.github.io",
+        "description": "Autonomous data infrastructure powered by AI agents",
+        "foundingDate": "2026-02",
+        "sameAs": ["https://github.com/duet-company"]
     }
     </script>
 
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Clash+Display:wght@500;600;700&display=swap&family=SF+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/oat.min.css">
-    <style>
-        /* Modern CSS 2025 - Sophisticated Neutral Palette */
-        :root {
-            /* Light mode */
-            --background-light: oklch(99% 0.002 85);
-            --surface-light: oklch(95% 0.003 85);
-            --foreground-light: oklch(15% 0.005 85);
-            --muted-light: oklch(45% 0.01 85);
-            --border-light: oklch(88% 0.005 85);
-            --accent-light: oklch(62% 0.15 145);
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-            /* Dark mode (default) - Charcoal/Graphite base */
-            --background: oklch(12% 0.008 85);
-            --surface: oklch(16% 0.008 85);
-            --surface-elevated: oklch(20% 0.008 85);
-            --foreground: oklch(97% 0.003 85);
-            --muted: oklch(65% 0.008 85);
-            --border: oklch(28% 0.008 85);
-            --border-subtle: oklch(22% 0.006 85);
-            --accent: oklch(70% 0.16 145);
+    <!-- Styles -->
+    <link rel="stylesheet" href="/styles.css">
 
-            /* Semantic colors - minimal use */
-            --success: oklch(68% 0.16 145);
-            --warning: oklch(75% 0.15 85);
-            --error: oklch(60% 0.18 25);
-
-            /* Typography */
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-display: 'Clash Display', sans-serif;
-            --font-mono: 'SF Mono', 'Menlo', monospace;
-
-            /* Spacing */
-            --container-max: 1400px;
-            --section-spacing: 160px;
-        }
-
-        @media (prefers-color-scheme: light) {
-            :root {
-                --background: var(--background-light);
-                --surface: var(--surface-light);
-                --surface-elevated: oklch(98% 0.003 85);
-                --foreground: var(--foreground-light);
-                --muted: var(--muted-light);
-                --border: var(--border-light);
-                --border-subtle: oklch(92% 0.004 85);
-                --accent: oklch(58% 0.18 145);
-            }
-        }
-
-        /* Base */
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font-sans);
-            background: var(--background);
-            color: var(--foreground);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Modern CSS 2025 */
-        h1, h2, h3, h4 {
-            text-wrap: balance;
-            font-family: var(--font-display);
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            line-height: 1.1;
-        }
-
-        /* Container */
-        .container {
-            max-width: var(--container-max);
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                padding: 0 48px;
-            }
-        }
-
-        /* Header - Sticky with backdrop blur */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            background: oklch(from var(--background) calc(l - 2%) c h / 0.8);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border-bottom: 1px solid var(--border-subtle);
-        }
-
-        @starting-style {
-            header {
-                transform: translateY(-100%);
-            }
-        }
-
-        header {
-            animation: slideDown 0.5s ease forwards;
-        }
-
-        @keyframes slideDown {
-            to { transform: translateY(0); }
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 64px;
-        }
-
-        .logo {
-            font-family: var(--font-display);
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--foreground);
-            text-decoration: none;
-            letter-spacing: -0.02em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .logo-mark {
-            width: 24px;
-            height: 24px;
-            background: var(--foreground);
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-mark span {
-            color: var(--background);
-            font-size: 14px;
-            font-weight: 700;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.2s ease;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--foreground);
-        }
-
-        .nav-links a.active::after {
-            width: 100%;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -22px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--foreground);
-            transition: width 0.2s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .github-link {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .github-link:hover {
-            color: var(--foreground);
-        }
-
-        .github-link svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-        }
-
-        /* Hero */
-        .hero {
-            padding: 180px 0 120px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .hero-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 12px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--muted);
-            margin-bottom: 32px;
-            width: fit-content;
-        }
-
-        .hero-label::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: pulse 2s ease infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .hero h1 {
-            font-size: clamp(40px, 8vw, 80px);
-            max-width: 1000px;
-            margin-bottom: 24px;
-            line-height: 1;
-            letter-spacing: -0.03em;
-        }
-
-        .hero h1 .line {
-            display: block;
-        }
-
-        .hero h1 .highlight {
-            color: var(--accent);
-        }
-
-        .hero p {
-            font-size: 18px;
-            color: var(--muted);
-            max-width: 540px;
-            line-height: 1.7;
-            font-weight: 300;
-            margin-bottom: 48px;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 28px;
-            font-size: 14px;
-            font-weight: 500;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .btn-primary {
-            background: var(--foreground);
-            color: var(--background);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px -10px oklch(from var(--foreground) c h / 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--foreground);
-            border: 1px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            background: var(--surface);
-            border-color: var(--foreground);
-        }
-
-        .hero-meta {
-            display: flex;
-            gap: 48px;
-            margin-top: 80px;
-            padding-top: 32px;
-            border-top: 1px solid var(--border-subtle);
-        }
-
-        .meta-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .meta-label {
-            font-size: 12px;
-            color: var(--muted);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .meta-value {
-            font-size: 16px;
-            color: var(--foreground);
-            font-weight: 500;
-        }
-
-        @media (max-width: 768px) {
-            .hero {
-                padding: 140px 0 80px;
-            }
-            .hero-meta {
-                flex-direction: column;
-                gap: 24px;
-            }
-        }
-
-        /* Section styles */
-        section {
-            padding: var(--section-spacing) 0;
-        }
-
-        .section-header {
-            margin-bottom: 64px;
-        }
-
-        .section-label {
-            font-size: 12px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--accent);
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            font-size: clamp(32px, 5vw, 56px);
-            max-width: 800px;
-        }
-
-        .section-subtitle {
-            font-size: 18px;
-            color: var(--muted);
-            max-width: 560px;
-            line-height: 1.7;
-            font-weight: 300;
-            margin-top: 24px;
-        }
-
-        /* Mission */
-        .mission {
-            position: relative;
-        }
-
-        .mission-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 64px;
-            align-items: center;
-        }
-
-        .mission-content p {
-            font-size: 18px;
-            color: var(--muted);
-            line-height: 1.8;
-            font-weight: 300;
-        }
-
-        .mission-stat {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 48px;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-family: var(--font-display);
-            font-size: 72px;
-            font-weight: 700;
-            color: var(--foreground);
-            letter-spacing: -0.03em;
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: var(--muted);
-            margin-top: 8px;
-        }
-
-        @media (max-width: 768px) {
-            .mission-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            .mission-stat {
-                padding: 32px;
-            }
-            .stat-value {
-                font-size: 48px;
-            }
-        }
-
-        /* Features - Card based */
-        .features {
-            background: var(--surface);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .feature-card {
-            background: var(--background);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 32px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--foreground);
-            box-shadow: 0 20px 40px -20px oklch(from var(--foreground) c h / 0.2);
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--surface);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-        }
-
-        .feature-icon svg {
-            width: 24px;
-            height: 24px;
-            stroke: var(--foreground);
-        }
-
-        .feature-card h3 {
-            font-size: 20px;
-            margin-bottom: 12px;
-            color: var(--foreground);
-        }
-
-        .feature-card p {
-            font-size: 14px;
-            color: var(--muted);
-            line-height: 1.7;
-            font-weight: 300;
-        }
-
-        @media (max-width: 768px) {
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Product */
-        .product-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: start;
-        }
-
-        .product-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .product-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            padding: 20px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--surface);
-            transition: all 0.2s ease;
-        }
-
-        .product-item:hover {
-            border-color: var(--foreground);
-            background: var(--surface-elevated);
-        }
-
-        .product-item-check {
-            width: 20px;
-            height: 20px;
-            background: var(--accent);
-            border-radius: 4px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .product-item-check svg {
-            width: 12px;
-            height: 12px;
-            stroke: var(--background);
-        }
-
-        .product-item-text {
-            font-size: 15px;
-            color: var(--foreground);
-        }
-
-        .product-visual {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            aspect-ratio: 4/3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-visual::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(45deg,
-                oklch(from var(--accent) l calc(l - 40%) c calc(c * 0.1)),
-                oklch(from var(--background) l c h)
-            );
-            opacity: 0.5;
-        }
-
-        .product-visual-content {
-            position: relative;
-            text-align: center;
-            padding: 32px;
-        }
-
-        @media (max-width: 768px) {
-            .product-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-        }
-
-        /* Team */
-        .team {
-            background: var(--surface);
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-        }
-
-        .team-card {
-            background: var(--background);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 32px;
-        }
-
-        .team-card-icon {
-            width: 56px;
-            height: 56px;
-            background: var(--surface);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-        }
-
-        .team-card-icon svg {
-            width: 28px;
-            height: 28px;
-            stroke: var(--foreground);
-        }
-
-        .team-card h3 {
-            font-size: 20px;
-            margin-bottom: 12px;
-            color: var(--foreground);
-        }
-
-        .team-card p {
-            font-size: 15px;
-            color: var(--muted);
-            line-height: 1.7;
-            font-weight: 300;
-        }
-
-        @media (max-width: 768px) {
-            .team-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Contact */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 64px;
-        }
-
-        .contact-info h3 {
-            font-size: 24px;
-            margin-bottom: 16px;
-        }
-
-        .contact-info p {
-            font-size: 16px;
-            color: var(--muted);
-            line-height: 1.7;
-            font-weight: 300;
-            margin-bottom: 32px;
-        }
-
-        .contact-links {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .contact-link {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 20px 24px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            text-decoration: none;
-            color: var(--foreground);
-            transition: all 0.2s ease;
-        }
-
-        .contact-link:hover {
-            border-color: var(--foreground);
-            background: var(--surface-elevated);
-        }
-
-        .contact-link-icon {
-            width: 20px;
-            height: 20px;
-        }
-
-        .contact-link-text {
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        @media (max-width: 768px) {
-            .contact-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-        }
-
-        /* Footer */
-        footer {
-            padding: 48px 0;
-            border-top: 1px solid var(--border-subtle);
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-text {
-            font-size: 14px;
-            color: var(--muted);
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 24px;
-        }
-
-        .footer-links a {
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.2s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--foreground);
-        }
-
-        @media (max-width: 768px) {
-            .footer-content {
-                flex-direction: column;
-                gap: 24px;
-                text-align: center;
-            }
-        }
-
-        /* Animations */
-        @starting-style {
-            .fade-in {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-        }
-
-        .fade-in {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-in-delay-1 { transition-delay: 0.1s; }
-        .fade-in-delay-2 { transition-delay: 0.2s; }
-        .fade-in-delay-3 { transition-delay: 0.3s; }
-    </style>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◆</text></svg>">
 </head>
 <body>
-    <header>
+    <!-- Noise texture overlay for depth -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- ========== HEADER ========== -->
+    <header class="site-header">
         <div class="container">
-            <nav>
-                <a href="/" class="logo">
-                    <div class="logo-mark"><span>D</span></div>
+            <nav class="nav">
+                <a href="/" class="nav-logo">
+                    <div class="nav-logo-mark">D</div>
                     Duet Company
                 </a>
                 <div class="nav-links">
                     <a href="#mission">Mission</a>
                     <a href="#product">Product</a>
+                    <a href="#pricing">Pricing</a>
                     <a href="#team">Team</a>
                     <a href="#contact">Contact</a>
-                    <a href="https://github.com/duet-company" class="github-link">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <a href="https://github.com/duet-company" class="nav-github" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
                         </svg>
                     </a>
                 </div>
+                <button class="nav-toggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </nav>
         </div>
     </header>
 
     <main>
+        <!-- ========== HERO ========== -->
         <section class="hero">
             <div class="container">
-                <div class="hero-label fade-in">🚀 Now in Beta</div>
-                <h1 class="fade-in fade-in-delay-1">
-                    <span class="line">From 0 to production</span>
-                    <span class="line"><span class="highlight">analytics in 10 minutes</span></span>
-                </h1>
-                <p class="fade-in fade-in-delay-2">
-                    Autonomous ClickHouse clusters, natural language to SQL, and AI agents that handle everything. Sub-second queries on billions of rows—no engineering team required.
-                </p>
-                <div class="hero-actions fade-in fade-in-delay-3">
-                    <a href="https://github.com/duet-company" class="btn btn-primary">
-                        Start Free Trial
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                    <a href="#product" class="btn btn-secondary">
-                        See How It Works
-                    </a>
-                </div>
-                <div class="hero-meta fade-in fade-in-delay-3">
-                    <div class="meta-item">
-                        <span class="meta-label">Founded</span>
-                        <span class="meta-value">Feb 2026</span>
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <div class="hero-badge" data-reveal>
+                            <span class="hero-badge-dot"></span>
+                            Now in Beta
+                        </div>
+                        <h1 data-reveal data-reveal-delay="1">
+                            Analytics<br>
+                            <em>without</em> engineers
+                        </h1>
+                        <p class="hero-description" data-reveal data-reveal-delay="2">
+                            Autonomous ClickHouse clusters, natural language to SQL, and AI agents that handle everything. Sub-second queries on billions of rows.
+                        </p>
+                        <div class="hero-actions" data-reveal data-reveal-delay="3">
+                            <a href="#pricing" class="btn btn-primary">
+                                Start Free Trial
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                            <a href="#product" class="btn btn-secondary">See How It Works</a>
+                        </div>
+                        <div class="hero-meta" data-reveal data-reveal-delay="4">
+                            <div class="hero-meta-item">
+                                <span class="hero-meta-label">Founded</span>
+                                <span class="hero-meta-value">Feb 2026</span>
+                            </div>
+                            <div class="hero-meta-item">
+                                <span class="hero-meta-label">Architecture</span>
+                                <span class="hero-meta-value">AI-Native</span>
+                            </div>
+                            <div class="hero-meta-item">
+                                <span class="hero-meta-label">Query Time</span>
+                                <span class="hero-meta-value">&lt;100ms</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="meta-item">
-                        <span class="meta-label">Beta Users</span>
-                        <span class="meta-value">Growing Fast</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">Query Performance</span>
-                        <span class="meta-value">&lt;100ms</span>
+
+                    <!-- Terminal Demo -->
+                    <div class="terminal" data-reveal data-reveal-delay="2">
+                        <div class="terminal-bar">
+                            <span class="terminal-dot terminal-dot--red"></span>
+                            <span class="terminal-dot terminal-dot--yellow"></span>
+                            <span class="terminal-dot terminal-dot--green"></span>
+                            <span class="terminal-title">ai-data-labs — query</span>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">query</span>
+                            </div>
+                            <div class="terminal-line terminal-cmd">
+                                "Show me revenue by region for Q4, sorted descending"
+                            </div>
+                            <div class="terminal-line terminal-comment">
+                                → Translating to SQL...
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-highlight">SELECT</span> region,
+                                <span class="terminal-highlight">SUM</span>(revenue) <span class="terminal-highlight">AS</span> total
+                                <span class="terminal-highlight">FROM</span> transactions
+                                <span class="terminal-highlight">WHERE</span> quarter = <span class="terminal-string">'Q4'</span>
+                                <span class="terminal-highlight">GROUP BY</span> region
+                                <span class="terminal-highlight">ORDER BY</span> total <span class="terminal-highlight">DESC</span>
+                            </div>
+                            <div class="terminal-line terminal-comment">
+                                → Executing on ClickHouse cluster...
+                            </div>
+                            <div class="terminal-line terminal-success">
+                                ✓ 4 rows returned in 47ms
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                APAC&nbsp;&nbsp;&nbsp;&nbsp;$2.4M<br>
+                                EMEA&nbsp;&nbsp;&nbsp;&nbsp;$1.8M<br>
+                                LATAM&nbsp;&nbsp;&nbsp;&nbsp;$1.2M<br>
+                                NA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$0.9M
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- ========== MARQUEE TICKER ========== -->
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee-track">
+                <div class="marquee-item"><strong>Sub-second</strong> query latency</div>
+                <span class="marquee-sep"></span>
+                <div class="marquee-item"><strong>ClickHouse</strong> native</div>
+                <span class="marquee-sep"></span>
+                <div class="marquee-item"><strong>NL→SQL</strong> translation</div>
+                <span class="marquee-sep"></span>
+                <div class="marquee-item"><strong>Zero</strong> engineering overhead</div>
+                <span class="marquee-sep"></span>
+                <div class="marquee-item"><strong>24/7</strong> autonomous ops</div>
+                <span class="marquee-sep"></span>
+                <div class="marquee-item"><strong>Linear</strong> scalability</div>
+                <span class="marquee-sep"></span>
+                <div class="marquee-item"><strong>Self-healing</strong> infrastructure</div>
+                <span class="marquee-sep"></span>
+                <div class="marquee-item"><strong>AI-native</strong> architecture</div>
+                <span class="marquee-sep"></span>
+                <!-- Duplicate for seamless loop -->
+                <div class="marquee-item"><strong>Sub-second</strong> query latency</div>
+                <span class="marquee-sep"></span>
+                <div class="marquee-item"><strong>ClickHouse</strong> native</div>
+                <span class="marquee-sep"></span>
+                <div class="marquee-item"><strong>NL→SQL</strong> translation</div>
+                <span class="marquee-sep"></span>
+                <div class="marquee-item"><strong>Zero</strong> engineering overhead</div>
+                <span class="marquee-sep"></span>
+                <div class="marquee-item"><strong>24/7</strong> autonomous ops</div>
+                <span class="marquee-sep"></span>
+                <div class="marquee-item"><strong>Linear</strong> scalability</div>
+                <span class="marquee-sep"></span>
+                <div class="marquee-item"><strong>Self-healing</strong> infrastructure</div>
+                <span class="marquee-sep"></span>
+                <div class="marquee-item"><strong>AI-native</strong> architecture</div>
+            </div>
+        </div>
+
+        <!-- ========== MISSION ========== -->
         <section class="mission" id="mission">
             <div class="container">
                 <div class="mission-grid">
-                    <div class="mission-content">
-                        <div class="section-label">Our Mission</div>
-                        <h2 class="section-title">Data infrastructure shouldn't require armies of engineers</h2>
-                        <p>AI can handle the complexity—architecture decisions, performance optimization, incident response. Humans focus on what matters: insights, decisions, impact.</p>
+                    <div>
+                        <div class="mission-label" data-reveal>Our Mission</div>
+                        <h2 data-reveal data-reveal-delay="1">Data infrastructure shouldn't require armies of engineers</h2>
+                        <p class="mission-text" data-reveal data-reveal-delay="2">
+                            AI can handle the complexity — architecture decisions, performance optimization, incident response. Humans focus on what matters: insights, decisions, impact.
+                        </p>
                     </div>
-                    <div class="mission-stat">
-                        <div class="stat-value">100%</div>
+                    <div class="mission-stat" data-reveal data-reveal-delay="2">
+                        <div class="stat-number">100%</div>
                         <div class="stat-label">Autonomous operations</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="features">
+        <!-- ========== FEATURES ========== -->
+        <section class="features" id="features">
             <div class="container">
-                <div class="section-header">
-                    <div class="section-label">Why AI Data Labs</div>
-                    <h2 class="section-title">Built for the AI-native future</h2>
+                <div class="features-header">
+                    <div class="features-label" data-reveal>Capabilities</div>
+                    <h2 data-reveal data-reveal-delay="1">Built for the AI-native future</h2>
                 </div>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-                            </svg>
+                <div class="features-list">
+                    <div class="feature-item" data-reveal>
+                        <span class="feature-number">01</span>
+                        <div class="feature-content">
+                            <h3>ClickHouse Powered</h3>
+                            <p>Sub-second analytics on billions of rows. Real-time ingestion with Kafka. Linear scalability across clusters.</p>
                         </div>
-                        <h3>ClickHouse Powered</h3>
-                        <p>Sub-second analytics on billions of rows. Real-time ingestion. Linear scalability.</p>
+                        <div class="feature-detail">Column-oriented storage engine. MergeTree family tables. Materialized views for real-time aggregation.</div>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                            </svg>
+                    <div class="feature-item" data-reveal>
+                        <span class="feature-number">02</span>
+                        <div class="feature-content">
+                            <h3>Natural Language to SQL</h3>
+                            <p>Query your data in plain English. Our AI translates intent into optimized SQL, executes, and explains the results.</p>
                         </div>
-                        <h3>Natural Language to SQL</h3>
-                        <p>Query your data in plain English. Our AI translates, optimizes, and executes.</p>
+                        <div class="feature-detail">Context-aware query generation. Schema understanding. Automatic JOIN optimization.</div>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M12 16v-4M12 8h.01"/>
-                            </svg>
+                    <div class="feature-item" data-reveal>
+                        <span class="feature-number">03</span>
+                        <div class="feature-content">
+                            <h3>AI Agent Platform</h3>
+                            <p>Autonomous agents for design, deployment, and management. 24/7 monitoring with self-healing capabilities.</p>
                         </div>
-                        <h3>AI Agents</h3>
-                        <p>Autonomous design, deployment, and management. 24/7 monitoring and self-healing.</p>
+                        <div class="feature-detail">Engineering, documentation, operations, and support agents. Each with specialized capabilities.</div>
+                    </div>
+                    <div class="feature-item" data-reveal>
+                        <span class="feature-number">04</span>
+                        <div class="feature-content">
+                            <h3>Autonomous Scaling</h3>
+                            <p>Resources scale with demand. No manual intervention. Cost-optimized with predictive capacity planning.</p>
+                        </div>
+                        <div class="feature-detail">Horizontal shard management. Auto-replication. Zero-downtime migrations.</div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- ========== PRODUCT ========== -->
         <section class="product" id="product">
             <div class="container">
-                <div class="section-header">
-                    <div class="section-label">Product</div>
-                    <h2 class="section-title">AI Data Labs</h2>
-                    <p class="section-subtitle">Everything you need for production-grade analytics, managed entirely by AI.</p>
-                </div>
+                <div class="product-label" data-reveal>Product</div>
+                <h2 data-reveal data-reveal-delay="1">AI Data Labs</h2>
+                <p class="product-subtitle" data-reveal data-reveal-delay="2">Everything you need for production-grade analytics, managed entirely by AI.</p>
                 <div class="product-grid">
-                    <div class="product-list">
-                        <div class="product-item">
-                            <div class="product-item-check">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <div class="product-features" data-reveal data-reveal-delay="2">
+                        <div class="product-feature">
+                            <div class="product-feature-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M20 6L9 17l-5-5"/>
                                 </svg>
                             </div>
-                            <div class="product-item-text">ClickHouse-powered analytics with sub-second queries</div>
+                            <div class="product-feature-text">ClickHouse-powered analytics with sub-second queries</div>
                         </div>
-                        <div class="product-item">
-                            <div class="product-item-check">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <div class="product-feature">
+                            <div class="product-feature-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M20 6L9 17l-5-5"/>
                                 </svg>
                             </div>
-                            <div class="product-item-text">Natural language to SQL translation</div>
+                            <div class="product-feature-text">Natural language to SQL translation</div>
                         </div>
-                        <div class="product-item">
-                            <div class="product-item-check">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <div class="product-feature">
+                            <div class="product-feature-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M20 6L9 17l-5-5"/>
                                 </svg>
                             </div>
-                            <div class="product-item-text">AI agents for design, deployment, and operations</div>
+                            <div class="product-feature-text">AI agents for design, deployment, and operations</div>
                         </div>
-                        <div class="product-item">
-                            <div class="product-item-check">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <div class="product-feature">
+                            <div class="product-feature-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M20 6L9 17l-5-5"/>
                                 </svg>
                             </div>
-                            <div class="product-item-text">Autonomous scaling and self-healing</div>
+                            <div class="product-feature-text">Autonomous scaling and self-healing</div>
                         </div>
-                        <div class="product-item">
-                            <div class="product-item-check">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <div class="product-feature">
+                            <div class="product-feature-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M20 6L9 17l-5-5"/>
                                 </svg>
                             </div>
-                            <div class="product-item-text">24/7 AI-powered support</div>
+                            <div class="product-feature-text">24/7 AI-powered support and monitoring</div>
                         </div>
                     </div>
-                    <div class="product-visual">
-                        <div class="product-visual-content">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--foreground)" stroke-width="1">
-                                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                                <path d="M3 9h18M9 3v18"/>
-                            </svg>
-                            <p style="margin-top: 16px; color: var(--muted); font-size: 14px;">Analytics Dashboard</p>
+                    <div class="product-visual" data-reveal data-reveal-delay="3">
+                        <div class="product-visual-header">
+                            <span class="dot"></span>
+                            <span>analytics-dashboard — connected</span>
                         </div>
+                        <pre><span class="hl-comment">-- Auto-generated dashboard query</span>
+<span class="hl-keyword">SELECT</span>
+  toDate(timestamp) <span class="hl-keyword">AS</span> date,
+  count() <span class="hl-keyword">AS</span> events,
+  uniq(user_id) <span class="hl-keyword">AS</span> users,
+  round(avg(duration_ms), <span class="hl-number">1</span>) <span class="hl-keyword">AS</span> avg_ms
+<span class="hl-keyword">FROM</span> events
+<span class="hl-keyword">WHERE</span> date >= today() - <span class="hl-number">30</span>
+<span class="hl-keyword">GROUP BY</span> date
+<span class="hl-keyword">ORDER BY</span> date <span class="hl-keyword">DESC</span>
+<span class="hl-keyword">LIMIT</span> <span class="hl-number">30</span>
+
+<span class="hl-comment">-- Result: 30 rows in 23ms</span></pre>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- ========== PRICING ========== -->
+        <section class="pricing" id="pricing">
+            <div class="container">
+                <div class="pricing-label" data-reveal>Pricing</div>
+                <h2 data-reveal data-reveal-delay="1">Start free, scale when ready</h2>
+                <p class="pricing-subtitle" data-reveal data-reveal-delay="2">14-day free trial. No credit card required. Cancel anytime.</p>
+                <div class="pricing-grid">
+                    <div class="pricing-card" data-reveal data-reveal-delay="1">
+                        <div class="pricing-card-name">Starter</div>
+                        <div class="pricing-card-price">$0 <span>/ month</span></div>
+                        <div class="pricing-card-desc">Perfect for exploration and small projects.</div>
+                        <ul class="pricing-card-features">
+                            <li>1 ClickHouse cluster</li>
+                            <li>100K rows</li>
+                            <li>Natural language queries</li>
+                            <li>Community support</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-secondary">Get Started</a>
+                    </div>
+                    <div class="pricing-card pricing-card--featured" data-reveal data-reveal-delay="2">
+                        <div class="pricing-card-name">Growth</div>
+                        <div class="pricing-card-price">$299 <span>/ month</span></div>
+                        <div class="pricing-card-desc">For teams that need production-grade analytics.</div>
+                        <ul class="pricing-card-features">
+                            <li>3 ClickHouse clusters</li>
+                            <li>Unlimited rows</li>
+                            <li>AI agent platform</li>
+                            <li>Natural language to SQL</li>
+                            <li>Autonomous scaling</li>
+                            <li>Priority support</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-primary">Start Free Trial</a>
+                    </div>
+                    <div class="pricing-card" data-reveal data-reveal-delay="3">
+                        <div class="pricing-card-name">Enterprise</div>
+                        <div class="pricing-card-price">Custom</div>
+                        <div class="pricing-card-desc">For organizations with complex requirements.</div>
+                        <ul class="pricing-card-features">
+                            <li>Unlimited clusters</li>
+                            <li>Unlimited rows</li>
+                            <li>Custom AI agents</li>
+                            <li>Dedicated support</li>
+                            <li>SLA guarantee</li>
+                            <li>On-premise option</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-secondary">Contact Sales</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== TEAM ========== -->
         <section class="team" id="team">
             <div class="container">
-                <div class="section-header">
-                    <div class="section-label">Team</div>
-                    <h2 class="section-title">Founded by AI agents</h2>
-                </div>
+                <div class="team-label" data-reveal>Our Team</div>
+                <h2 data-reveal data-reveal-delay="1">Founded by AI agents</h2>
                 <div class="team-grid">
-                    <div class="team-card">
-                        <div class="team-card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <polyline points="16 18 22 12 16 6"/>
-                                <polyline points="8 6 2 12 8 18"/>
-                            </svg>
+                    <div class="agent-card" data-reveal data-reveal-delay="1">
+                        <div class="agent-card-header">
+                            <div class="agent-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="16 18 22 12 16 6"/>
+                                    <polyline points="8 6 2 12 8 18"/>
+                                </svg>
+                            </div>
+                            <div class="agent-status">
+                                <span class="agent-status-dot"></span>
+                                Active
+                            </div>
                         </div>
                         <h3>Engineering Agents</h3>
-                        <p>Write, test, and deploy production code. Handle pull requests, code reviews, and infrastructure-as-code.</p>
+                        <p>Write, test, and deploy production code. Handle pull requests, code reviews, and infrastructure-as-code autonomously.</p>
                     </div>
-                    <div class="team-card">
-                        <div class="team-card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14 2 14 8 20 8"/>
-                                <line x1="16" y1="13" x2="8" y2="13"/>
-                                <line x1="16" y1="17" x2="8" y2="17"/>
-                            </svg>
+                    <div class="agent-card" data-reveal data-reveal-delay="2">
+                        <div class="agent-card-header">
+                            <div class="agent-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                    <line x1="16" y1="13" x2="8" y2="13"/>
+                                    <line x1="16" y1="17" x2="8" y2="17"/>
+                                </svg>
+                            </div>
+                            <div class="agent-status">
+                                <span class="agent-status-dot"></span>
+                                Active
+                            </div>
                         </div>
                         <h3>Documentation Agents</h3>
-                        <p>Maintain guides, API docs, and tutorials. Keep everything up-to-date with the latest changes.</p>
+                        <p>Maintain guides, API docs, and tutorials. Keep everything synchronized with the latest platform changes.</p>
                     </div>
-                    <div class="team-card">
-                        <div class="team-card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <circle cx="12" cy="12" r="10"/>
-                                <line x1="12" y1="8" x2="12" y2="12"/>
-                                <line x1="12" y1="16" x2="12.01" y2="16"/>
-                            </svg>
+                    <div class="agent-card" data-reveal data-reveal-delay="3">
+                        <div class="agent-card-header">
+                            <div class="agent-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="12" y1="8" x2="12" y2="12"/>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                </svg>
+                            </div>
+                            <div class="agent-status">
+                                <span class="agent-status-dot"></span>
+                                Active
+                            </div>
                         </div>
                         <h3>Operations Agents</h3>
-                        <p>Monitor systems, respond to incidents, and optimize performance. 24/7 vigilance.</p>
+                        <p>Monitor systems, respond to incidents, and optimize performance. 24/7 vigilance with self-healing capabilities.</p>
                     </div>
-                    <div class="team-card">
-                        <div class="team-card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-                            </svg>
+                    <div class="agent-card" data-reveal data-reveal-delay="4">
+                        <div class="agent-card-header">
+                            <div class="agent-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                                </svg>
+                            </div>
+                            <div class="agent-status">
+                                <span class="agent-status-dot"></span>
+                                Active
+                            </div>
                         </div>
                         <h3>Support Agents</h3>
-                        <p>Answer questions, resolve issues, and provide guidance. Instant help, any time.</p>
+                        <p>Answer questions, resolve issues, and provide guidance. Instant help, any time of day.</p>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- ========== CONTACT ========== -->
         <section class="contact" id="contact">
             <div class="container">
                 <div class="contact-grid">
-                    <div class="contact-info">
-                        <div class="section-label">Contact</div>
-                        <h3>Get in touch</h3>
-                        <p>Have questions about AI Data Labs? Want to see a demo? We'd love to hear from you.</p>
-                        <div class="contact-links">
+                    <div>
+                        <div class="contact-label" data-reveal>Get in Touch</div>
+                        <h3 data-reveal data-reveal-delay="1">Ready to start?</h3>
+                        <p class="contact-desc" data-reveal data-reveal-delay="2">Have questions about AI Data Labs? Want to see a demo? We'd love to hear from you.</p>
+                        <div class="contact-links" data-reveal data-reveal-delay="3">
                             <a href="mailto:hello@duet-company.dev" class="contact-link">
-                                <svg class="contact-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                                     <polyline points="22,6 12,13 2,6"/>
                                 </svg>
-                                <span class="contact-link-text">hello@duet-company.dev</span>
+                                hello@duet-company.dev
                             </a>
-                            <a href="https://github.com/duet-company" class="contact-link">
-                                <svg class="contact-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <a href="https://github.com/duet-company" class="contact-link" target="_blank" rel="noopener">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
                                 </svg>
-                                <span class="contact-link-text">github.com/duet-company</span>
+                                github.com/duet-company
                             </a>
                         </div>
                     </div>
-                    <div class="contact-visual">
-                        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 48px; text-align: center;">
-                            <div style="font-family: var(--font-display); font-size: 48px; font-weight: 700; margin-bottom: 8px;">14</div>
-                            <div style="font-size: 14px; color: var(--muted);">Day free trial</div>
-                            <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">No credit card required</div>
-                        </div>
+                    <div class="contact-cta" data-reveal data-reveal-delay="2">
+                        <div class="contact-cta-number">14</div>
+                        <div class="contact-cta-label">Day free trial</div>
+                        <div class="contact-cta-note">No credit card required</div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer>
+    <!-- ========== FOOTER ========== -->
+    <footer class="site-footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-text">&copy; 2026 Duet Company. Built by AI.</div>
                 <div class="footer-links">
                     <a href="https://github.com/duet-company">GitHub</a>
-                    <a href="/features.html">Features</a>
-                    <a href="/pricing.html">Pricing</a>
-                    <a href="/about.html">About</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#contact">Contact</a>
                 </div>
             </div>
         </div>
     </footer>
+
+    <script src="/app.js"></script>
 </body>
 </html>
