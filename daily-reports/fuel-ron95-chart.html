@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⛽ Biểu đồ giá xăng RON 95-III — 2026</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5; color: #1a1a1a; padding: 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .header { border-bottom: 2px solid #e0e0e0; padding: 24px 32px; background: #fafafa; }
+        .header h1 { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+        .header .date { color: #6b7280; font-size: 14px; }
+        .content { padding: 32px; }
+        .chart-container { position: relative; height: 400px; margin-bottom: 32px; }
+        .note { background: #fef3c7; padding: 12px; border-radius: 4px; font-size: 13px; color: #92400e; margin-bottom: 20px; }
+        .current { background: #ecfdf5; padding: 16px; border-radius: 4px; margin-bottom: 20px; }
+        .current h3 { margin-bottom: 8px; }
+        .current .price { font-size: 28px; font-weight: 700; color: #059669; }
+        .current .change { font-size: 14px; color: #dc2626; }
+        .footer { border-top: 1px solid #e0e0e0; padding: 20px; text-align: center; color: #6b7280; font-size: 13px; background: #fafafa; }
+        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+        th { background: #f9fafb; font-weight: 600; }
+        .up { color: #dc2626; }
+        .down { color: #059669; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⛽ Giá xăng RON 95-III — Việt Nam 2026</h1>
+            <div class="date">Cập nhật: 03/04/2026 — Nguồn: VnExpress, Petrolimex, PVOIL</div>
+        </div>
+        <div class="content">
+            <div class="current">
+                <h3>Giá hiện tại</h3>
+                <div class="price">25.150 đ/lít</div>
+                <div class="change">+820đ so với kỳ trước (từ 23h30 26/3/2026)</div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="priceChart"></canvas>
+            </div>
+
+            <h3 style="margin-bottom:12px">Lịch sử điều chỉnh gần đây</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ngày</th>
+                        <th>Giá (đồng/lít)</th>
+                        <th>Thay đổi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>05/03/2026</td><td>22.340</td><td class="up">+2.189</td></tr>
+                    <tr><td>07/03/2026</td><td>~27.000</td><td class="up">~+4.660</td></tr>
+                    <tr><td>11/03/2026</td><td>29.120</td><td class="up">+2.120</td></tr>
+                    <tr><td>19/03/2026</td><td>30.690</td><td class="up">+1.570</td></tr>
+                    <tr><td>26/03/2026</td><td>25.150</td><td class="down">-5.540</td></tr>
+                    <tr><td>02/04/2026</td><td>25.150</td><td class="up">+820*</td></tr>
+                </tbody>
+            </table>
+            <p style="font-size:12px;color:#6b7280;margin-top:8px">*+820 so với kỳ trước đó (kỳ 19/3 giữ giá). Kỳ 26/3 giảm mạnh -5.540đ sau khi dùng quỹ bình ổn.</p>
+
+            <div class="note" style="margin-top:24px">
+                ⚠️ Dữ liệu lịch sử dựa trên thông báo chính thức từ Petrolimex, PVOIL và Bộ Công Thương. 
+                Giá thực tế có thể khác nhẹ giữa các vùng và đầu mối. Đỉnh lịch sử: 32.873đ/lít (21/06/2022).
+            </div>
+        </div>
+        <div class="footer">
+            Biểu đồ tự động cập nhật khi có giá mới • OpenClaw • 03/04/2026
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('priceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['05/03', '07/03', '11/03', '19/03', '26/03', '02/04'],
+                datasets: [{
+                    label: 'RON 95-III (đồng/lít)',
+                    data: [22340, 27000, 29120, 30690, 25150, 25150],
+                    borderColor: '#dc2626',
+                    backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#dc2626',
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true, position: 'top' },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.parsed.y.toLocaleString('vi-VN') + ' đ/lít';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 20000,
+                        max: 33000,
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString('vi-VN') + 'đ';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

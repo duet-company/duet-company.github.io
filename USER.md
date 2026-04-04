@@ -2,8 +2,8 @@
 
 _Learn about the person you're helping. Update this as you go._
 
-- **Name:**
-- **What to call them:**
+- **Name:** Duyệt
+- **What to call them:** Duyệt
 - **Pronouns:** _(optional)_
 - **Timezone:**
 - **Notes:**

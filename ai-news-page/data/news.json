@@ -1,37 +1,44 @@
 [
   {
-    "title": "OpenAI o1-preview models now available to all free users",
-    "source": "OpenAI Blog",
-    "date": "2025-02-22",
-    "category": "release",
-    "link": "https://openai.com/blog"
+    "title": "OpenAI builds 1.2GW data center in Texas, faces China parts shortage",
+    "source": "Japan Times",
+    "date": "2026-04-02",
+    "category": "infrastructure",
+    "link": "https://www.japantimes.co.jp/business/2026/04/02/tech/us-ai-china-electrical-parts/"
   },
   {
-    "title": "Google Gemini 2.0 Pro with 1M token context",
-    "source": "Google",
-    "date": "2025-02-21",
+    "title": "OpenAI completes largest funding round ever; Periodic Labs eyes $7B valuation",
+    "source": "CNBC",
+    "date": "2026-04-02",
+    "category": "funding",
+    "link": "https://www.youtube.com/watch?v=kbT58pJrW_4"
+  },
+  {
+    "title": "Qualcomm positions as AI growth contender against NVIDIA and custom chips",
+    "source": "NatLawReview",
+    "date": "2026-04-02",
     "category": "product",
-    "link": "https://blog.google/technology/ai/"
+    "link": "https://natlawreview.com/press-releases/ai-next-growth-engine-qualcomm-asks-industry-analyst-jeff-kagan"
   },
   {
-    "title": "Anthropic releases Claude 4 Sonnet with improved reasoning",
-    "source": "Anthropic",
-    "date": "2025-02-20",
-    "category": "model",
-    "link": "https://www.anthropic.com/news"
+    "title": "AI-generated misinformation surges during Iran war — verified X accounts amplify fakes",
+    "source": "WSLS",
+    "date": "2026-04-02",
+    "category": "safety",
+    "link": "https://www.wsls.com/news/politics/2026/04/02/its-international-fact-checking-day-refresh-your-ai-identification-skills/"
   },
   {
-    "title": "Meta releases Llama 4 with 405B parameters",
-    "source": "Meta AI",
-    "date": "2025-02-19",
-    "category": "model",
-    "link": "https://ai.meta.com/blog"
-  },
-  {
-    "title": "New study shows transformers can learn in-context without backpropagation",
-    "source": "arXiv",
-    "date": "2025-02-18",
+    "title": "Deutsche Bank AI models forecast higher inflation from data center energy costs",
+    "source": "National Today",
+    "date": "2026-04-02",
     "category": "research",
-    "link": "https://arxiv.org/abs/2502.x"
+    "link": "https://nationaltoday.com/us/ny/new-york/news/2026/04/02/ai-predicts-higher-inflation-challenging-disinflationary-consensus/"
+  },
+  {
+    "title": "Tech giants plan $650B+ AI infrastructure spend amid supply chain strain",
+    "source": "Japan Times",
+    "date": "2026-04-02",
+    "category": "infrastructure",
+    "link": "https://www.japantimes.co.jp/business/2026/04/02/tech/us-ai-china-electrical-parts/"
   }
 ]
