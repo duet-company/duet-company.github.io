@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biểu đồ Giá Xăng Dầu Việt Nam</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            color: #856404;
+        }
+        .warning strong {
+            color: #d65a31;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Biểu đồ Giá Xăng Dầu Việt Nam</h1>
+        
+        <div class="warning">
+            <strong>⚠️ LưU Ý QUAN TRọNG:</strong> Đã phát hiện sự không nhất quán dữ liệu lớn giữa các kỳ ghi nhận. Giá ngày 16/4 thấp hơn đáng kể so với ngày 6/4. Cần kiểm tra thủ công lịch sử giá.
+        </div>
+        
+        <canvas id="fuelChart"></canvas>
+        
+        <div style="margin-top: 20px;">
+            <h3>Dữ liệu Giá mới nhất (16/4/2026):</h3>
+            <ul>
+                <li><strong>Xăng RON 95-III:</strong> 23.760 đ‑‑(+220)</li>
+                <li><strong>Xăng E5 RON 92-II:</strong> 22.590 đ‑‑(+250)</li>
+                <li><strong>Dầu diesel:</strong> 31.040 đ‑‑(-1.920)</li>
+            </ul>
+            
+            <h3>Lịch sử Giá:</h3>
+            <ul>
+                <li><strong>16/4/2026:</strong> RON 95-III 23.760đ (+220), E5 22.590đ (+250), Diesel 31.040đ (-1.920)</li>
+                <li><strong>06/4/2026:</strong> RON 95-III 26.970đ (+1.820), E5 25.420đ (+1.560), Diesel 44.780đ (+3.960) <span style="color: #d65a31;">⚠️ Data inconsistency</span></li>
+                <li><strong>03/4/2026:</strong> RON 95-III 25.150đ (+820), E5 23.860đ (+540), Diesel 40.820đ (+5.380)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('fuelChart').getContext('2d');
+        
+        const fuelChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['03/04', '06/04', '16/04'],
+                datasets: [{
+                    label: 'Xăng RON 95-III (đ‑‑/‑lít)',
+                    data: [25150, 26970, 23760],
+                    borderColor: 'rgb(75, 192, 192)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    tension: 0.1
+                }, {
+                    label: 'Xăng E5 RON 92-II (đ‑‑/‑lít)',
+                    data: [23860, 25420, 22590],
+                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    tension: 0.1
+                }, {
+                    label: 'Dầu diesel (đ‑‑/‑lít)',
+                    data: [40820, 44780, 31040],
+                    borderColor: 'rgb(54, 162, 235)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Biểu đồ Giá Xăng Dầu Việt Nam'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Giá (đ‑‑/‑lít)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

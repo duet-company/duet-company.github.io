@@ -2,6 +2,9 @@
   "publishes": {
     "coral-basin-72rv": {
       "siteUrl": "https://coral-basin-72rv.here.now/"
+    },
+    "civic-arbor-43g4": {
+      "siteUrl": "https://civic-arbor-43g4.here.now/"
     }
   }
 }
